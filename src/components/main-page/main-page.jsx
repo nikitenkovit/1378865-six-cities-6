@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceCard from "../place-card";
 import PropTypes from "prop-types";
 
-const MainPage = ({keyNumbers, quantityRentalOffers}) => {
+const MainPage = ({placeCardsIds, quantityRentalOffers}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -90,7 +90,7 @@ const MainPage = ({keyNumbers, quantityRentalOffers}) => {
               </form>
               <div className="cities__places-list places__list tabs__content">
                 {
-                  keyNumbers.map((number) => <PlaceCard key={number}/>)
+                  placeCardsIds.map((number) => <PlaceCard key={number}/>)
                 }
               </div>
             </section>
@@ -105,7 +105,7 @@ const MainPage = ({keyNumbers, quantityRentalOffers}) => {
 };
 
 MainPage.propTypes = {
-  keyNumbers: PropTypes.arrayOf(PropTypes.string.isRequired),
+  placeCardsIds: PropTypes.arrayOf(PropTypes.string.isRequired),
   quantityRentalOffers: PropTypes.number.isRequired
 };
 

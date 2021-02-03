@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MainPage from "../main-page/main-page";
 
-const App = ({keyNumbers, quantityRentalOffers}) => {
+const App = ({placeCardsIds, quantityRentalOffers}) => {
   return (
     <MainPage
-      keyNumbers = {keyNumbers}
+      placeCardsIds = {placeCardsIds}
       quantityRentalOffers = {quantityRentalOffers}
     />
   );
 };
 
 App.propTypes = {
-  keyNumbers: PropTypes.arrayOf(PropTypes.string.isRequired),
+  placeCardsIds: PropTypes.arrayOf(PropTypes.string.isRequired),
   quantityRentalOffers: PropTypes.number.isRequired
 };
 
