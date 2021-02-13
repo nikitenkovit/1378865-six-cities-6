@@ -1,16 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import offers from './mocks/offers';
-import reviews from './mocks/reviews';
+import offersData from './mocks/offersData';
+import reviewsData from './mocks/reviews';
+import {adaptCommentsData, adaptOfferData} from "./utils/common";
 
-const QUANTITY_RENTAL_OFFERS = offers.length;
+const offers = offersData.map(adaptOfferData);
+const reviews = reviewsData.map(adaptCommentsData);
+const quantityRentalOffers = offersData.length;
 
 ReactDOM.render(
     <App
-      offres = {offers}
+      offers = {offers}
       reviews = {reviews}
-      quantityRentalOffers = {QUANTITY_RENTAL_OFFERS}
+      quantityRentalOffers = {quantityRentalOffers}
     />,
     document.querySelector(`#root`)
 );
