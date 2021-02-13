@@ -8,9 +8,11 @@ const FavoritesScreen = ({offers}) => {
 
   const filteredOffers = offers.filter((offer) => offer.isFavorite)
     .reduce((generalOffer, offer) => {
-      generalOffer.hasOwnProperty(offer.city.name)
-        ? generalOffer[offer.city.name].push(offer)
-        : generalOffer[offer.city.name] = [offer];
+      if (generalOffer.hasOwnProperty(offer.city.name)) {
+        generalOffer[offer.city.name].push(offer);
+      } else {
+        generalOffer[offer.city.name] = [offer];
+      } // Почему линтер не разрешает делать тернарник тут???
 
       return generalOffer;
     }, {});
