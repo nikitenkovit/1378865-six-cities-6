@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
+import roomOfferProp from '../room-screen/room-offer-prop';
 
 const MainScreen = ({offers, quantityRentalOffers}) => {
   return (
@@ -104,11 +105,11 @@ const MainScreen = ({offers, quantityRentalOffers}) => {
 };
 
 MainScreen.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.object),
+  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
   quantityRentalOffers: PropTypes.number.isRequired
 };
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.object)
+  offers: PropTypes.arrayOf(roomOfferProp)
 };
 
 export default MainScreen;

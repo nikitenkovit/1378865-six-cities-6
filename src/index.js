@@ -7,7 +7,7 @@ import {adaptCommentsData, adaptOfferData} from "./utils/common";
 
 const offers = offersData.map(adaptOfferData);
 const reviews = reviewsData.map(adaptCommentsData);
-const quantityRentalOffers = offersData.length;
+const quantityRentalOffers = offers.length;
 
 ReactDOM.render(
     <App

@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {getRatingStarValue} from "../../utils/common";
+import reviewProp from './review-prop';
 
 const Review = ({review}) => {
   const {comment, date, rating, user} = review;
@@ -32,15 +32,7 @@ const Review = ({review}) => {
 };
 
 Review.propTypes = {
-  review: PropTypes.shape({
-    user: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatarUrl: PropTypes.string,
-    }),
-    rating: PropTypes.number.isRequired,
-    date: PropTypes.string.isRequired,
-    comment: PropTypes.string.isRequired
-  })
+  review: reviewProp,
 };
 
 export default Review;

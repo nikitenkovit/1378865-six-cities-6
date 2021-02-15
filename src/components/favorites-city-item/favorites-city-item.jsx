@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import OfferCard from "../offer-card/offer-card";
+import roomOfferProp from '../room-screen/room-offer-prop';
 
 const FavoritesCityItem = ({cityName, cityOffers}) => {
   return (
@@ -26,7 +27,7 @@ const FavoritesCityItem = ({cityName, cityOffers}) => {
 
 FavoritesCityItem.propTypes = {
   cityName: PropTypes.string.isRequired,
-  cityOffers: PropTypes.arrayOf(PropTypes.object.isRequired)
+  cityOffers: PropTypes.arrayOf(roomOfferProp).isRequired
 };
 
 export default FavoritesCityItem;

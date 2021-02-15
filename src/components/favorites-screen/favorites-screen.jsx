@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
 import FavoritesCityItem from "../favorites-city-item/favorites-city-item";
+import roomOfferProp from '../room-screen/room-offer-prop';
 
 const FavoritesScreen = ({offers}) => {
 
@@ -70,11 +71,11 @@ const FavoritesScreen = ({offers}) => {
 };
 
 FavoritesScreen.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.object.isRequired)
+  offers: PropTypes.arrayOf(roomOfferProp)
 };
 FavoritesCityItem.propTypes = {
   cityName: PropTypes.string,
-  cityOffers: PropTypes.arrayOf(PropTypes.object.isRequired)
+  cityOffers: PropTypes.arrayOf(roomOfferProp)
 };
 
 export default FavoritesScreen;

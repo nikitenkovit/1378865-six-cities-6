@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 const ReviewForm = () => {
-  const [formValue, setFormValue] = useState({
+  const [, setFormValue] = useState({
     ratingValue: ``,
     userTextValue: ``
   });
@@ -12,7 +12,7 @@ const ReviewForm = () => {
 
   const handleFieldChange = (evt) => {
     const {name, value} = evt.target;
-    setFormValue({...formValue, [name]: value});
+    setFormValue((state) => ({...state, [name]: value}));
   };
 
   return (

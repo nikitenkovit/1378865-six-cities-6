@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import OfferCard from "../offer-card/offer-card";
+import roomOfferProp from '../room-screen/room-offer-prop';
 
 const OffersList = ({offers}) => {
   const [activeCardId, setActiveCardId] = useState(``);
@@ -22,8 +23,8 @@ const OffersList = ({offers}) => {
           <OfferCard
             key={offer.id}
             offer={offer}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
         )
       }
@@ -32,11 +33,13 @@ const OffersList = ({offers}) => {
 };
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.object.isRequired)
+  offers: PropTypes.arrayOf(roomOfferProp)
 };
 
 OfferCard.propTypes = {
-  offer: PropTypes.object.isRequired
+  offer: roomOfferProp,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func
 };
 
 export default OffersList;

@@ -40,12 +40,13 @@ const BookmarkButton = ({isFavorite}) => {
   };
 
   return (
-    <button className={`${switchProperty().buttonClass} ${isFavorite && `${switchProperty().buttonClass}--active`} button`}
-      type="button"
-      onClick={(evt) => {
-        setBookmark(!bookmark);
-        bookmarkButtonClickHandler(evt, `${switchProperty().buttonClass}--active`);
-      }}>
+    <button className={`${switchProperty().buttonClass}
+     ${isFavorite && `${switchProperty().buttonClass}--active`} button`}
+    type="button"
+    onClick={(evt) => {
+      setBookmark(!bookmark);
+      bookmarkButtonClickHandler(evt, `${switchProperty().buttonClass}--active`);
+    }}>
       <svg className={`${switchProperty().iconClass}`}
         width={switchProperty().iconWidth}
         height={switchProperty().iconHeight}>

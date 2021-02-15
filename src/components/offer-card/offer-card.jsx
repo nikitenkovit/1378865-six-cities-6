@@ -1,11 +1,12 @@
 import React from 'react';
-import {OfferTypes, PathValue} from "../../const";
+import {OfferType, PathValue} from "../../const";
 import PropTypes from "prop-types";
 import {Link, useRouteMatch} from "react-router-dom";
 import {getRatingStarValue} from "../../utils/common";
 import BookmarkButton from "../bookmark-button/bookmark-button";
+import roomOfferProp from '../room-screen/room-offer-prop';
 
-const OfferCard = ({offer, handleMouseEnter, handleMouseLeave}) => {
+const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
   const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = offer;
 
   const match = useRouteMatch();
@@ -45,11 +46,11 @@ const OfferCard = ({offer, handleMouseEnter, handleMouseLeave}) => {
     <article className={`${switchClassNames().articleClass} place-card`}
       onMouseEnter={() => {
         if (currentPathValue === PathValue.MAIN_SCREEN) {
-          handleMouseEnter(id);
+          onMouseEnter(id);
         }
       }} onMouseLeave={() => {
         if (currentPathValue === PathValue.MAIN_SCREEN) {
-          handleMouseLeave();
+          onMouseLeave();
         }
       }}>
 
@@ -82,28 +83,19 @@ const OfferCard = ({offer, handleMouseEnter, handleMouseLeave}) => {
         <h2 className="place-card__name">
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{OfferTypes[type.toUpperCase()]}</p>
+        <p className="place-card__type">{OfferType[type.toUpperCase()]}</p>
       </div>
     </article>
   );
 };
 
 OfferCard.propTypes = {
-  offer: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    pictures: PropTypes.arrayOf(
-        PropTypes.shape(PropTypes.string.isRequired)
-    ),
-    price: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
-  }),
-  handleMouseEnter: PropTypes.func,
-  handleMouseLeave: PropTypes.func
+  offer: roomOfferProp,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func
+};
+BookmarkButton.propTypes = {
+  isFavorite: PropTypes.bool.isRequired
 };
 
 export default OfferCard;
