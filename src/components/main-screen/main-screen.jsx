@@ -2,9 +2,20 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
+import Map from "../map/map";
 import roomOfferProp from '../room-screen/room-offer-prop';
+import {CityCoordinate} from "../../const";
+import mapCityProp from "../map/map-city-prop";
+import mapPointsProp from "../map/map-points-prop";
 
 const MainScreen = ({offers, quantityRentalOffers}) => {
+  const points = offers.map((offer) => {
+    return {
+      location: offer.location,
+      description: offer.description
+    };
+  }); // временное решение
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -95,7 +106,11 @@ const MainScreen = ({offers, quantityRentalOffers}) => {
 
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+
+                {<Map city={CityCoordinate.AMSTERDAM} points={points}/>}
+
+              </section>
             </div>
           </div>
         </div>
@@ -110,6 +125,10 @@ MainScreen.propTypes = {
 };
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp)
+};
+Map.propTypes = {
+  city: mapCityProp,
+  points: mapPointsProp
 };
 
 export default MainScreen;
