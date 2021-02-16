@@ -1,20 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {generateId, getRandomInteger} from "./utils/common";
+import offersData from './mocks/offersData';
+import reviewsData from './mocks/reviews';
+import {adaptCommentsData, adaptOfferData} from "./utils/common";
 
-const PLACE_CARDS_COUNT = 5;
-const placeCardsIds = new Array(PLACE_CARDS_COUNT).fill().map(generateId);
-
-const Setting = {
-  KEY_NUMBERS: placeCardsIds,
-  QUANTITY_RENTAL_OFFERS: getRandomInteger(10, 500)
-};
+const offers = offersData.map(adaptOfferData);
+const reviews = reviewsData.map(adaptCommentsData);
+const quantityRentalOffers = offers.length;
 
 ReactDOM.render(
     <App
-      placeCardsIds = {Setting.KEY_NUMBERS}
-      quantityRentalOffers = {Setting.QUANTITY_RENTAL_OFFERS}
+      offers = {offers}
+      reviews = {reviews}
+      quantityRentalOffers = {quantityRentalOffers}
     />,
     document.querySelector(`#root`)
 );

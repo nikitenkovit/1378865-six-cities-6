@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import PlaceCard from "../place-card";
 import PropTypes from "prop-types";
+import OffersList from "../offers-list/offers-list";
+import roomOfferProp from '../room-screen/room-offer-prop';
 
-const MainScreen = ({placeCardsIds, quantityRentalOffers}) => {
+const MainScreen = ({offers, quantityRentalOffers}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -79,7 +80,7 @@ const MainScreen = ({placeCardsIds, quantityRentalOffers}) => {
                 <span className="places__sorting-type" tabIndex="0">
                   Popular
                   <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
+                    <use xlinkHref="#icon-arrow-select"/>
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
@@ -89,11 +90,9 @@ const MainScreen = ({placeCardsIds, quantityRentalOffers}) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {
-                  placeCardsIds.map((number) => <PlaceCard key={number}/>)
-                }
-              </div>
+
+              <OffersList offers={offers}/>
+
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
@@ -106,8 +105,11 @@ const MainScreen = ({placeCardsIds, quantityRentalOffers}) => {
 };
 
 MainScreen.propTypes = {
-  placeCardsIds: PropTypes.arrayOf(PropTypes.string.isRequired),
+  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
   quantityRentalOffers: PropTypes.number.isRequired
+};
+OffersList.propTypes = {
+  offers: PropTypes.arrayOf(roomOfferProp)
 };
 
 export default MainScreen;
