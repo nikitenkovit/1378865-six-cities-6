@@ -3,8 +3,8 @@ export default [
     "bedrooms": 3,
     "city": {
       "location": {
-        "latitude": 52.370216,
-        "longitude": 4.895168,
+        "latitude": 52.3909553943508,
+        "longitude": 4.85309666406198,
         "zoom": 10
       },
       "name": `Amsterdam`
@@ -22,8 +22,8 @@ export default [
     "is_favorite": true,
     "is_premium": false,
     "location": {
-      "latitude": 52.35514938496378,
-      "longitude": 4.673877537499948,
+      "latitude": 52.3909553943508,
+      "longitude": 4.85309666406198,
       "zoom": 8
     },
     "max_adults": 4,
@@ -37,8 +37,8 @@ export default [
     "bedrooms": 1,
     "city": {
       "location": {
-        "latitude": 52.450216,
-        "longitude": 4.945168,
+        "latitude": 52.369553943508,
+        "longitude": 4.85309666406198,
         "zoom": 10
       },
       "name": `Amsterdam`
@@ -56,8 +56,8 @@ export default [
     "is_favorite": true,
     "is_premium": true,
     "location": {
-      "latitude": 52.35514938496378,
-      "longitude": 4.673877537499948,
+      "latitude": 52.369553943508,
+      "longitude": 4.85309666406198,
       "zoom": 8
     },
     "max_adults": 4,
@@ -71,8 +71,8 @@ export default [
     "bedrooms": 1,
     "city": {
       "location": {
-        "latitude": 52.850216,
-        "longitude": 5.945168,
+        "latitude": 52.3909553943508,
+        "longitude": 4.85309666406198,
         "zoom": 10
       },
       "name": `Amsterdam`
@@ -90,8 +90,8 @@ export default [
     "is_favorite": false,
     "is_premium": true,
     "location": {
-      "latitude": 52.35514938496378,
-      "longitude": 4.673877537499948,
+      "latitude": 52.3909553943508,
+      "longitude": 4.929309666406198,
       "zoom": 8
     },
     "max_adults": 2,
@@ -105,11 +105,11 @@ export default [
     "bedrooms": 1,
     "city": {
       "location": {
-        "latitude": 53.850216,
-        "longitude": 4.873877537499948,
+        "latitude": 52.3909553943508,
+        "longitude": 4.85309666406198,
         "zoom": 10
       },
-      "name": `Paris`
+      "name": `Amsterdam`
     },
     "description": `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     "goods": [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
@@ -124,8 +124,8 @@ export default [
     "is_favorite": true,
     "is_premium": true,
     "location": {
-      "latitude": 53.35514938496378,
-      "longitude": 4.873877537499948,
+      "latitude": 52.3809553943508,
+      "longitude": 4.939309666406198,
       "zoom": 8
     },
     "max_adults": 3,

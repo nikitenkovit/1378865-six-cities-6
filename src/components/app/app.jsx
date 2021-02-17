@@ -30,8 +30,8 @@ const App = ({offers, reviews, quantityRentalOffers}) => {
           />
         </Route>
         <Route exact path="/offer/:id"
-          render={(routerProps) => {
-            const id = routerProps.match.params.id;
+          render={(renderProps) => {
+            const id = renderProps.match.params.id;
             const offer = offers.find((room) => room.id.toString() === id);
 
             const nearestOffers = offers.slice(0, 3); // временные моки для ближайшых трёх предложений
