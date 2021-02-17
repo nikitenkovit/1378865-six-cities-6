@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import {useRouteMatch} from "react-router-dom";
-import {PathValue} from "../../const";
 import PropTypes from "prop-types";
+import BookmarkButtonPropertyProp from "./bookmark-button-property.prop";
 
 const bookmarkButtonClickHandler = (evt, className) => {
   const clickedElement = evt.target.closest(`button`);
@@ -9,47 +8,20 @@ const bookmarkButtonClickHandler = (evt, className) => {
   clickedElement.classList.toggle(className);
 };
 
-const BookmarkButton = ({isFavorite}) => {
+const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
   const [bookmark, setBookmark] = useState(isFavorite);
 
-  const match = useRouteMatch();
-  const currentPathValue = match.path;
-
-  const switchProperty = () => {
-    let currentClassNames;
-
-    switch (currentPathValue) {
-      case (PathValue.ROOM_SCREEN):
-        currentClassNames = {
-          buttonClass: `property__bookmark-button`,
-          iconClass: `property__bookmark-icon`,
-          iconWidth: `31`,
-          iconHeight: `33`
-        };
-        break;
-      default:
-        currentClassNames = {
-          buttonClass: `place-card__bookmark-button`,
-          iconClass: `place-card__bookmark-icon`,
-          iconWidth: `18`,
-          iconHeight: `19`
-        };
-    }
-
-    return currentClassNames;
-  };
-
   return (
-    <button className={`${switchProperty().buttonClass}
-     ${isFavorite && `${switchProperty().buttonClass}--active`} button`}
+    <button className={`${bookmarkButtonProperty.buttonClass}
+     ${isFavorite && `${bookmarkButtonProperty.buttonClass}--active`} button`}
     type="button"
     onClick={(evt) => {
       setBookmark(!bookmark);
-      bookmarkButtonClickHandler(evt, `${switchProperty().buttonClass}--active`);
+      bookmarkButtonClickHandler(evt, `${bookmarkButtonProperty.buttonClass}--active`);
     }}>
-      <svg className={`${switchProperty().iconClass}`}
-        width={switchProperty().iconWidth}
-        height={switchProperty().iconHeight}>
+      <svg className={`${bookmarkButtonProperty.iconClass}`}
+        width={bookmarkButtonProperty.iconWidth}
+        height={bookmarkButtonProperty.iconHeight}>
         <use xlinkHref="#icon-bookmark"/>
       </svg>
       <span className="visually-hidden">To bookmarks</span>
@@ -58,7 +30,9 @@ const BookmarkButton = ({isFavorite}) => {
 };
 
 BookmarkButton.propTypes = {
-  isFavorite: PropTypes.bool.isRequired
+  isFavorite: PropTypes.bool.isRequired,
+  bookmarkButtonProperty: BookmarkButtonPropertyProp
+
 };
 
 export default BookmarkButton;

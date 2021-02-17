@@ -18,3 +18,23 @@ export const CityCoordinate = {
     zoom: 12
   }
 }; // скорее всего временно
+
+export const OffersListClassName = {
+  CITY_PLACES: `cities__places-list`,
+  NEAR_PLACES: `near-places__list`
+};
+
+export const BookmarkButtonProperty = {
+  ROOM_SCREEN: {
+    buttonClass: `property__bookmark-button`,
+    iconClass: `property__bookmark-icon`,
+    iconWidth: `31`,
+    iconHeight: `33`
+  },
+  OFFER_CARD: {
+    buttonClass: `place-card__bookmark-button`,
+    iconClass: `place-card__bookmark-icon`,
+    iconWidth: `18`,
+    iconHeight: `19`
+  }
+};

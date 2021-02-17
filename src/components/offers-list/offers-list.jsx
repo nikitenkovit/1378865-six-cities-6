@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import OfferCard from "../offer-card/offer-card";
 import roomOfferProp from '../room-screen/room-offer-prop';
+import {OffersListClassName} from "../../const";
 
-const OffersList = ({offers}) => {
+const OffersList = ({offers, offersListClassName}) => {
   const [activeCardId, setActiveCardId] = useState(``);
 
   const handleMouseEnter = (id) => {
@@ -17,7 +18,8 @@ const OffersList = ({offers}) => {
   };
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${offersListClassName} places__list
+     ${offersListClassName === OffersListClassName.CITY_PLACES ? `tabs__content` : ``}`}>
       {
         offers.map((offer) =>
           <OfferCard
@@ -33,7 +35,8 @@ const OffersList = ({offers}) => {
 };
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(roomOfferProp)
+  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  offersListClassName: PropTypes.string.isRequired
 };
 
 OfferCard.propTypes = {

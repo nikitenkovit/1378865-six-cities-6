@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
 import Map from "../map/map";
 import roomOfferProp from '../room-screen/room-offer-prop';
-import {CityCoordinate} from "../../const";
+import {CityCoordinate, OffersListClassName} from "../../const";
 import mapCityProp from "../map/map-city-prop";
 import mapPointsProp from "../map/map-points-prop";
 
@@ -102,7 +102,7 @@ const MainScreen = ({offers, quantityRentalOffers}) => {
                 </ul>
               </form>
 
-              <OffersList offers={offers}/>
+              <OffersList offers={offers} offersListClassName={OffersListClassName.CITY_PLACES}/>
 
             </section>
             <div className="cities__right-section">
@@ -124,7 +124,8 @@ MainScreen.propTypes = {
   quantityRentalOffers: PropTypes.number.isRequired
 };
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(roomOfferProp)
+  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  offersListClassName: PropTypes.string.isRequired
 };
 Map.propTypes = {
   city: mapCityProp,
