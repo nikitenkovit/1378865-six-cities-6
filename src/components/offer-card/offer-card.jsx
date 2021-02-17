@@ -16,11 +16,11 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
   return (
     <article className={`${getOfferCardClassNames(currentPathValue).articleClass} place-card`}
       onMouseEnter={() => {
-        if (currentPathValue === PathValue.MAIN_SCREEN) {
+        if (currentPathValue !== PathValue.FAVORITES_SCREEN) {
           onMouseEnter(id);
         }
       }} onMouseLeave={() => {
-        if (currentPathValue === PathValue.MAIN_SCREEN) {
+        if (currentPathValue !== PathValue.FAVORITES_SCREEN) {
           onMouseLeave();
         }
       }}>
