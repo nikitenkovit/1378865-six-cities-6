@@ -1,5 +1,3 @@
-import {PathValue} from "../const";
-
 export const getRatingStarValue = (number) => {
   return Math.round(number) * 20 + `%`;
 };
@@ -40,33 +38,3 @@ export const adaptCommentsData = (data) => ({
     name: data.user.name,
   }
 });
-
-export const getOfferCardClassNames = (pathValue) => {
-  let currentClassNames = {};
-
-  switch (pathValue) {
-    case (PathValue.MAIN_SCREEN):
-      currentClassNames = {
-        articleClass: `cities__place-card`,
-        wrapperClass: `cities__image-wrapper`,
-        infoClass: ``
-      };
-      break;
-    case (PathValue.FAVORITES_SCREEN):
-      currentClassNames = {
-        articleClass: `favorites__card`,
-        wrapperClass: `favorites__image-wrapper`,
-        infoClass: `favorites__card-info`
-      };
-      break;
-    case (PathValue.ROOM_SCREEN):
-      currentClassNames = {
-        articleClass: `near-places__card`,
-        wrapperClass: `near-places__image-wrapper`,
-        infoClass: ``
-      };
-      break;
-  }
-
-  return currentClassNames;
-};

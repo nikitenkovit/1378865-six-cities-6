@@ -14,7 +14,7 @@ import {CityCoordinate, OffersListClassName} from "../../const";
 import mapCityProp from "../map/map-city-prop";
 import mapPointsProp from "../map/map-points-prop";
 import OffersList from "../offers-list/offers-list";
-import BookmarkButtonPropertyProp from '../bookmark-button/bookmark-button-property.prop';
+import bookmarkButtonPropertyProp from '../bookmark-button/bookmark-button-property.prop';
 
 const RoomScreen = ({offer, reviews, nearestOffers}) => {
   const {
@@ -175,7 +175,7 @@ OffersList.propTypes = {
 };
 BookmarkButton.propTypes = {
   isFavorite: PropTypes.bool.isRequired,
-  bookmarkButtonProperty: BookmarkButtonPropertyProp
+  bookmarkButtonProperty: bookmarkButtonPropertyProp
 };
 
 export default RoomScreen;

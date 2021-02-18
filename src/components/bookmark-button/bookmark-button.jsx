@@ -32,7 +32,6 @@ const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
 BookmarkButton.propTypes = {
   isFavorite: PropTypes.bool.isRequired,
   bookmarkButtonProperty: BookmarkButtonPropertyProp
-
 };
 
 export default BookmarkButton;

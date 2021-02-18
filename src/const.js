@@ -38,3 +38,21 @@ export const BookmarkButtonProperty = {
     iconHeight: `19`
   }
 };
+
+export const OfferCardClassName = {
+  CITY: {
+    articleClass: `cities__place-card`,
+    wrapperClass: `cities__image-wrapper`,
+    infoClass: ``
+  },
+  NEAR: {
+    articleClass: `near-places__card`,
+    wrapperClass: `near-places__image-wrapper`,
+    infoClass: ``
+  },
+  FAVORITES: {
+    articleClass: `favorites__card`,
+    wrapperClass: `favorites__image-wrapper`,
+    infoClass: `favorites__card-info`
+  }
+};

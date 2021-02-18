@@ -1,26 +1,26 @@
 import React from 'react';
-import {OfferType, PathValue, BookmarkButtonProperty} from "../../const";
+import {OfferType, BookmarkButtonProperty} from "../../const";
 import PropTypes from "prop-types";
-import {Link, useRouteMatch} from "react-router-dom";
-import {getRatingStarValue, getOfferCardClassNames} from "../../utils/common";
+import {Link} from "react-router-dom";
+import {getRatingStarValue} from "../../utils/common";
 import BookmarkButton from "../bookmark-button/bookmark-button";
 import roomOfferProp from '../room-screen/room-offer-prop';
-import BookmarkButtonPropertyProp from "../bookmark-button/bookmark-button-property.prop";
+import bookmarkButtonPropertyProp from "../bookmark-button/bookmark-button-property.prop";
+import offerCardClassNameProp from './offer-card-class-name-prop';
 
-const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
+const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onMouseLeave}) => {
+  const {articleClass, wrapperClass, infoClass} = offerCardClassName;
   const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = offer;
 
-  const match = useRouteMatch();
-  const currentPathValue = match.path;
-
   return (
-    <article className={`${getOfferCardClassNames(currentPathValue).articleClass} place-card`}
+    <article className={`${articleClass} place-card`}
       onMouseEnter={() => {
-        if (currentPathValue !== PathValue.FAVORITES_SCREEN) {
+        if (isHoverHandler) {
           onMouseEnter(id);
         }
-      }} onMouseLeave={() => {
-        if (currentPathValue !== PathValue.FAVORITES_SCREEN) {
+      }}
+      onMouseLeave={() => {
+        if (isHoverHandler) {
           onMouseLeave();
         }
       }}>
@@ -30,12 +30,12 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
         <span>Premium</span>
       </div>
       }
-      <div className={`${getOfferCardClassNames(currentPathValue).wrapperClass} place-card__image-wrapper`}>
+      <div className={`${wrapperClass} place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </a>
       </div>
-      <div className={`${getOfferCardClassNames(currentPathValue).infoClass} place-card__info`}>
+      <div className={`${infoClass} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -61,13 +61,15 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
 };
 
 OfferCard.propTypes = {
+  offerCardClassName: offerCardClassNameProp,
   offer: roomOfferProp,
+  isHoverHandler: PropTypes.bool.isRequired,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func
 };
 BookmarkButton.propTypes = {
   isFavorite: PropTypes.bool.isRequired,
-  bookmarkButtonProperty: BookmarkButtonPropertyProp
+  bookmarkButtonProperty: bookmarkButtonPropertyProp
 };
 
 export default OfferCard;
