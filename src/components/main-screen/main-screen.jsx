@@ -3,10 +3,9 @@ import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
 import Map from "../map/map";
-import roomOfferProp from '../room-screen/room-offer-prop';
+import roomOfferProp from '../room-screen/room-screen-offer.prop';
 import {CityCoordinate, OffersListClassName} from "../../const";
-import mapCityProp from "../map/map-city-prop";
-import mapPointsProp from "../map/map-points-prop";
+import mapProp from '../map/map.prop';
 
 const MainScreen = ({offers, quantityRentalOffers}) => {
   const points = offers.map((offer) => {
@@ -128,8 +127,8 @@ OffersList.propTypes = {
   offersListClassName: PropTypes.string.isRequired
 };
 Map.propTypes = {
-  city: mapCityProp,
-  points: mapPointsProp
+  city: mapProp.city,
+  points: mapProp.points
 };
 
 export default MainScreen;

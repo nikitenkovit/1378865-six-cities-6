@@ -1,23 +1,17 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import BookmarkButtonPropertyProp from "./bookmark-button-property.prop";
-
-const bookmarkButtonClickHandler = (evt, className) => {
-  const clickedElement = evt.target.closest(`button`);
-
-  clickedElement.classList.toggle(className);
-};
+import BookmarkButtonProp from "./bookmark-button.prop";
 
 const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
-  const [bookmark, setBookmark] = useState(isFavorite);
+  const [isActiveBookmark, setIsActiveBookmark] = useState(isFavorite);
 
   return (
-    <button className={`${bookmarkButtonProperty.buttonClass}
-     ${isFavorite && `${bookmarkButtonProperty.buttonClass}--active`} button`}
+    <button className={`${isActiveBookmark
+      ? bookmarkButtonProperty.buttonClass
+      : bookmarkButtonProperty.buttonClass + ` ` + bookmarkButtonProperty.buttonClass + `--active`} button`}
     type="button"
-    onClick={(evt) => {
-      setBookmark(!bookmark);
-      bookmarkButtonClickHandler(evt, `${bookmarkButtonProperty.buttonClass}--active`);
+    onClick={() => {
+      setIsActiveBookmark(!isActiveBookmark);
     }}>
       <svg className={`${bookmarkButtonProperty.iconClass}`}
         width={bookmarkButtonProperty.iconWidth}
@@ -31,7 +25,7 @@ const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
 
 BookmarkButton.propTypes = {
   isFavorite: PropTypes.bool.isRequired,
-  bookmarkButtonProperty: BookmarkButtonPropertyProp
+  bookmarkButtonProperty: BookmarkButtonProp
 };
 
 export default BookmarkButton;

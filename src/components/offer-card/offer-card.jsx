@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {getRatingStarValue} from "../../utils/common";
 import BookmarkButton from "../bookmark-button/bookmark-button";
-import roomOfferProp from '../room-screen/room-offer-prop';
-import bookmarkButtonPropertyProp from "../bookmark-button/bookmark-button-property.prop";
-import offerCardClassNameProp from './offer-card-class-name-prop';
+import roomScreenOfferProp from '../room-screen/room-screen-offer.prop';
+import bookmarkButtonPropertyProp from "../bookmark-button/bookmark-button.prop";
 
 const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onMouseLeave}) => {
   const {articleClass, wrapperClass, infoClass} = offerCardClassName;
@@ -61,8 +60,12 @@ const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onM
 };
 
 OfferCard.propTypes = {
-  offerCardClassName: offerCardClassNameProp,
-  offer: roomOfferProp,
+  offerCardClassName: PropTypes.shape({
+    articleClass: PropTypes.string.isRequired,
+    wrapperClass: PropTypes.string.isRequired,
+    infoClass: PropTypes.string.isRequired
+  }).isRequired,
+  offer: roomScreenOfferProp,
   isHoverHandler: PropTypes.bool.isRequired,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func

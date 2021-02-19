@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
-import mapCityProp from './map-city-prop';
-import mapPointsProp from './map-points-prop';
+import mapProp from './map.prop';
 
 import "leaflet/dist/leaflet.css";
 
@@ -58,8 +57,8 @@ const Map = ({city, points}) => {
 };
 
 Map.propTypes = {
-  city: mapCityProp,
-  points: mapPointsProp
+  city: mapProp.city,
+  points: mapProp.points
 };
 
 export default Map;

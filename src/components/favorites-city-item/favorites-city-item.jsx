@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import OfferCardFavorites from "../offer-card/offer-card-favorites";
-import roomOfferProp from '../room-screen/room-offer-prop';
+import roomOfferProp from '../room-screen/room-screen-offer.prop';
 
 const FavoritesCityItem = ({cityName, cityOffers}) => {
   return (

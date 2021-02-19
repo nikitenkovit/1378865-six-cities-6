@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import OfferCardCity from '../offer-card/offer-card-city';
-import roomOfferProp from '../room-screen/room-offer-prop';
+import roomOfferProp from '../room-screen/room-screen-offer.prop';
 import {OffersListClassName} from "../../const";
 import OfferCardNear from "../offer-card/offer-card-near";
 

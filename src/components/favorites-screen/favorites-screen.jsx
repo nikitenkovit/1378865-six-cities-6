@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
 import FavoritesCityItem from "../favorites-city-item/favorites-city-item";
-import roomOfferProp from '../room-screen/room-offer-prop';
+import roomOfferProp from '../room-screen/room-screen-offer.prop';
 
 const FavoritesScreen = ({offers}) => {
 

@@ -6,15 +6,14 @@ import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
 import ReviewForm from "../reviews-form/review-form";
 import BookmarkButton from "../bookmark-button/bookmark-button";
-import roomOfferProp from './room-offer-prop';
+import roomScreenOfferProp from './room-screen-offer.prop';
 import reviewProp from '../review/review-prop';
 import ReviewsList from "../reviews-list/reviews-list";
 import Map from "../map/map";
 import {CityCoordinate, OffersListClassName} from "../../const";
-import mapCityProp from "../map/map-city-prop";
-import mapPointsProp from "../map/map-points-prop";
+import mapProp from '../map/map.prop';
 import OffersList from "../offers-list/offers-list";
-import bookmarkButtonPropertyProp from '../bookmark-button/bookmark-button-property.prop';
+import BookmarkButtonProp from '../bookmark-button/bookmark-button.prop';
 
 const RoomScreen = ({offer, reviews, nearestOffers}) => {
   const {
@@ -158,24 +157,24 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
 };
 
 RoomScreen.propTypes = {
-  offer: roomOfferProp,
+  offer: roomScreenOfferProp,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  nearestOffers: PropTypes.arrayOf(roomOfferProp)
+  nearestOffers: PropTypes.arrayOf(roomScreenOfferProp)
 };
 ReviewsList.propTypes = {
   reviews: PropTypes.arrayOf(reviewProp).isRequired
 };
 Map.propTypes = {
-  city: mapCityProp,
-  points: mapPointsProp
+  city: mapProp.city,
+  points: mapProp.points
 };
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  offers: PropTypes.arrayOf(roomScreenOfferProp).isRequired,
   offersListClassName: PropTypes.string.isRequired
 };
 BookmarkButton.propTypes = {
   isFavorite: PropTypes.bool.isRequired,
-  bookmarkButtonProperty: bookmarkButtonPropertyProp
+  bookmarkButtonProperty: BookmarkButtonProp
 };
 
 export default RoomScreen;

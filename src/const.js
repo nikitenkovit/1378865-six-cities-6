@@ -5,12 +5,6 @@ export const OfferType = {
   HOTEL: `Hotel`
 };
 
-export const PathValue = {
-  MAIN_SCREEN: `/`,
-  FAVORITES_SCREEN: `/favorites`,
-  ROOM_SCREEN: `/offer/:id`
-};
-
 export const CityCoordinate = {
   AMSTERDAM: {
     latitude: 52.38333,
@@ -36,23 +30,5 @@ export const BookmarkButtonProperty = {
     iconClass: `place-card__bookmark-icon`,
     iconWidth: `18`,
     iconHeight: `19`
-  }
-};
-
-export const OfferCardClassName = {
-  CITY: {
-    articleClass: `cities__place-card`,
-    wrapperClass: `cities__image-wrapper`,
-    infoClass: ``
-  },
-  NEAR: {
-    articleClass: `near-places__card`,
-    wrapperClass: `near-places__image-wrapper`,
-    infoClass: ``
-  },
-  FAVORITES: {
-    articleClass: `favorites__card`,
-    wrapperClass: `favorites__image-wrapper`,
-    infoClass: `favorites__card-info`
   }
 };
