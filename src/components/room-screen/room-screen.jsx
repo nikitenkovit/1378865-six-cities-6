@@ -1,15 +1,19 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {OfferType} from '../../const';
+import {OfferType, BookmarkButtonProperty} from '../../const';
 import {getRatingStarValue} from "../../utils/common";
 import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
-import Review from "../review/review";
 import ReviewForm from "../reviews-form/review-form";
 import BookmarkButton from "../bookmark-button/bookmark-button";
-import OfferCard from "../offer-card/offer-card";
-import roomOfferProp from './room-offer-prop';
+import roomScreenOfferProp from './room-screen-offer.prop';
 import reviewProp from '../review/review-prop';
+import ReviewsList from "../reviews-list/reviews-list";
+import Map from "../map/map";
+import {CityCoordinate, OffersListClassName} from "../../const";
+import mapProp from '../map/map.prop';
+import OffersList from "../offers-list/offers-list";
+import BookmarkButtonProp from '../bookmark-button/bookmark-button.prop';
 
 const RoomScreen = ({offer, reviews, nearestOffers}) => {
   const {
@@ -25,6 +29,13 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
     goods,
     host,
     description} = offer;
+
+  const points = nearestOffers.map((room) => {
+    return {
+      location: room.location,
+      description: room.description
+    };
+  }); // временное решение
 
   return (
     <div className="page">
@@ -70,7 +81,7 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
               </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <BookmarkButton isFavorite={isFavorite}/>
+                <BookmarkButton isFavorite={isFavorite} bookmarkButtonProperty={BookmarkButtonProperty.ROOM_SCREEN}/>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -120,26 +131,24 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  {reviews.map((review) => <Review key={nanoid()} review={review}/>)}
-                </ul>
+
+                {<ReviewsList reviews={reviews}/>}
 
                 {<ReviewForm/>}
 
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            {<Map city={CityCoordinate.AMSTERDAM} points={points}/>}
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {
-                nearestOffers.map((room) => <OfferCard key={room.id} offer={room}/>)
-              }
-            </div>
+
+            {<OffersList offers={nearestOffers} offersListClassName={OffersListClassName.NEAR_PLACES}/>}
+
           </section>
         </div>
       </main>
@@ -148,12 +157,24 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
 };
 
 RoomScreen.propTypes = {
-  offer: roomOfferProp,
+  offer: roomScreenOfferProp,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  nearestOffers: PropTypes.arrayOf(roomOfferProp)
+  nearestOffers: PropTypes.arrayOf(roomScreenOfferProp)
 };
-Review.propTypes = {
-  review: reviewProp
+ReviewsList.propTypes = {
+  reviews: PropTypes.arrayOf(reviewProp).isRequired
+};
+Map.propTypes = {
+  city: mapProp.city,
+  points: mapProp.points
+};
+OffersList.propTypes = {
+  offers: PropTypes.arrayOf(roomScreenOfferProp).isRequired,
+  offersListClassName: PropTypes.string.isRequired
+};
+BookmarkButton.propTypes = {
+  isFavorite: PropTypes.bool.isRequired,
+  bookmarkButtonProperty: BookmarkButtonProp
 };
 
 export default RoomScreen;

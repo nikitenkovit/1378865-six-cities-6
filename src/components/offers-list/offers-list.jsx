@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
-import OfferCard from "../offer-card/offer-card";
-import roomOfferProp from '../room-screen/room-offer-prop';
+import OfferCardCity from '../offer-card/offer-card-city';
+import roomOfferProp from '../room-screen/room-screen-offer.prop';
+import {OffersListClassName} from "../../const";
+import OfferCardNear from "../offer-card/offer-card-near";
 
-const OffersList = ({offers}) => {
+const OffersList = ({offers, offersListClassName}) => {
   const [activeCardId, setActiveCardId] = useState(``);
 
   const handleMouseEnter = (id) => {
@@ -16,16 +18,29 @@ const OffersList = ({offers}) => {
     setActiveCardId(null);
   };
 
+  const getComponentByListClassName = (offer) => {
+    if (offersListClassName === OffersListClassName.CITY_PLACES) {
+      return <OfferCardCity
+        key={offer.id}
+        offer={offer}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      />;
+    }
+    return <OfferCardNear
+      key={offer.id}
+      offer={offer}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    />;
+  };
+
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${offersListClassName} places__list
+     ${offersListClassName === OffersListClassName.CITY_PLACES ? `tabs__content` : ``}`}>
       {
         offers.map((offer) =>
-          <OfferCard
-            key={offer.id}
-            offer={offer}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
+          getComponentByListClassName(offer)
         )
       }
     </div>
@@ -33,10 +48,11 @@ const OffersList = ({offers}) => {
 };
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(roomOfferProp)
+  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  offersListClassName: PropTypes.string.isRequired
 };
 
-OfferCard.propTypes = {
+OfferCardCity.propTypes = {
   offer: roomOfferProp,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func

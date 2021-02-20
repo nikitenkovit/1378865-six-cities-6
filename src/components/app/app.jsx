@@ -7,7 +7,7 @@ import FavoritesScreen from "../favorites-screen/favorites-screen";
 import RoomScreen from "../room-screen/room-screen";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 import FavoritesEmptyScreen from "../favorites-empty-screen/favorites-empty-screen";
-import roomOfferProp from '../room-screen/room-offer-prop';
+import roomOfferProp from '../room-screen/room-screen-offer.prop';
 import reviewProp from '../review/review-prop';
 
 const App = ({offers, reviews, quantityRentalOffers}) => {

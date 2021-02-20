@@ -1,55 +1,25 @@
 import React from 'react';
-import {OfferType, PathValue} from "../../const";
+import {OfferType, BookmarkButtonProperty} from "../../const";
 import PropTypes from "prop-types";
-import {Link, useRouteMatch} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {getRatingStarValue} from "../../utils/common";
 import BookmarkButton from "../bookmark-button/bookmark-button";
-import roomOfferProp from '../room-screen/room-offer-prop';
+import roomScreenOfferProp from '../room-screen/room-screen-offer.prop';
+import bookmarkButtonPropertyProp from "../bookmark-button/bookmark-button.prop";
 
-const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
+const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onMouseLeave}) => {
+  const {articleClass, wrapperClass, infoClass} = offerCardClassName;
   const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = offer;
 
-  const match = useRouteMatch();
-  const currentPathValue = match.path;
-
-  const switchClassNames = () => {
-    let currentClassNames = {};
-
-    switch (currentPathValue) {
-      case (PathValue.MAIN_SCREEN):
-        currentClassNames = {
-          articleClass: `cities__place-card`,
-          wrapperClass: `cities__image-wrapper`,
-          infoClass: ``
-        };
-        break;
-      case (PathValue.FAVORITES_SCREEN):
-        currentClassNames = {
-          articleClass: `favorites__card`,
-          wrapperClass: `favorites__image-wrapper`,
-          infoClass: `favorites__card-info`
-        };
-        break;
-      case (PathValue.ROOM_SCREEN):
-        currentClassNames = {
-          articleClass: `near-places__card`,
-          wrapperClass: `near-places__image-wrapper`,
-          infoClass: ``
-        };
-        break;
-    }
-
-    return currentClassNames;
-  };
-
   return (
-    <article className={`${switchClassNames().articleClass} place-card`}
+    <article className={`${articleClass} place-card`}
       onMouseEnter={() => {
-        if (currentPathValue === PathValue.MAIN_SCREEN) {
+        if (isHoverHandler) {
           onMouseEnter(id);
         }
-      }} onMouseLeave={() => {
-        if (currentPathValue === PathValue.MAIN_SCREEN) {
+      }}
+      onMouseLeave={() => {
+        if (isHoverHandler) {
           onMouseLeave();
         }
       }}>
@@ -59,18 +29,18 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
         <span>Premium</span>
       </div>
       }
-      <div className={`${switchClassNames().wrapperClass} place-card__image-wrapper`}>
+      <div className={`${wrapperClass} place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </a>
       </div>
-      <div className={`${switchClassNames().infoClass} place-card__info`}>
+      <div className={`${infoClass} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton isFavorite={isFavorite}/>
+          <BookmarkButton isFavorite={isFavorite} bookmarkButtonProperty={BookmarkButtonProperty.OFFER_CARD}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -90,12 +60,19 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
 };
 
 OfferCard.propTypes = {
-  offer: roomOfferProp,
+  offerCardClassName: PropTypes.shape({
+    articleClass: PropTypes.string.isRequired,
+    wrapperClass: PropTypes.string.isRequired,
+    infoClass: PropTypes.string.isRequired
+  }).isRequired,
+  offer: roomScreenOfferProp,
+  isHoverHandler: PropTypes.bool.isRequired,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func
 };
 BookmarkButton.propTypes = {
-  isFavorite: PropTypes.bool.isRequired
+  isFavorite: PropTypes.bool.isRequired,
+  bookmarkButtonProperty: bookmarkButtonPropertyProp
 };
 
 export default OfferCard;

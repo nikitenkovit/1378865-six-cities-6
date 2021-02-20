@@ -3,10 +3,9 @@ import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
 import Map from "../map/map";
-import roomOfferProp from '../room-screen/room-offer-prop';
-import {CityCoordinate} from "../../const";
-import mapCityProp from "../map/map-city-prop";
-import mapPointsProp from "../map/map-points-prop";
+import roomOfferProp from '../room-screen/room-screen-offer.prop';
+import {CityCoordinate, OffersListClassName} from "../../const";
+import mapProp from '../map/map.prop';
 
 const MainScreen = ({offers, quantityRentalOffers}) => {
   const points = offers.map((offer) => {
@@ -102,7 +101,7 @@ const MainScreen = ({offers, quantityRentalOffers}) => {
                 </ul>
               </form>
 
-              <OffersList offers={offers}/>
+              <OffersList offers={offers} offersListClassName={OffersListClassName.CITY_PLACES}/>
 
             </section>
             <div className="cities__right-section">
@@ -124,11 +123,12 @@ MainScreen.propTypes = {
   quantityRentalOffers: PropTypes.number.isRequired
 };
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(roomOfferProp)
+  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  offersListClassName: PropTypes.string.isRequired
 };
 Map.propTypes = {
-  city: mapCityProp,
-  points: mapPointsProp
+  city: mapProp.city,
+  points: mapProp.points
 };
 
 export default MainScreen;
