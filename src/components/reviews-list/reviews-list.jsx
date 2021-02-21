@@ -2,7 +2,7 @@ import Review from "../review/review";
 import {nanoid} from "nanoid";
 import React from "react";
 import PropTypes from "prop-types";
-import reviewProp from "../review/review-prop";
+import reviewProp from "../review/review.prop";
 
 const ReviewsList = ({reviews}) => {
   return (
@@ -19,8 +19,4 @@ export default ReviewsList;
 
 ReviewsList.propTypes = {
   reviews: PropTypes.arrayOf(reviewProp)
-};
-
-Review.propTypes = {
-  review: reviewProp
 };

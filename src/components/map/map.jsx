@@ -1,23 +1,32 @@
 import React, {useEffect, useRef} from 'react';
+import {connect} from 'react-redux';
 import leaflet from 'leaflet';
-import mapProp from './map.prop';
-
 import "leaflet/dist/leaflet.css";
+import {getCurrentCity, getOffersByCity} from "../../utils/common";
+import PropTypes from "prop-types";
+import roomOfferProp from "../room-screen/room-screen.prop";
+import citiesProp from "../cities/cities.prop";
 
-const Map = ({city, points}) => {
-  const mapRef = useRef();
+const Map = (props) => {
+  const {currentCity, offers} = props;
 
-  const {latitude, longitude, zoom} = city;
+  const points = offers.map((offer) => {
+    return {
+      location: offer.location,
+      description: offer.description
+    };
+  });
+
+  let mapRef = useRef();
 
   const icon = leaflet.icon({
     iconUrl: `img/pin.svg`,
     iconSize: [30, 30]
   });
 
+  const {latitude, longitude, zoom} = currentCity.location;
+
   useEffect(() => {
-
-    mapRef.current.style.height = `100%`;
-
     mapRef.current = leaflet.map(`map`, {
       center: [latitude, longitude],
       zoom,
@@ -44,21 +53,27 @@ const Map = ({city, points}) => {
       })
         .addTo(mapRef.current)
         .bindPopup(description);
-
-      return () => {
-        mapRef.current.remove();
-      };
     });
-  }, []);
+    return () => {
+      mapRef.current.remove();
+    };
+  }, [currentCity]);
 
   return (
-    <div id="map" ref={mapRef}/>
+    <div id="map" ref={mapRef} style={{height: `100%`}}/>
   );
 };
 
 Map.propTypes = {
-  city: mapProp.city,
-  points: mapProp.points
+  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  currentCity: citiesProp
 };
 
-export default Map;
+const mapStateToProps = (state, props) => ({
+  ...props,
+  currentCity: getCurrentCity(state),
+  offers: getOffersByCity(state.CITY.city)
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);

@@ -6,14 +6,12 @@ import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
 import ReviewForm from "../reviews-form/review-form";
 import BookmarkButton from "../bookmark-button/bookmark-button";
-import roomScreenOfferProp from './room-screen-offer.prop';
-import reviewProp from '../review/review-prop';
+import roomScreenProp from './room-screen.prop';
+import reviewProp from '../review/review.prop';
 import ReviewsList from "../reviews-list/reviews-list";
 import Map from "../map/map";
-import {CityCoordinate, OffersListClassName} from "../../const";
-import mapProp from '../map/map.prop';
+import {OffersListClassName} from "../../const";
 import OffersList from "../offers-list/offers-list";
-import BookmarkButtonProp from '../bookmark-button/bookmark-button.prop';
 
 const RoomScreen = ({offer, reviews, nearestOffers}) => {
   const {
@@ -29,13 +27,6 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
     goods,
     host,
     description} = offer;
-
-  const points = nearestOffers.map((room) => {
-    return {
-      location: room.location,
-      description: room.description
-    };
-  }); // временное решение
 
   return (
     <div className="page">
@@ -140,7 +131,9 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
             </div>
           </div>
           <section className="property__map map">
-            {<Map city={CityCoordinate.AMSTERDAM} points={points}/>}
+
+            {<Map/>}
+
           </section>
         </section>
         <div className="container">
@@ -157,24 +150,9 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
 };
 
 RoomScreen.propTypes = {
-  offer: roomScreenOfferProp,
+  offer: roomScreenProp,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  nearestOffers: PropTypes.arrayOf(roomScreenOfferProp)
-};
-ReviewsList.propTypes = {
-  reviews: PropTypes.arrayOf(reviewProp).isRequired
-};
-Map.propTypes = {
-  city: mapProp.city,
-  points: mapProp.points
-};
-OffersList.propTypes = {
-  offers: PropTypes.arrayOf(roomScreenOfferProp).isRequired,
-  offersListClassName: PropTypes.string.isRequired
-};
-BookmarkButton.propTypes = {
-  isFavorite: PropTypes.bool.isRequired,
-  bookmarkButtonProperty: BookmarkButtonProp
+  nearestOffers: PropTypes.arrayOf(roomScreenProp)
 };
 
 export default RoomScreen;

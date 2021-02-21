@@ -1,6 +1,6 @@
 import React from 'react';
 import {getRatingStarValue} from "../../utils/common";
-import reviewProp from './review-prop';
+import reviewProp from './review.prop';
 
 const Review = ({review}) => {
   const {comment, date, rating, user} = review;

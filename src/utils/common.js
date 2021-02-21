@@ -1,3 +1,7 @@
+import offersData from '../mocks/offersData';
+
+import {DEFAULT_CURRENT_CITY} from "../const";
+
 export const getRatingStarValue = (number) => {
   return Math.round(number) * 20 + `%`;
 };
@@ -38,3 +42,30 @@ export const adaptCommentsData = (data) => ({
     name: data.user.name,
   }
 });
+
+export const getOffers = () => offersData.map(adaptOfferData); // временно. пока нет api
+
+export const getOffersByCity = (city) => {
+  return getOffers().filter((offer) => offer.city.name === city.name);
+};
+
+export const getCurrentCity = (state) => {
+  if (state && state.CITY.city) {
+    return state.CITY.city;
+  }
+  return getCities()
+    .find((city) => city.name === DEFAULT_CURRENT_CITY);
+};
+
+export const getCities = () => {
+  const cities = getOffers()
+    .reduce((generalOffer, offer) => {
+      if (!generalOffer.hasOwnProperty(offer.city.name)) {
+        generalOffer[offer.city.name] = {...offer.city};
+      }
+
+      return generalOffer;
+    }, {});
+
+  return Object.values(cities);
+};

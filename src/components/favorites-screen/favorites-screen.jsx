@@ -1,9 +1,11 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
 import FavoritesCityItem from "../favorites-city-item/favorites-city-item";
-import roomOfferProp from '../room-screen/room-screen-offer.prop';
+import roomOfferProp from '../room-screen/room-screen.prop';
+import {getOffers} from "../../utils/common";
 
 const FavoritesScreen = ({offers}) => {
 
@@ -13,12 +15,12 @@ const FavoritesScreen = ({offers}) => {
         generalOffer[offer.city.name].push(offer);
       } else {
         generalOffer[offer.city.name] = [offer];
-      } // Почему линтер не разрешает делать тернарник тут???
+      }
 
       return generalOffer;
     }, {});
 
-  const filteredOffersArray = Object.entries(filteredOffers);
+  const filteredOffersArray = Object.entries(filteredOffers); // временно, потом вынесу в отдельеый редюсер
 
   return (
     <div className="page">
@@ -73,9 +75,11 @@ const FavoritesScreen = ({offers}) => {
 FavoritesScreen.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp)
 };
-FavoritesCityItem.propTypes = {
-  cityName: PropTypes.string,
-  cityOffers: PropTypes.arrayOf(roomOfferProp)
-};
 
-export default FavoritesScreen;
+const mapStateToProps = (state, props) => ({
+  ...props,
+  offers: getOffers() // временно, потом вынесу в отдельеый редюсер
+});
+
+export {FavoritesScreen};
+export default connect(mapStateToProps)(FavoritesScreen);
