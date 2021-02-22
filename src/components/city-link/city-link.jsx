@@ -2,11 +2,9 @@ import React from "react";
 import {connect} from 'react-redux';
 import PropTypes from "prop-types";
 import CityActionCreator from '../../store/city/action-creator';
-import {getCurrentCity} from "../../utils/common";
 import citiesProp from "../cities/cities.prop";
 
 const CityLink = (props) => {
-
   const {
     city,
     isActive,
@@ -40,14 +38,9 @@ CityLink.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, props) => ({
-  ...props,
-  currentCity: getCurrentCity(state),
-});
-
 const mapDispatchToProps = (dispatch) =>({
   onClick: (city) => dispatch(CityActionCreator.changeCity(city))
 });
 
 export {CityLink};
-export default connect(mapStateToProps, mapDispatchToProps)(CityLink);
+export default connect(null, mapDispatchToProps)(CityLink);

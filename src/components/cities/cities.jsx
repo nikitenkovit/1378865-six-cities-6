@@ -2,7 +2,8 @@ import React from "react";
 import {connect} from 'react-redux';
 import CityLink from "../city-link/city-link";
 import PropTypes from "prop-types";
-import {getCities, getCurrentCity} from "../../utils/common";
+import {getCities} from "../../store/city/utils";
+import {getCurrentCity} from "../../store/city/utils";
 import citiesProp from './cities.prop';
 
 const Cities = ({cities, currentCity}) => {
@@ -14,8 +15,10 @@ const Cities = ({cities, currentCity}) => {
             <CityLink
               city={city}
               isActive={city.name === currentCity.name}
+              currentCity={currentCity}
             />
-          </li>)}
+          </li>
+        )}
       </ul>
     </section>
   );

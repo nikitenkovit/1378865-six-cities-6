@@ -123,16 +123,16 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
               </div>
               <section className="property__reviews reviews">
 
-                {<ReviewsList reviews={reviews}/>}
+                <ReviewsList reviews={reviews}/>
 
-                {<ReviewForm/>}
+                <ReviewForm/>
 
               </section>
             </div>
           </div>
           <section className="property__map map">
 
-            {<Map/>}
+            <Map/>
 
           </section>
         </section>
@@ -140,7 +140,7 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
 
-            {<OffersList offers={nearestOffers} offersListClassName={OffersListClassName.NEAR_PLACES}/>}
+            <OffersList offers={nearestOffers} offersListClassName={OffersListClassName.NEAR_PLACES}/>
 
           </section>
         </div>

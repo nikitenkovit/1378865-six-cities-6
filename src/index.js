@@ -9,7 +9,7 @@ import {adaptCommentsData} from "./utils/common";
 
 const reviews = reviewsData.map(adaptCommentsData);
 
-import reducer from './store/root-reduser';
+import reducer from './store/root-reducer';
 
 const store = createStore(reducer, composeWithDevTools());
 

@@ -1,16 +1,15 @@
 import {CHANGE_CITY} from "./action-types";
-import {getCurrentCity} from "../../utils/common";
+import {getCurrentCity} from "./utils";
 
 const initialState = {
-  city: getCurrentCity()
+  ...getCurrentCity()
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_CITY:
       return {
-        ...state,
-        city: action.payload
+        ...action.payload
       };
     default:
       return state;

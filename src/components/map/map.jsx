@@ -2,7 +2,8 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import {getCurrentCity, getOffersByCity} from "../../utils/common";
+import {getOffersByCity} from "../../utils/common";
+import {getCurrentCity} from "../../store/city/utils";
 import PropTypes from "prop-types";
 import roomOfferProp from "../room-screen/room-screen.prop";
 import citiesProp from "../cities/cities.prop";
@@ -72,7 +73,7 @@ Map.propTypes = {
 const mapStateToProps = (state, props) => ({
   ...props,
   currentCity: getCurrentCity(state),
-  offers: getOffersByCity(state.CITY.city)
+  offers: getOffersByCity(state)
 });
 
 export {Map};

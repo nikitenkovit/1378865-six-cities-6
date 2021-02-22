@@ -7,9 +7,11 @@ import roomOfferProp from '../room-screen/room-screen.prop';
 import {OffersListClassName} from "../../const";
 import Cities from "../cities/cities";
 import {getOffersByCity} from "../../utils/common";
+import {getCurrentCity} from "../../store/city/utils";
 import {connect} from 'react-redux';
+import citiesProp from "../cities/cities.prop";
 
-const MainScreen = ({offers}) => {
+const MainScreen = ({offers, currentCity}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -38,16 +40,14 @@ const MainScreen = ({offers}) => {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-
-          {<Cities/>}
-
+          <Cities/>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {offers.length} places to stay in Amsterdam
+                {offers.length} places to stay in {currentCity.name}
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -64,15 +64,11 @@ const MainScreen = ({offers}) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-
               <OffersList offers={offers} offersListClassName={OffersListClassName.CITY_PLACES}/>
-
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-
-                {<Map/>}
-
+                <Map/>
               </section>
             </div>
           </div>
@@ -84,11 +80,13 @@ const MainScreen = ({offers}) => {
 
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  currentCity: citiesProp
 };
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  offers: getOffersByCity(state.CITY.city)
+  offers: getOffersByCity(state),
+  currentCity: getCurrentCity(state)
 });
 
 export {MainScreen};

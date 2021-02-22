@@ -15,8 +15,8 @@ const ReviewsList = ({reviews}) => {
   );
 };
 
-export default ReviewsList;
-
 ReviewsList.propTypes = {
   reviews: PropTypes.arrayOf(reviewProp)
 };
+
+export default ReviewsList;

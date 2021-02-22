@@ -43,7 +43,7 @@ App.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  offers: getOffersByCity(state.CITY.city)
+  offers: getOffersByCity(state)
 });
 
 export {App};
