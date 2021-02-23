@@ -1,19 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {Provider} from 'react-redux';
 import App from './components/app/app';
-import offersData from './mocks/offersData';
 import reviewsData from './mocks/reviews';
-import {adaptCommentsData, adaptOfferData} from "./utils/common";
+import {adaptCommentsData} from "./utils/common";
 
-const offers = offersData.map(adaptOfferData);
 const reviews = reviewsData.map(adaptCommentsData);
-const quantityRentalOffers = offers.length;
+
+import reducer from './store/root-reducer';
+
+const store = createStore(reducer, composeWithDevTools());
 
 ReactDOM.render(
-    <App
-      offers = {offers}
-      reviews = {reviews}
-      quantityRentalOffers = {quantityRentalOffers}
-    />,
+    <Provider store={store}>
+      <App
+        reviews={reviews}
+      />
+    </Provider>,
     document.querySelector(`#root`)
 );

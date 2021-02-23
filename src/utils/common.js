@@ -1,3 +1,5 @@
+import offersData from '../mocks/offersData';
+
 export const getRatingStarValue = (number) => {
   return Math.round(number) * 20 + `%`;
 };
@@ -38,3 +40,9 @@ export const adaptCommentsData = (data) => ({
     name: data.user.name,
   }
 });
+
+export const getOffers = () => offersData.map(adaptOfferData); // временно. пока нет api
+
+export const getOffersByCity = (state) => {
+  return getOffers().filter((offer) => offer.city.name === state.CITY.name);
+};

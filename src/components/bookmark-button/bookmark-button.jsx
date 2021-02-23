@@ -7,8 +7,8 @@ const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
 
   return (
     <button className={`${isActiveBookmark
-      ? bookmarkButtonProperty.buttonClass
-      : bookmarkButtonProperty.buttonClass + ` ` + bookmarkButtonProperty.buttonClass + `--active`} button`}
+      ? bookmarkButtonProperty.buttonClass + ` ` + bookmarkButtonProperty.buttonClass + `--active`
+      : bookmarkButtonProperty.buttonClass} button`}
     type="button"
     onClick={() => {
       setIsActiveBookmark(!isActiveBookmark);

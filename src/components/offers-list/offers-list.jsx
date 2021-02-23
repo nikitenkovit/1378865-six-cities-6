@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import OfferCardCity from '../offer-card/offer-card-city';
-import roomOfferProp from '../room-screen/room-screen-offer.prop';
+import roomOfferProp from '../room-screen/room-screen.prop';
 import {OffersListClassName} from "../../const";
 import OfferCardNear from "../offer-card/offer-card-near";
 
@@ -50,12 +50,6 @@ const OffersList = ({offers, offersListClassName}) => {
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
   offersListClassName: PropTypes.string.isRequired
-};
-
-OfferCardCity.propTypes = {
-  offer: roomOfferProp,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func
 };
 
 export default OffersList;

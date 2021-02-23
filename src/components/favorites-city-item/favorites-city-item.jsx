@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import OfferCardFavorites from "../offer-card/offer-card-favorites";
-import roomOfferProp from '../room-screen/room-screen-offer.prop';
+import roomOfferProp from '../room-screen/room-screen.prop';
 
 const FavoritesCityItem = ({cityName, cityOffers}) => {
   return (
@@ -28,9 +28,6 @@ const FavoritesCityItem = ({cityName, cityOffers}) => {
 FavoritesCityItem.propTypes = {
   cityName: PropTypes.string.isRequired,
   cityOffers: PropTypes.arrayOf(roomOfferProp).isRequired
-};
-OfferCardFavorites.propTypes = {
-  offer: roomOfferProp
 };
 
 export default FavoritesCityItem;

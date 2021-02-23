@@ -3,18 +3,15 @@ import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
 import Map from "../map/map";
-import roomOfferProp from '../room-screen/room-screen-offer.prop';
-import {CityCoordinate, OffersListClassName} from "../../const";
-import mapProp from '../map/map.prop';
+import roomOfferProp from '../room-screen/room-screen.prop';
+import {OffersListClassName} from "../../const";
+import Cities from "../cities/cities";
+import {getOffersByCity} from "../../utils/common";
+import {getCurrentCity} from "../../store/city/utils";
+import {connect} from 'react-redux';
+import citiesProp from "../cities/cities.prop";
 
-const MainScreen = ({offers, quantityRentalOffers}) => {
-  const points = offers.map((offer) => {
-    return {
-      location: offer.location,
-      description: offer.description
-    };
-  }); // временное решение
-
+const MainScreen = ({offers, currentCity}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -43,47 +40,14 @@ const MainScreen = ({offers, quantityRentalOffers}) => {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <Cities/>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {quantityRentalOffers} places to stay in Amsterdam
+                {offers.length} places to stay in {currentCity.name}
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -100,15 +64,11 @@ const MainScreen = ({offers, quantityRentalOffers}) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-
               <OffersList offers={offers} offersListClassName={OffersListClassName.CITY_PLACES}/>
-
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-
-                {<Map city={CityCoordinate.AMSTERDAM} points={points}/>}
-
+                <Map/>
               </section>
             </div>
           </div>
@@ -120,15 +80,14 @@ const MainScreen = ({offers, quantityRentalOffers}) => {
 
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  quantityRentalOffers: PropTypes.number.isRequired
-};
-OffersList.propTypes = {
-  offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  offersListClassName: PropTypes.string.isRequired
-};
-Map.propTypes = {
-  city: mapProp.city,
-  points: mapProp.points
+  currentCity: citiesProp
 };
 
-export default MainScreen;
+const mapStateToProps = (state, props) => ({
+  ...props,
+  offers: getOffersByCity(state),
+  currentCity: getCurrentCity(state)
+});
+
+export {MainScreen};
+export default connect(mapStateToProps)(MainScreen);

@@ -5,14 +5,6 @@ export const OfferType = {
   HOTEL: `Hotel`
 };
 
-export const CityCoordinate = {
-  AMSTERDAM: {
-    latitude: 52.38333,
-    longitude: 4.9,
-    zoom: 12
-  }
-}; // скорее всего временно
-
 export const OffersListClassName = {
   CITY_PLACES: `cities__places-list`,
   NEAR_PLACES: `near-places__list`
@@ -32,3 +24,5 @@ export const BookmarkButtonProperty = {
     iconHeight: `19`
   }
 };
+
+export const DEFAULT_CURRENT_CITY = `Paris`;
