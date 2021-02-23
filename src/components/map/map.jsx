@@ -7,9 +7,21 @@ import {getCurrentCity} from "../../store/city/utils";
 import PropTypes from "prop-types";
 import roomOfferProp from "../room-screen/room-screen.prop";
 import citiesProp from "../cities/cities.prop";
+import {getCurrentOfferLocation} from "../../store/offer-location/utils";
+import {MapMarkerProperty} from "../../const";
+import mapProp from './map.prop';
+
+let prevMarker = {};
+const group = leaflet.layerGroup();
 
 const Map = (props) => {
-  const {currentCity, offers} = props;
+  const {currentCity,
+    offers,
+    hoverOfferLocation,
+    roomScreenOfferLocation,
+    isRoomScreenMap,
+    roomScreenOfferDescription
+  } = props;
 
   const points = offers.map((offer) => {
     return {
@@ -20,12 +32,20 @@ const Map = (props) => {
 
   let mapRef = useRef();
 
-  const icon = leaflet.icon({
-    iconUrl: `img/pin.svg`,
-    iconSize: [30, 30]
-  });
+  const iconDefault = leaflet.icon(MapMarkerProperty.DEFAULT);
+  const iconActive = leaflet.icon(MapMarkerProperty.ACTIVE);
 
   const {latitude, longitude, zoom} = currentCity.location;
+
+  const createMarker = (location, description, markerIcon) => {
+    return leaflet.marker({
+      lat: location.latitude,
+      lng: location.longitude
+    },
+    {
+      icon: markerIcon
+    }).bindPopup(description);
+  };
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
@@ -42,23 +62,42 @@ const Map = (props) => {
       .addTo(mapRef.current);
 
     points.forEach((point) => {
-
       const {location, description} = point;
 
-      leaflet.marker({
-        lat: location.latitude,
-        lng: location.longitude
-      },
-      {
-        icon
-      })
-        .addTo(mapRef.current)
-        .bindPopup(description);
+      let marker = createMarker(location, description, iconDefault);
+
+      group.addLayer(marker);
+      group.addTo(mapRef.current);
     });
     return () => {
       mapRef.current.remove();
     };
   }, [currentCity]);
+
+  const changeMarkerIcon = (currentLocation, icon) => {
+    group.eachLayer((layer) => {
+      const {lat, lng} = layer.getLatLng();
+      if (lat === currentLocation.latitude && lng === currentLocation.longitude) {
+        layer.setIcon(icon);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (hoverOfferLocation.hasOwnProperty(`latitude`)) {
+      changeMarkerIcon(hoverOfferLocation, iconActive);
+
+      prevMarker = {...hoverOfferLocation};
+    } else if (prevMarker.hasOwnProperty(`latitude`)) {
+      changeMarkerIcon(prevMarker, iconDefault);
+    }
+  }, [hoverOfferLocation]);
+
+  useEffect(() => {
+    if (isRoomScreenMap) {
+      createMarker(roomScreenOfferLocation, roomScreenOfferDescription, iconActive);
+    }
+  });
 
   return (
     <div id="map" ref={mapRef} style={{height: `100%`}}/>
@@ -67,13 +106,18 @@ const Map = (props) => {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  currentCity: citiesProp
+  currentCity: citiesProp,
+  hoverOfferLocation: mapProp,
+  isRoomScreenMap: PropTypes.bool,
+  roomScreenOfferLocation: mapProp,
+  roomScreenOfferDescription: PropTypes.string
 };
 
 const mapStateToProps = (state, props) => ({
   ...props,
   currentCity: getCurrentCity(state),
-  offers: getOffersByCity(state)
+  offers: getOffersByCity(state),
+  hoverOfferLocation: getCurrentOfferLocation(state)
 });
 
 export {Map};

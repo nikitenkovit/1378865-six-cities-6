@@ -1,0 +1,1 @@
+export const CHANGE_OFFER_LOCATION = `CHANGE_OFFER`;

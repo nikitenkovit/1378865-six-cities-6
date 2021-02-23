@@ -26,7 +26,8 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
     price,
     goods,
     host,
-    description} = offer;
+    description,
+    location} = offer;
 
   return (
     <div className="page">
@@ -132,7 +133,11 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
           </div>
           <section className="property__map map">
 
-            <Map/>
+            <Map
+              roomScreenOfferLocation={location}
+              isRoomScreenMap={true}
+              roomScreenOfferDescription={description}
+            />
 
           </section>
         </section>

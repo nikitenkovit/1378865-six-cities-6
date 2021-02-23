@@ -26,3 +26,14 @@ export const BookmarkButtonProperty = {
 };
 
 export const DEFAULT_CURRENT_CITY = `Paris`;
+
+export const MapMarkerProperty = {
+  DEFAULT: {
+    iconUrl: `./img/pin.svg`,
+    iconSize: [30, 30]
+  },
+  ACTIVE: {
+    iconUrl: `./img/pin-active.svg`,
+    iconSize: [30, 30]
+  }
+};

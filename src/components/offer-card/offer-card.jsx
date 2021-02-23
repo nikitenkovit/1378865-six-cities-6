@@ -8,13 +8,13 @@ import roomScreenProp from '../room-screen/room-screen.prop';
 
 const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onMouseLeave}) => {
   const {articleClass, wrapperClass, infoClass} = offerCardClassName;
-  const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = offer;
+  const {id, isPremium, previewImage, price, isFavorite, rating, title, type, location} = offer;
 
   return (
     <article className={`${articleClass} place-card`}
       onMouseEnter={() => {
         if (isHoverHandler) {
-          onMouseEnter(id);
+          onMouseEnter(location);
         }
       }}
       onMouseLeave={() => {
