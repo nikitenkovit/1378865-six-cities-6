@@ -134,8 +134,9 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
           <section className="property__map map">
 
             <Map
-              roomScreenOfferLocation={location}
+              offers={nearestOffers}
               isRoomScreenMap={true}
+              roomScreenOfferLocation={location}
               roomScreenOfferDescription={description}
             />
 

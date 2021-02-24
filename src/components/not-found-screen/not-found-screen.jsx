@@ -34,8 +34,8 @@ const NotFoundScreen = () => {
             <div className="favorites__status-wrapper">
               <b className="favorites__status">404. Page not found</b>
               <p className="favorites__status-description">
-                <Link className="error-link" style={{color: `#4481c3`}} to="/">
-                  Вернуться на главную
+                <Link className="error-link" style={{color: `#4481c3`, fontWeight: `bold`}} to="/">
+                  Go back to the home page
                 </Link>
               </p>
             </div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
@@ -14,12 +14,11 @@ import OfferSorting from "../offer-sorting/offer-sorting";
 
 const MainScreen = ({offers, currentCity}) => {
   const [activeType, setActiveType] = useState(DEFAULT_SORTING_TYPE);
+  const [sortedOffers, setSortedOffers] = useState(offers);
 
-  const handleSortChange = (type) => {
-    setActiveType(() => type);
-  };
-
-  const sortedOffers = [...offers].sort(sortingFunction(offers, activeType));
+  useEffect(() => {
+    setSortedOffers(offers.sort(sortingFunction(offers, activeType)));
+  }, [activeType, currentCity]);
 
   return (
     <div className="page page--gray page--main">
@@ -58,12 +57,12 @@ const MainScreen = ({offers, currentCity}) => {
               <b className="places__found">
                 {offers.length} places to stay in {currentCity.name}
               </b>
-              <OfferSorting activeType={activeType} onSortChange={handleSortChange}/>
+              <OfferSorting activeType={activeType} onSortChange={setActiveType}/>
               <OffersList offers={sortedOffers} offersListClassName={OffersListClassName.CITY_PLACES}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map/>
+                <Map offers={offers}/>
               </section>
             </div>
           </div>
@@ -81,7 +80,7 @@ MainScreen.propTypes = {
 const mapStateToProps = (state, props) => ({
   ...props,
   offers: getOffersByCity(state),
-  currentCity: getCurrentCity(state)
+  currentCity: getCurrentCity(state),
 });
 
 export {MainScreen};
