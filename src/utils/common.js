@@ -46,3 +46,15 @@ export const getOffers = () => offersData.map(adaptOfferData); // временн
 export const getOffersByCity = (state) => {
   return getOffers().filter((offer) => offer.city.name === state.CITY.name);
 };
+
+export const sortingFunction = (offers, type) => (a, b) => {
+  switch (type) {
+    case `HIGH_TO_LOW`:
+      return b.price - a.price;
+    case `LOW_TO_HIGH`:
+      return a.price - b.price;
+    case `TOP_RATED`:
+      return b.rating - a.rating;
+  }
+  return offers;
+};
