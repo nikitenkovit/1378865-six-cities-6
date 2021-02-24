@@ -11,16 +11,13 @@ import {getCurrentOfferLocation} from "../../store/offer-location/utils";
 import {MapMarkerProperty} from "../../const";
 import mapProp from './map.prop';
 
-let prevMarker = {};
 const group = leaflet.layerGroup();
 
 const Map = (props) => {
   const {currentCity,
     offers,
     hoverOfferLocation,
-    roomScreenOfferLocation,
-    isRoomScreenMap,
-    roomScreenOfferDescription
+
   } = props;
 
   const points = offers.map((offer) => {
@@ -37,15 +34,34 @@ const Map = (props) => {
 
   const {latitude, longitude, zoom} = currentCity.location;
 
-  const createMarker = (location, description, markerIcon) => {
-    return leaflet.marker({
-      lat: location.latitude,
-      lng: location.longitude
-    },
-    {
-      icon: markerIcon
-    }).bindPopup(description);
+  // Делаем единую функцию рисования маркеров
+  const addMarkers = () => {
+    points.forEach((point) => {
+      const {location, description} = point;
+
+
+      // тут решаем какой маркер нам нужен.
+      const icon = (
+        location.latitude === hoverOfferLocation.latitude
+        && location.longitude === hoverOfferLocation.longitude
+      ) ? iconActive : iconDefault;
+
+      // создаем маркер
+      const marker = leaflet.marker({
+        lat: location.latitude,
+        lng: location.longitude
+      },
+      {
+        icon
+      }).bindPopup(description);
+
+      group.addLayer(marker);
+      group.addTo(mapRef.current);
+    });
   };
+
+  // Функция удаления маркеров - не сделал.
+  const removeMarkers = () => {};
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
@@ -61,43 +77,18 @@ const Map = (props) => {
       })
       .addTo(mapRef.current);
 
-    points.forEach((point) => {
-      const {location, description} = point;
+    addMarkers();
 
-      let marker = createMarker(location, description, iconDefault);
-
-      group.addLayer(marker);
-      group.addTo(mapRef.current);
-    });
     return () => {
       mapRef.current.remove();
     };
   }, [currentCity]);
 
-  const changeMarkerIcon = (currentLocation, icon) => {
-    group.eachLayer((layer) => {
-      const {lat, lng} = layer.getLatLng();
-      if (lat === currentLocation.latitude && lng === currentLocation.longitude) {
-        layer.setIcon(icon);
-      }
-    });
-  };
-
+  // при смене наведенного города - вызываем перерисовку маркеров
   useEffect(() => {
-    if (hoverOfferLocation.hasOwnProperty(`latitude`)) {
-      changeMarkerIcon(hoverOfferLocation, iconActive);
-
-      prevMarker = {...hoverOfferLocation};
-    } else if (prevMarker.hasOwnProperty(`latitude`)) {
-      changeMarkerIcon(prevMarker, iconDefault);
-    }
+    removeMarkers();
+    addMarkers();
   }, [hoverOfferLocation]);
-
-  useEffect(() => {
-    if (isRoomScreenMap) {
-      createMarker(roomScreenOfferLocation, roomScreenOfferDescription, iconActive);
-    }
-  });
 
   return (
     <div id="map" ref={mapRef} style={{height: `100%`}}/>
