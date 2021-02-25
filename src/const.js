@@ -46,3 +46,8 @@ export const SortingType = {
 };
 
 export const DEFAULT_SORTING_TYPE = SortingType.POPULAR;
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};

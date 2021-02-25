@@ -6,15 +6,19 @@ import Map from "../map/map";
 import roomOfferProp from '../room-screen/room-screen.prop';
 import {DEFAULT_SORTING_TYPE, OffersListClassName} from "../../const";
 import Cities from "../cities/cities";
-import {getOffersByCity, sortingFunction} from "../../utils/common";
-import {getCurrentCity} from "../../store/city/utils";
-import {connect} from 'react-redux';
+import {sortingFunction} from "../../store/offers/offers-utils";
 import citiesProp from "../cities/cities.prop";
 import OfferSorting from "../offer-sorting/offer-sorting";
 
-const MainScreen = ({offers, currentCity}) => {
+const MainScreen = ({offers, currentCity, isDataLoading, onLoadData}) => {
   const [activeType, setActiveType] = useState(DEFAULT_SORTING_TYPE);
   const [sortedOffers, setSortedOffers] = useState(offers);
+
+  useEffect(() => {
+    if (!isDataLoading) {
+      onLoadData();
+    }
+  }, [isDataLoading]);
 
   useEffect(() => {
     setSortedOffers(offers.sort(sortingFunction(offers, activeType)));
@@ -77,11 +81,4 @@ MainScreen.propTypes = {
   currentCity: citiesProp
 };
 
-const mapStateToProps = (state, props) => ({
-  ...props,
-  offers: getOffersByCity(state),
-  currentCity: getCurrentCity(state),
-});
-
-export {MainScreen};
-export default connect(mapStateToProps)(MainScreen);
+export default MainScreen;

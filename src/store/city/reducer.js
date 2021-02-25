@@ -1,5 +1,5 @@
 import {CHANGE_CITY} from "./action-types";
-import {getCurrentCity} from "./utils";
+import {getCurrentCity} from "./city-utils";
 
 const initialState = {
   ...getCurrentCity()

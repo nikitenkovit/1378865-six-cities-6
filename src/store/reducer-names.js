@@ -1,4 +1,6 @@
 export default {
   CITY: `CITY`,
+  OFFERS: `OFFERS`,
+  USER: `USER`,
   OFFER_LOCATION: `OFFER_LOCATION`
 };

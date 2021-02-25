@@ -10,13 +10,23 @@ import NotFoundScreen from "../not-found-screen/not-found-screen";
 import FavoritesEmptyScreen from "../favorites-empty-screen/favorites-empty-screen";
 import roomOfferProp from '../room-screen/room-screen.prop';
 import reviewProp from '../review/review.prop';
-import {getOffersByCity} from "../../utils/common";
+import {getOffersByCity} from "../../store/offers/offers-utils";
+import {fetchOfferList} from "../../store/api-actions";
+import {getCurrentCity} from "../../store/city/city-utils";
 
-const App = ({reviews, offers}) => {
+const App = ({reviews, offers, currentCity, onLoadData, isDataLoading}) => {
+  onLoadData();
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={MainScreen}/>
+        <Route exact path="/">
+          <MainScreen
+            offers={offers}
+            currentCity={currentCity}
+            onLoadData={onLoadData}
+            isDataLoading={isDataLoading}
+          />
+        </Route>
         <Route exact path="/login" component={SignInScreen}/>
         <Route exact path="/favorites" component={FavoritesScreen}/>
         <Route exact path="/offer/:id"
@@ -39,12 +49,21 @@ const App = ({reviews, offers}) => {
 App.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
+  onLoadData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, props) => {
+  console.log(state)
+  return {
   ...props,
-  offers: getOffersByCity(state)
+  isDataLoading: state.OFFERS.isDataLoading,
+  // offers: getOffersByCity(state),
+  // currentCity: getCurrentCity(state),
+}};
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData: () => dispatch(fetchOfferList())
 });
 
 export {App};
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
