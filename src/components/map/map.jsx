@@ -2,14 +2,25 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import {getOffersByCity} from "../../utils/common";
 import {getCurrentCity} from "../../store/city/utils";
 import PropTypes from "prop-types";
 import roomOfferProp from "../room-screen/room-screen.prop";
 import citiesProp from "../cities/cities.prop";
+import {getCurrentOfferLocation} from "../../store/offer-location/utils";
+import {MapMarkerProperty} from "../../const";
+import mapProp from './map.prop';
+
+const group = leaflet.layerGroup();
+const removeMarkers = () => group.clearLayers();
 
 const Map = (props) => {
-  const {currentCity, offers} = props;
+  const {currentCity,
+    offers,
+    hoverOfferLocation,
+    isRoomScreenMap,
+    roomScreenOfferLocation,
+    roomScreenOfferDescription
+  } = props;
 
   const points = offers.map((offer) => {
     return {
@@ -20,14 +31,24 @@ const Map = (props) => {
 
   let mapRef = useRef();
 
-  const icon = leaflet.icon({
-    iconUrl: `img/pin.svg`,
-    iconSize: [30, 30]
-  });
+  const iconDefault = leaflet.icon(MapMarkerProperty.DEFAULT);
+  const iconActive = leaflet.icon(MapMarkerProperty.ACTIVE);
 
   const {latitude, longitude, zoom} = currentCity.location;
 
+  const createMarker = (location, description, markerIcon) => {
+    return leaflet.marker({
+      lat: location.latitude,
+      lng: location.longitude
+    },
+    {
+      icon: markerIcon
+    }).bindPopup(description);
+  };
+
   useEffect(() => {
+    removeMarkers();
+
     mapRef.current = leaflet.map(`map`, {
       center: [latitude, longitude],
       zoom,
@@ -42,23 +63,40 @@ const Map = (props) => {
       .addTo(mapRef.current);
 
     points.forEach((point) => {
-
       const {location, description} = point;
 
-      leaflet.marker({
-        lat: location.latitude,
-        lng: location.longitude
-      },
-      {
-        icon
-      })
-        .addTo(mapRef.current)
-        .bindPopup(description);
+      let marker = createMarker(location, description, iconDefault);
+
+      group.addLayer(marker);
+      group.addTo(mapRef.current);
     });
+
     return () => {
       mapRef.current.remove();
     };
   }, [currentCity]);
+
+  const changeMarkerIcon = () => {
+    group.eachLayer((layer) => {
+      const {lat, lng} = layer.getLatLng();
+      if (lat === hoverOfferLocation.latitude
+        && lng === hoverOfferLocation.longitude) {
+        layer.setIcon(iconActive);
+      } else {
+        layer.setIcon(iconDefault);
+      }
+    });
+  };
+
+  useEffect(() => {
+    changeMarkerIcon();
+  }, [hoverOfferLocation]);
+
+  useEffect(() => {
+    if (isRoomScreenMap) {
+      createMarker(roomScreenOfferLocation, roomScreenOfferDescription, iconActive);
+    }
+  });
 
   return (
     <div id="map" ref={mapRef} style={{height: `100%`}}/>
@@ -67,13 +105,18 @@ const Map = (props) => {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  currentCity: citiesProp
+  currentCity: citiesProp,
+  hoverOfferLocation: mapProp,
+  isRoomScreenMap: PropTypes.bool,
+  roomScreenOfferLocation: mapProp,
+  roomScreenOfferDescription: PropTypes.string
 };
 
+/* из стора берутся только критичные свойства текущего города и обработчика ховер события */
 const mapStateToProps = (state, props) => ({
   ...props,
   currentCity: getCurrentCity(state),
-  offers: getOffersByCity(state)
+  hoverOfferLocation: getCurrentOfferLocation(state)
 });
 
 export {Map};

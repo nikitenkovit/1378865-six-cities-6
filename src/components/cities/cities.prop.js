@@ -8,4 +8,3 @@ export default PropTypes.shape({
   }),
   name: PropTypes.string.isRequired
 }).isRequired;
-

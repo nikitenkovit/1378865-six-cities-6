@@ -1,4 +1,5 @@
 import offersData from '../mocks/offersData';
+import {SortingType} from "../const";
 
 export const getRatingStarValue = (number) => {
   return Math.round(number) * 20 + `%`;
@@ -45,4 +46,16 @@ export const getOffers = () => offersData.map(adaptOfferData); // временн
 
 export const getOffersByCity = (state) => {
   return getOffers().filter((offer) => offer.city.name === state.CITY.name);
+};
+
+export const sortingFunction = (offers, type) => (a, b) => {
+  switch (type) {
+    case SortingType.HIGH_TO_LOW:
+      return b.price - a.price;
+    case SortingType.LOW_TO_HIGH:
+      return a.price - b.price;
+    case SortingType.TOP_RATED:
+      return b.rating - a.rating;
+  }
+  return offers;
 };

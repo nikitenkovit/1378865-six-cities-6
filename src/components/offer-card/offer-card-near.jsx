@@ -9,7 +9,7 @@ const OfferCardNear = (props) => {
         wrapperClass: `near-places__image-wrapper`,
         infoClass: ``
       }}
-      isHoverHandler={true}
+      isHoverHandler={false}
       {...props}
     />
   );

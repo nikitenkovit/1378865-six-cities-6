@@ -1,30 +1,21 @@
 import React from "react";
-import {connect} from 'react-redux';
 import PropTypes from "prop-types";
-import CityActionCreator from '../../store/city/action-creator';
 import citiesProp from "../cities/cities.prop";
 
 const CityLink = (props) => {
   const {
     city,
     isActive,
-    currentCity,
-    onClick
+    onCityLinkClick
   } = props;
-
-  const handleCityLinkClick = (evt) => {
-    evt.preventDefault();
-
-    if (city.name !== currentCity.name) {
-      onClick(city);
-    }
-  };
 
   return (
     <a
       className={`locations__item-link tabs__item ${isActive && `tabs__item--active`}`}
       href="#"
-      onClick={handleCityLinkClick}
+      onClick={(evt) => {
+        onCityLinkClick(evt, city);
+      }}
     >
       <span>{city.name}</span>
     </a>
@@ -34,13 +25,7 @@ const CityLink = (props) => {
 CityLink.propTypes = {
   city: citiesProp,
   isActive: PropTypes.bool.isRequired,
-  currentCity: citiesProp,
-  onClick: PropTypes.func.isRequired
+  onCityLinkClick: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = (dispatch) =>({
-  onClick: (city) => dispatch(CityActionCreator.changeCity(city))
-});
-
-export {CityLink};
-export default connect(null, mapDispatchToProps)(CityLink);
+export default CityLink;
