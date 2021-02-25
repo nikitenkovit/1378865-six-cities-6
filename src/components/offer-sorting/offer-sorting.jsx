@@ -21,7 +21,7 @@ const OfferSorting = ({onSortChange, activeType}) => {
     </span>
     <ul className={`places__options places__options--custom
     ${isOpenedSorting ? `places__options--opened` : null}`}>
-      {Object.keys(SortingType).map((type) =>
+      {Object.values(SortingType).map((type) =>
         <OfferSortingType
           key={`sorting-type-${type}`}
           type={type}
