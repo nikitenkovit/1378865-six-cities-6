@@ -6,7 +6,7 @@ const REQUEST_TIMEOUT = 5000;
 const HttpCode = {
   UNAUTHORIZED: 401
 };
-// записать адаптер прям в аксиос
+
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
     baseURL: BACKEND_URL,

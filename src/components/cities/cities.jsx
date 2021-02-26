@@ -43,8 +43,8 @@ Cities.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  cities: getCities(),
-  currentCity: getCurrentCity(state),
+  cities: getCities(state.OFFERS.offers),
+  currentCity: getCurrentCity(state.OFFERS.offers, state),
 });
 
 export {Cities};

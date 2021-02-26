@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
@@ -9,20 +10,28 @@ import Cities from "../cities/cities";
 import {sortingFunction} from "../../store/offers/offers-utils";
 import citiesProp from "../cities/cities.prop";
 import OfferSorting from "../offer-sorting/offer-sorting";
+import {fetchOfferList} from "../../store/api-actions";
+import {getCurrentCity} from "../../store/city/city-utils";
+import {getOffersByCity} from "../../store/offers/offers-utils";
+import Spiner from "../spiner/spiner";
 
 const MainScreen = ({offers, currentCity, isDataLoading, onLoadData}) => {
   const [activeType, setActiveType] = useState(DEFAULT_SORTING_TYPE);
   const [sortedOffers, setSortedOffers] = useState(offers);
 
   useEffect(() => {
-    if (!isDataLoading) {
-      onLoadData();
-    }
-  }, [isDataLoading]);
-
-  useEffect(() => {
     setSortedOffers(offers.sort(sortingFunction(offers, activeType)));
   }, [activeType, currentCity]);
+
+  useEffect(() => {
+    onLoadData();
+  }, [isDataLoading]);
+
+  if (!isDataLoading) {
+    return (
+      <Spiner/>
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -78,7 +87,23 @@ const MainScreen = ({offers, currentCity, isDataLoading, onLoadData}) => {
 
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  currentCity: citiesProp
+  currentCity: citiesProp,
+  isDataLoading: PropTypes.bool,
+  onLoadData: PropTypes.func
 };
 
-export default MainScreen;
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchOfferList());
+  }
+});
+
+const mapStateToProps = (state, props) => ({
+  ...props,
+  isDataLoading: state.OFFERS.isDataLoading,
+  currentCity: getCurrentCity(state.OFFERS.offers, state),
+  offers: getOffersByCity(state)
+});
+
+export {MainScreen};
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

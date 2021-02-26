@@ -9,23 +9,14 @@ import RoomScreen from "../room-screen/room-screen";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 import FavoritesEmptyScreen from "../favorites-empty-screen/favorites-empty-screen";
 import roomOfferProp from '../room-screen/room-screen.prop';
-import reviewProp from '../review/review.prop';
 import {getOffersByCity} from "../../store/offers/offers-utils";
-import {fetchOfferList} from "../../store/api-actions";
-import {getCurrentCity} from "../../store/city/city-utils";
 
-const App = ({reviews, offers, currentCity, onLoadData, isDataLoading}) => {
-  onLoadData();
+const App = ({offers}) => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainScreen
-            offers={offers}
-            currentCity={currentCity}
-            onLoadData={onLoadData}
-            isDataLoading={isDataLoading}
-          />
+          <MainScreen/>
         </Route>
         <Route exact path="/login" component={SignInScreen}/>
         <Route exact path="/favorites" component={FavoritesScreen}/>
@@ -36,7 +27,7 @@ const App = ({reviews, offers, currentCity, onLoadData, isDataLoading}) => {
 
             const nearestOffers = offers.slice(0, 3); // временные моки для ближайшых трёх предложений
 
-            return offer ? <RoomScreen offer={offer} reviews={reviews} nearestOffers={nearestOffers}/> : <NotFoundScreen/>;
+            return offer ? <RoomScreen offer={offer} nearestOffers={nearestOffers} reviews={[]}/> : <NotFoundScreen/>;
           }}
         />
         <Route exact path="/favorites_empty" component={FavoritesEmptyScreen}/>
@@ -48,22 +39,12 @@ const App = ({reviews, offers, currentCity, onLoadData, isDataLoading}) => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  onLoadData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, props) => {
-  console.log(state)
-  return {
+const mapStateToProps = (state, props) => ({
   ...props,
-  isDataLoading: state.OFFERS.isDataLoading,
-  // offers: getOffersByCity(state),
-  // currentCity: getCurrentCity(state),
-}};
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData: () => dispatch(fetchOfferList())
+  offers: getOffersByCity(state)
 });
 
 export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

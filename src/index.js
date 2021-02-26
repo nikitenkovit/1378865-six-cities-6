@@ -8,7 +8,7 @@ import {Provider} from 'react-redux';
 import App from './components/app/app';
 import UserActionCreator from './store/user/ation-creator';
 import {AuthorizationStatus} from "./const";
-import {checkAuth} from "./store/api-actions";
+import {checkAuth, fetchOfferList} from "./store/api-actions";
 
 import reducer from './store/root-reducer';
 
@@ -22,10 +22,11 @@ const store = createStore(reducer, composeWithDevTools(
 
 store.dispatch(checkAuth());
 
+store.dispatch(fetchOfferList());
+
 ReactDOM.render(
     <Provider store={store}>
-      <App
-      />
+      <App/>
     </Provider>,
     document.querySelector(`#root`)
 );

@@ -1,9 +1,6 @@
 import {CHANGE_CITY} from "./action-types";
-import {getCurrentCity} from "./city-utils";
 
-const initialState = {
-  ...getCurrentCity()
-};
+const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
