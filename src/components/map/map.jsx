@@ -9,7 +9,7 @@ import citiesProp from "../cities/cities.prop";
 import {getCurrentOfferLocation} from "../../store/offer-location/utils";
 import {MapMarkerProperty} from "../../const";
 import mapProp from './map.prop';
-import Spiner from "../spiner/spiner";
+import SpinerScreen from "../spiner-screen/spiner-screen";
 
 const group = leaflet.layerGroup();
 const removeMarkers = () => group.clearLayers();
@@ -25,7 +25,7 @@ const Map = (props) => {
 
   if (!currentCity.name) {
     return (
-      <Spiner/>
+      <SpinerScreen/>
     );
   }
 
@@ -122,7 +122,7 @@ Map.propTypes = {
 /* из стора берутся только критичные свойства текущего города и обработчика ховер события */
 const mapStateToProps = (state, props) => ({
   ...props,
-  currentCity: getCurrentCity(state.OFFERS.offers, state),
+  currentCity: getCurrentCity(state),
   hoverOfferLocation: getCurrentOfferLocation(state)
 });
 

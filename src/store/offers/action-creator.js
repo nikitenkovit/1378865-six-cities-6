@@ -1,8 +1,12 @@
-import {LOAD_OFFERS} from "./action-types";
+import {SET_OFFERS, CHANGE_STATUS} from "./action-types";
 
 export default {
-  loadOffers: (offers) => ({
-    type: LOAD_OFFERS,
-    payload: offers
+  setOffers: (offers) => ({
+    type: SET_OFFERS,
+    payload: offers,
   }),
+  changeStatus: (status) => ({
+    type: CHANGE_STATUS,
+    payload: status
+  })
 };

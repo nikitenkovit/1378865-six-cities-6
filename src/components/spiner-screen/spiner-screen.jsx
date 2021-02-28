@@ -1,7 +1,7 @@
 import React from "react";
 import '../../spiner/css/style.css';
 
-const Spiner = () => {
+const SpinerScreen = () => {
   return (
     <div className='spiner'>
       <div className="loader">
@@ -23,4 +23,4 @@ const Spiner = () => {
   );
 };
 
-export default Spiner;
+export default SpinerScreen;
