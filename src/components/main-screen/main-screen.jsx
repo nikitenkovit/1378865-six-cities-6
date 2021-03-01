@@ -10,12 +10,12 @@ import Cities from "../cities/cities";
 import {sortingFunction} from "../../store/offers/offers-utils";
 import citiesProp from "../cities/cities.prop";
 import OfferSorting from "../offer-sorting/offer-sorting";
-import {getCurrentCity} from "../../store/city/city-utils";
+import {getCurrentCity} from "../../store/cities/cities-utils";
 import {getOffersByCity} from "../../store/offers/offers-utils";
 import SpinerScreen from "../spiner-screen/spiner-screen";
 import ServiceIsUnavailableScreen from "../service-is-unavailable-screen/service-is-unavailable-screen";
 
-const MainScreen = ({offers, currentCity, loadStatus}) => {
+const MainScreen = ({offers, currentCity, needShowSpinner, needShowError}) => {
   const [activeType, setActiveType] = useState(DEFAULT_SORTING_TYPE);
   const [sortedOffers, setSortedOffers] = useState(offers);
 
@@ -23,15 +23,14 @@ const MainScreen = ({offers, currentCity, loadStatus}) => {
     setSortedOffers(offers.sort(sortingFunction(offers, activeType)));
   }, [activeType, currentCity]);
 
-  switch (loadStatus) {
-    case LoadStatus.INITIAL || LoadStatus.FETCHING:
-      return (
-        <SpinerScreen/>
-      );
-    case LoadStatus.FAILURE:
-      return (
-        <ServiceIsUnavailableScreen/>
-      );
+  if (needShowSpinner) {
+    return (
+      <SpinerScreen/>
+    );
+  } else if (needShowError) {
+    return (
+      <ServiceIsUnavailableScreen/>
+    );
   }
 
   return (
@@ -89,14 +88,15 @@ const MainScreen = ({offers, currentCity, loadStatus}) => {
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
   currentCity: citiesProp,
-  loadStatus: PropTypes.string.isRequired
+  needShowSpinner: PropTypes.bool.isRequired,
+  needShowError: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  loadStatus: state.OFFERS.status,
+  needShowSpinner: state.OFFERS.status === LoadStatus.INITIAL || state.OFFERS.status === LoadStatus.FETCHING,
+  needShowError: state.OFFERS.status === LoadStatus.FAILURE,
   currentCity: getCurrentCity(state),
-
   offers: getOffersByCity(state),
 });
 

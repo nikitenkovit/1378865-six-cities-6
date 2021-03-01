@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import {getCurrentCity} from "../../store/city/city-utils";
+import {getCurrentCity} from "../../store/cities/cities-utils";
 import PropTypes from "prop-types";
 import roomOfferProp from "../room-screen/room-screen.prop";
 import citiesProp from "../cities/cities.prop";

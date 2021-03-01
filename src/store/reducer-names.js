@@ -1,5 +1,5 @@
 export default {
-  CITY: `CITY`,
+  CITIES: `CITIES`,
   OFFERS: `OFFERS`,
   USER: `USER`,
   OFFER_LOCATION: `OFFER_LOCATION`
