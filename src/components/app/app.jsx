@@ -9,14 +9,15 @@ import RoomScreen from "../room-screen/room-screen";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 import FavoritesEmptyScreen from "../favorites-empty-screen/favorites-empty-screen";
 import roomOfferProp from '../room-screen/room-screen.prop';
-import reviewProp from '../review/review.prop';
-import {getOffersByCity} from "../../utils/common";
+import {getOffersByCity} from "../../store/offers/offers-utils";
 
-const App = ({reviews, offers}) => {
+const App = ({offers}) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={MainScreen}/>
+        <Route exact path="/">
+          <MainScreen/>
+        </Route>
         <Route exact path="/login" component={SignInScreen}/>
         <Route exact path="/favorites" component={FavoritesScreen}/>
         <Route exact path="/offer/:id"
@@ -26,7 +27,7 @@ const App = ({reviews, offers}) => {
 
             const nearestOffers = offers.slice(0, 3); // временные моки для ближайшых трёх предложений
 
-            return offer ? <RoomScreen offer={offer} reviews={reviews} nearestOffers={nearestOffers}/> : <NotFoundScreen/>;
+            return offer ? <RoomScreen offer={offer} nearestOffers={nearestOffers} reviews={[]}/> : <NotFoundScreen/>;
           }}
         />
         <Route exact path="/favorites_empty" component={FavoritesEmptyScreen}/>
@@ -38,7 +39,6 @@ const App = ({reviews, offers}) => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
 };
 
 const mapStateToProps = (state, props) => ({

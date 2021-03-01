@@ -13,7 +13,7 @@ import Map from "../map/map";
 import {OffersListClassName} from "../../const";
 import OffersList from "../offers-list/offers-list";
 
-const RoomScreen = ({offer, reviews, nearestOffers}) => {
+const RoomScreen = ({offer, nearestOffers}) => {
   const {
     images,
     isPremium,
@@ -124,7 +124,7 @@ const RoomScreen = ({offer, reviews, nearestOffers}) => {
               </div>
               <section className="property__reviews reviews">
 
-                <ReviewsList reviews={reviews}/>
+                <ReviewsList reviews={[]}/>
 
                 <ReviewForm/>
 

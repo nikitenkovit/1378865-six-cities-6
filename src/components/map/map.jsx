@@ -2,13 +2,14 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import {getCurrentCity} from "../../store/city/utils";
+import {getCurrentCity} from "../../store/cities/cities-utils";
 import PropTypes from "prop-types";
 import roomOfferProp from "../room-screen/room-screen.prop";
 import citiesProp from "../cities/cities.prop";
 import {getCurrentOfferLocation} from "../../store/offer-location/utils";
 import {MapMarkerProperty} from "../../const";
 import mapProp from './map.prop';
+import SpinerScreen from "../spiner-screen/spiner-screen";
 
 const group = leaflet.layerGroup();
 const removeMarkers = () => group.clearLayers();
@@ -21,6 +22,12 @@ const Map = (props) => {
     roomScreenOfferLocation,
     roomScreenOfferDescription
   } = props;
+
+  if (!currentCity.name) {
+    return (
+      <SpinerScreen/>
+    );
+  }
 
   const points = offers.map((offer) => {
     return {

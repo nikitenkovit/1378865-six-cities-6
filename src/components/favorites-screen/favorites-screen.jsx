@@ -5,7 +5,6 @@ import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
 import FavoritesCityItem from "../favorites-city-item/favorites-city-item";
 import roomOfferProp from '../room-screen/room-screen.prop';
-import {getOffers} from "../../utils/common";
 
 const FavoritesScreen = ({offers}) => {
 
@@ -78,7 +77,6 @@ FavoritesScreen.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  offers: getOffers() // временно, потом вынесу в отдельеый редюсер
 });
 
 export {FavoritesScreen};

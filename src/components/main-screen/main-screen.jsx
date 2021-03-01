@@ -1,24 +1,37 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import OffersList from "../offers-list/offers-list";
 import Map from "../map/map";
 import roomOfferProp from '../room-screen/room-screen.prop';
-import {DEFAULT_SORTING_TYPE, OffersListClassName} from "../../const";
+import {DEFAULT_SORTING_TYPE, LoadStatus, OffersListClassName} from "../../const";
 import Cities from "../cities/cities";
-import {getOffersByCity, sortingFunction} from "../../utils/common";
-import {getCurrentCity} from "../../store/city/utils";
-import {connect} from 'react-redux';
+import {sortingFunction} from "../../store/offers/offers-utils";
 import citiesProp from "../cities/cities.prop";
 import OfferSorting from "../offer-sorting/offer-sorting";
+import {getCurrentCity} from "../../store/cities/cities-utils";
+import {getOffersByCity} from "../../store/offers/offers-utils";
+import SpinerScreen from "../spiner-screen/spiner-screen";
+import ServiceIsUnavailableScreen from "../service-is-unavailable-screen/service-is-unavailable-screen";
 
-const MainScreen = ({offers, currentCity}) => {
+const MainScreen = ({offers, currentCity, needShowSpinner, needShowError}) => {
   const [activeType, setActiveType] = useState(DEFAULT_SORTING_TYPE);
   const [sortedOffers, setSortedOffers] = useState(offers);
 
   useEffect(() => {
     setSortedOffers(offers.sort(sortingFunction(offers, activeType)));
   }, [activeType, currentCity]);
+
+  if (needShowSpinner) {
+    return (
+      <SpinerScreen/>
+    );
+  } else if (needShowError) {
+    return (
+      <ServiceIsUnavailableScreen/>
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -74,13 +87,17 @@ const MainScreen = ({offers, currentCity}) => {
 
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  currentCity: citiesProp
+  currentCity: citiesProp,
+  needShowSpinner: PropTypes.bool.isRequired,
+  needShowError: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  offers: getOffersByCity(state),
+  needShowSpinner: state.OFFERS.status === LoadStatus.INITIAL || state.OFFERS.status === LoadStatus.FETCHING,
+  needShowError: state.OFFERS.status === LoadStatus.FAILURE,
   currentCity: getCurrentCity(state),
+  offers: getOffersByCity(state),
 });
 
 export {MainScreen};

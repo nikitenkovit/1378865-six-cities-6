@@ -2,11 +2,10 @@ import React from "react";
 import {connect} from 'react-redux';
 import CityLink from "../city-link/city-link";
 import PropTypes from "prop-types";
-import {getCities} from "../../store/city/utils";
-import {getCurrentCity} from "../../store/city/utils";
+import {getCurrentCity} from "../../store/cities/cities-utils";
 import citiesProp from './cities.prop';
 import {useDispatch} from "react-redux";
-import CityActionCreator from '../../store/city/action-creator';
+import CityActionCreator from '../../store/cities/action-creator';
 
 const Cities = ({cities, currentCity}) => {
   const dispatch = useDispatch();
@@ -43,7 +42,7 @@ Cities.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  cities: getCities(),
+  cities: state.CITIES.items,
   currentCity: getCurrentCity(state),
 });
 
