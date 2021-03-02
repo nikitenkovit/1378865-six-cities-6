@@ -9,6 +9,8 @@ import App from './components/app/app';
 import UserActionCreator from './store/user/ation-creator';
 import {AuthorizationStatus} from "./const";
 import {checkAuth, fetchOfferList} from "./store/api-actions";
+import {Router} from 'react-router-dom';
+import history from "./history";
 
 import reducer from './store/root-reducer';
 
@@ -26,7 +28,9 @@ store.dispatch(fetchOfferList());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App/>
+      <Router history={history}>
+        <App/>
+      </Router>
     </Provider>,
     document.querySelector(`#root`)
 );

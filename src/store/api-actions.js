@@ -3,6 +3,8 @@ import UserActionCreator from './user/ation-creator';
 import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus} from "../const";
 import CityActionCreator from './cities/action-creator';
 import {adaptOfferData} from "./offers/offers-utils";
+import {adaptUserData} from "./user/selectors";
+import history from "../history";
 
 const setDefaultCurrentCity = (data) => {
   return data.find((city) => city.name === DEFAULT_CURRENT_CITY);
@@ -47,7 +49,19 @@ export const fetchOfferList = () => (dispatch, _getState, api) => {
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    .then(() => dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {
+    .then(() => {
+      dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
     })
+    .catch(() => {})
+);
+
+export const login = (email, password) => (dispatch, _getState, api) => (
+  api.post(`/login`, {email, password})
+  .then((response) => {
+    const user = adaptUserData(response.data);
+    dispatch(UserActionCreator.setUser(user));
+    dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
+    history.push(`/`);
+  })
+  .catch(() => {})
 );
