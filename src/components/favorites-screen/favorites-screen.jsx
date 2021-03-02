@@ -77,6 +77,7 @@ FavoritesScreen.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   ...props,
+  offers: state.OFFERS.offers
 });
 
 export {FavoritesScreen};

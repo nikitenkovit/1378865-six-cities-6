@@ -1,12 +1,12 @@
-import {REQUIRED_AUTHORIZATION, GET_USER} from "./action-types";
+import {REQUIRED_AUTHORIZATION, SET_USER} from "./action-types";
 
 export default {
   requiredAuthorization: (status) => ({
     type: REQUIRED_AUTHORIZATION,
     payload: status
   }),
-  getUser: (user) => ({
-    type: GET_USER,
+  setUser: (user) => ({
+    type: SET_USER,
     payload: user
   })
 };
