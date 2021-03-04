@@ -25,7 +25,8 @@ const Review = ({review}) => {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{new Date(date).toLocaleString(`en-US`, {year: `numeric`, month: `long`})}</time>
+        <time className="reviews__time" dateTime={date}>
+          {new Date(date).toLocaleString(`en-US`, {year: `numeric`, month: `long`})}</time>
       </div>
     </li>
   );

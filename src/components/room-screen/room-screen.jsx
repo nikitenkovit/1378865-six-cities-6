@@ -3,11 +3,8 @@ import {useSelector, useDispatch} from "react-redux";
 import {OfferType, BookmarkButtonProperty, AuthorizationStatus} from '../../const';
 import {getRatingStarValue} from "../../utils/common";
 import {nanoid} from "nanoid";
-import PropTypes from "prop-types";
 import ReviewForm from "../reviews-form/review-form";
 import BookmarkButton from "../bookmark-button/bookmark-button";
-import roomScreenProp from './room-screen.prop';
-import reviewProp from '../review/review.prop';
 import ReviewsList from "../reviews-list/reviews-list";
 import Map from "../map/map";
 import {OffersListClassName, MAX_GALLERY_IMAGES} from "../../const";
@@ -16,7 +13,7 @@ import Header from "../header/header";
 import {fetchCurrentOffer} from "../../store/api-actions";
 import SpinerScreen from "../spiner-screen/spiner-screen";
 import {getIsNeedShowSpiner, getCurrentOffer, getOfferId, getReviews,
-  getIsNeedLoadOffer, getNearestOffers, getIsNeedShowNotFoundScreen} from "../../store/current-offer/selectors";
+  getNearestOffers, getIsNeedShowNotFoundScreen} from "../../store/current-offer/selectors";
 import {getAuthorizationStatus} from "../../store/user/selectors";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 
@@ -24,7 +21,6 @@ const RoomScreen = (props) => {
   const dispatch = useDispatch();
 
   const needShowSpinner = useSelector(getIsNeedShowSpiner);
-  const needLoadOffer = useSelector(getIsNeedLoadOffer);
   const needShowNotFoundScreen = useSelector(getIsNeedShowNotFoundScreen);
   const id = getOfferId(props);
   const offer = useSelector(getCurrentOffer);
@@ -34,10 +30,8 @@ const RoomScreen = (props) => {
   const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
 
   useEffect(() => {
-    if (needLoadOffer) {
-      dispatch(fetchCurrentOffer(id));
-    }
-  });
+    dispatch(fetchCurrentOffer(id));
+  }, [id]);
 
   if (needShowSpinner) {
     return (

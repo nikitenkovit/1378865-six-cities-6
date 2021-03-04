@@ -1,52 +1,50 @@
 import OffersActionCreator from './offers/action-creator';
 import UserActionCreator from './user/ation-creator';
-import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus} from "../const";
+import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus, SendStatus} from "../const";
 import CityActionCreator from './cities/action-creator';
 import {adaptOfferData} from "./offers/offers-utils";
 import {adaptUserData} from "./user/selectors";
 import {adaptCommentsData} from "./current-offer/selectors";
 import RedirectActionCreator from '../store/middlewares/action-creator';
 import CurrentOfferActionCreator from './current-offer/action-creator';
+import CommentActionCreator from './comment-status/action-creator';
+import {batch} from 'react-redux';
 
 const setDefaultCurrentCity = (data) => {
   return data.find((city) => city.name === DEFAULT_CURRENT_CITY);
 };
 
-export const fetchOfferList = () => (dispatch, _getState, api) => {
+export const fetchOfferList = () => async (dispatch, _getState, api) => {
   dispatch(OffersActionCreator.changeStatus(LoadStatus.FETCHING));
 
-  api.get(`/hotels`)
-    .then(({data}) => {
-      const offers = data.map(adaptOfferData);
+  let fetchOffers;
 
-      dispatch(OffersActionCreator.setOffers(offers));
+  try {
+    fetchOffers = await api.get(`/hotels`);
+  } catch (error) {
+    dispatch(OffersActionCreator.changeStatus(LoadStatus.FAILURE));
+    return;
+  }
 
-      return offers;
-    })
-    .then((offers) => {
-      let swap = offers.slice()
-        .reduce((generalOffer, offer) => {
-          if (!generalOffer.hasOwnProperty(offer.city.name)) {
-            generalOffer[offer.city.name] = {...offer.city};
-          }
+  const adaptOffers = await fetchOffers.data.map(adaptOfferData);
 
-          return generalOffer;
-        }, {});
+  const cities = await adaptOffers.slice()
+      .reduce((generalOffer, offer) => {
+        if (!generalOffer.hasOwnProperty(offer.city.name)) {
+          generalOffer[offer.city.name] = {...offer.city};
+        }
 
-      const cities = Object.values(swap);
+        return generalOffer;
+      }, {});
 
-      dispatch(CityActionCreator.setCitiesItems(cities));
+  const citiesList = await Object.values(cities);
 
-      return cities;
-    })
-    .then((cities) => {
-      dispatch(CityActionCreator.changeCity(setDefaultCurrentCity(cities)));
-
-      dispatch(OffersActionCreator.changeStatus(LoadStatus.SUCCESS));
-    })
-    .catch(() => {
-      dispatch(OffersActionCreator.changeStatus(LoadStatus.FAILURE));
-    });
+  batch(() => {
+    dispatch(OffersActionCreator.setOffers(adaptOffers));
+    dispatch(CityActionCreator.setCitiesItems(citiesList));
+    dispatch(CityActionCreator.changeCity(setDefaultCurrentCity(citiesList)));
+    dispatch(OffersActionCreator.changeStatus(LoadStatus.SUCCESS));
+  });
 };
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -57,17 +55,16 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-export const login = (email, password) => (dispatch, _getState, api) => (
-  api.post(`/login`, {email, password})
-  .then(({data}) => {
-    const user = adaptUserData(data);
+export const login = (email, password) => async (dispatch, _getState, api) => {
+  const sendLogin = await api.post(`/login`, {email, password});
 
-    dispatch(UserActionCreator.setUser(user));
-    dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
-  })
-    .then(() => dispatch(RedirectActionCreator.redirectToRoute(`/`)))
-  .catch(() => {})
-);
+  const user = await adaptUserData(sendLogin.data);
+
+  dispatch(UserActionCreator.setUser(user));
+  dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
+
+  dispatch(RedirectActionCreator.redirectToRoute(`/`));
+};
 
 export const logout = () => (dispatch, _getState, api) => (
   api.get(`/logout`)
@@ -78,45 +75,50 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(RedirectActionCreator.redirectToRoute(`/login`)))
 );
 
-export const fetchCurrentOffer = (id) => (dispatch, _getState, api) => {
+export const fetchCurrentOffer = (id) => async (dispatch, _getState, api) => {
   dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.FETCHING));
 
-  api.get(`/hotels/${id}`)
-    .then(({data}) => {
-      const offer = adaptOfferData(data);
+  let fetchOffer;
+  let fetchComments;
+  let fetchNearestOffers;
 
-      dispatch(CurrentOfferActionCreator.setCurrentOffer(offer));
-    })
-    .then(() => {
-      api.get(`/hotels/${id}/nearby`)
-        .then(({data}) => {
-          const offers = data.map(adaptOfferData);
+  try {
+    fetchOffer = await api.get(`/hotels/${id}`);
+    fetchComments = await api.get(`/comments/${id}`);
+    fetchNearestOffers = await api.get(`/hotels/${id}/nearby`);
+  } catch (e) {
+    dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.FAILURE));
+    return;
+  }
 
-          dispatch(CurrentOfferActionCreator.setNearestOffers(offers));
-        });
-    })
-    .then(() => {
-      api.get(`/comments/${id}`)
-        .then(({data}) => {
-          const reviews = data.map(adaptCommentsData);
+  const offer = await adaptOfferData(fetchOffer.data);
+  const comments = await fetchComments.data.map(adaptCommentsData);
+  const nearestOffers = await fetchNearestOffers.data.map(adaptOfferData);
 
-          dispatch(CurrentOfferActionCreator.setReviews(reviews));
-
-          dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.SUCCESS));
-        });
-    })
-    .catch(() => {
-      dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.FAILURE));
-    });
+  batch(() => {
+    dispatch(CurrentOfferActionCreator.setCurrentOffer(offer));
+    dispatch(CurrentOfferActionCreator.setNearestOffers(nearestOffers));
+    dispatch(CurrentOfferActionCreator.setReviews(comments));
+    dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.SUCCESS));
+  });
 };
 
-export const sendComment = (id, comment, rating) => (dispatch, _getState, api) => (
-  api.post(`/comments/${id}`, {comment, rating})
-    .then(({data}) => {
-      console.log(data)
-      const reviews = data.map(adaptCommentsData);
+export const sendComment = (id, comment, rating) => async (dispatch, _getState, api) => {
+  dispatch(CommentActionCreator.changeCommentStatus(SendStatus.SENDING));
 
-      dispatch(CurrentOfferActionCreator.setReviews(reviews));
-    })
-    .catch(() => {})
-);
+  let sendReview;
+
+  try {
+    sendReview = await api.post(`/comments/${id}`, {comment, rating});
+  } catch (e) {
+    dispatch(CommentActionCreator.changeCommentStatus(SendStatus.FAILURE));
+    return;
+  }
+
+  const adaptedReviews = sendReview.data.map(adaptCommentsData);
+
+  batch(() => {
+    dispatch(CurrentOfferActionCreator.setReviews(adaptedReviews));
+    dispatch(CommentActionCreator.changeCommentStatus(SendStatus.SUCCESS));
+  });
+};

@@ -13,16 +13,12 @@ export const adaptCommentsData = (data) => ({
   }
 });
 
-export const getStatus = (state) => state.CURRENT_OFFER.status;
-
 export const getIsNeedShowSpiner = (state) => state.CURRENT_OFFER.status === LoadStatus.INITIAL
   || state.CURRENT_OFFER.status === LoadStatus.FETCHING;
 
 export const getIsNeedShowNotFoundScreen = (state) => state.CURRENT_OFFER.status === LoadStatus.FAILURE;
 
 export const getCurrentOffer = (state) => state.CURRENT_OFFER.current;
-
-export const getIsNeedLoadOffer = (state) => state.CURRENT_OFFER.status === LoadStatus.INITIAL;
 
 export const getOfferId = (props) => props.match.params.id;
 
