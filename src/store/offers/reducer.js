@@ -2,7 +2,7 @@ import {SET_OFFERS, CHANGE_STATUS} from "./action-types";
 import {LoadStatus} from "../../const";
 
 const initialState = {
-  offers: [],
+  items: [],
   status: LoadStatus.INITIAL,
 };
 
@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     case SET_OFFERS:
       return {
         ...state,
-        offers: action.payload
+        items: action.payload
       };
     case CHANGE_STATUS:
       return {

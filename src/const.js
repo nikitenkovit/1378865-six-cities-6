@@ -58,3 +58,5 @@ export const LoadStatus = {
   SUCCESS: `success`,
   FAILURE: `failure`
 };
+
+export const MAX_GALLERY_IMAGES = 6;

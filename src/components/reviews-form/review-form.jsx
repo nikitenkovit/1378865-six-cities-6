@@ -1,13 +1,20 @@
 import React, {useState} from "react";
+import PropTypes from "prop-types";
+import {useDispatch} from "react-redux";
+import {sendComment} from "../../store/api-actions";
 
-const ReviewForm = () => {
-  const [, setFormValue] = useState({
-    ratingValue: ``,
-    userTextValue: ``
+const ReviewForm = ({id}) => {
+  const dispatch = useDispatch();
+
+  const [formValue, setFormValue] = useState({
+    review: ``,
+    rating: ``
   });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    dispatch(sendComment(id, formValue.review, formValue.rating));
   };
 
   const handleFieldChange = (evt) => {
@@ -72,6 +79,10 @@ const ReviewForm = () => {
       </div>
     </form>
   );
+};
+
+ReviewForm.propTypes = {
+  id: PropTypes.string.isRequired
 };
 
 export default ReviewForm;

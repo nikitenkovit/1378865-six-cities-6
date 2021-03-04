@@ -37,6 +37,6 @@ export const sortingFunction = (offers, type) => (a, b) => {
 };
 
 export const getOffersByCity = (state) => {
-  const data = state.OFFERS.offers;
+  const data = state.OFFERS.items;
   return data.filter((offer) => offer.city.name === state.CITIES.current.name);
 };

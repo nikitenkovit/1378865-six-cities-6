@@ -1,6 +1,6 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {OfferType, BookmarkButtonProperty} from '../../const';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {OfferType, BookmarkButtonProperty, AuthorizationStatus} from '../../const';
 import {getRatingStarValue} from "../../utils/common";
 import {nanoid} from "nanoid";
 import PropTypes from "prop-types";
@@ -10,10 +10,45 @@ import roomScreenProp from './room-screen.prop';
 import reviewProp from '../review/review.prop';
 import ReviewsList from "../reviews-list/reviews-list";
 import Map from "../map/map";
-import {OffersListClassName} from "../../const";
+import {OffersListClassName, MAX_GALLERY_IMAGES} from "../../const";
 import OffersList from "../offers-list/offers-list";
+import Header from "../header/header";
+import {fetchCurrentOffer} from "../../store/api-actions";
+import SpinerScreen from "../spiner-screen/spiner-screen";
+import {getIsNeedShowSpiner, getCurrentOffer, getOfferId, getReviews,
+  getIsNeedLoadOffer, getNearestOffers, getIsNeedShowNotFoundScreen} from "../../store/current-offer/selectors";
+import {getAuthorizationStatus} from "../../store/user/selectors";
+import NotFoundScreen from "../not-found-screen/not-found-screen";
 
-const RoomScreen = ({offer, nearestOffers}) => {
+const RoomScreen = (props) => {
+  const dispatch = useDispatch();
+
+  const needShowSpinner = useSelector(getIsNeedShowSpiner);
+  const needLoadOffer = useSelector(getIsNeedLoadOffer);
+  const needShowNotFoundScreen = useSelector(getIsNeedShowNotFoundScreen);
+  const id = getOfferId(props);
+  const offer = useSelector(getCurrentOffer);
+  const reviews = useSelector(getReviews);
+  const nearestOffers = useSelector(getNearestOffers);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
+
+  useEffect(() => {
+    if (needLoadOffer) {
+      dispatch(fetchCurrentOffer(id));
+    }
+  });
+
+  if (needShowSpinner) {
+    return (
+      <SpinerScreen/>
+    );
+  } else if (needShowNotFoundScreen) {
+    return (
+      <NotFoundScreen/>
+    );
+  }
+
   const {
     images,
     isPremium,
@@ -31,34 +66,12 @@ const RoomScreen = ({offer, nearestOffers}) => {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to="/">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header/>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((picture) =>
+              {images.slice(0, MAX_GALLERY_IMAGES).map((picture) =>
                 <div key={nanoid()} className="property__image-wrapper">
                   <img className="property__image" src={picture} alt="Photo studio"/>
                 </div>
@@ -124,9 +137,9 @@ const RoomScreen = ({offer, nearestOffers}) => {
               </div>
               <section className="property__reviews reviews">
 
-                <ReviewsList reviews={[]}/>
+                <ReviewsList reviews={reviews}/>
 
-                <ReviewForm/>
+                {isAuthorized && <ReviewForm id={id}/>}
 
               </section>
             </div>
@@ -153,12 +166,6 @@ const RoomScreen = ({offer, nearestOffers}) => {
       </main>
     </div>
   );
-};
-
-RoomScreen.propTypes = {
-  offer: roomScreenProp,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  nearestOffers: PropTypes.arrayOf(roomScreenProp)
 };
 
 export default RoomScreen;

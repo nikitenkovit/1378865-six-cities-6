@@ -4,7 +4,9 @@ import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus} from "../const";
 import CityActionCreator from './cities/action-creator';
 import {adaptOfferData} from "./offers/offers-utils";
 import {adaptUserData} from "./user/selectors";
-import history from "../history";
+import {adaptCommentsData} from "./current-offer/selectors";
+import RedirectActionCreator from '../store/middlewares/action-creator';
+import CurrentOfferActionCreator from './current-offer/action-creator';
 
 const setDefaultCurrentCity = (data) => {
   return data.find((city) => city.name === DEFAULT_CURRENT_CITY);
@@ -57,11 +59,64 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 
 export const login = (email, password) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
-  .then((response) => {
-    const user = adaptUserData(response.data);
+  .then(({data}) => {
+    const user = adaptUserData(data);
+
     dispatch(UserActionCreator.setUser(user));
     dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
-    history.push(`/`);
   })
+    .then(() => dispatch(RedirectActionCreator.redirectToRoute(`/`)))
   .catch(() => {})
+);
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(`/logout`)
+    .then(() => {
+      dispatch(UserActionCreator.setUser(null));
+      dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.NO_AUTH));
+    })
+    .then(() => dispatch(RedirectActionCreator.redirectToRoute(`/login`)))
+);
+
+export const fetchCurrentOffer = (id) => (dispatch, _getState, api) => {
+  dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.FETCHING));
+
+  api.get(`/hotels/${id}`)
+    .then(({data}) => {
+      const offer = adaptOfferData(data);
+
+      dispatch(CurrentOfferActionCreator.setCurrentOffer(offer));
+    })
+    .then(() => {
+      api.get(`/hotels/${id}/nearby`)
+        .then(({data}) => {
+          const offers = data.map(adaptOfferData);
+
+          dispatch(CurrentOfferActionCreator.setNearestOffers(offers));
+        });
+    })
+    .then(() => {
+      api.get(`/comments/${id}`)
+        .then(({data}) => {
+          const reviews = data.map(adaptCommentsData);
+
+          dispatch(CurrentOfferActionCreator.setReviews(reviews));
+
+          dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.SUCCESS));
+        });
+    })
+    .catch(() => {
+      dispatch(CurrentOfferActionCreator.changeCurrentOfferStatus(LoadStatus.FAILURE));
+    });
+};
+
+export const sendComment = (id, comment, rating) => (dispatch, _getState, api) => (
+  api.post(`/comments/${id}`, {comment, rating})
+    .then(({data}) => {
+      console.log(data)
+      const reviews = data.map(adaptCommentsData);
+
+      dispatch(CurrentOfferActionCreator.setReviews(reviews));
+    })
+    .catch(() => {})
 );

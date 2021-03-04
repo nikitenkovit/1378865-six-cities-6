@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
-import {Header} from "../header/header";
+import Header from "../header/header";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/api-actions";
 
@@ -14,6 +14,7 @@ const SignInScreen = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
     dispatch(login(formValue.email, formValue.password));
   };
 
@@ -30,7 +31,8 @@ const SignInScreen = () => {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post" onChange={handleFieldChange} onSubmit={handleSubmit}>
+            <form className="login__form form" action="#" method="post"
+              onChange={handleFieldChange} onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input" type="email" name="email"
