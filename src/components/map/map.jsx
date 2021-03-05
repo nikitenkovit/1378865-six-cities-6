@@ -15,7 +15,8 @@ const group = leaflet.layerGroup();
 const removeMarkers = () => group.clearLayers();
 
 const Map = (props) => {
-  const {currentCity,
+  const {
+    currentCity,
     offers,
     hoverOfferLocation,
     isRoomScreenMap,
@@ -101,9 +102,12 @@ const Map = (props) => {
 
   useEffect(() => {
     if (isRoomScreenMap) {
-      createMarker(roomScreenOfferLocation, roomScreenOfferDescription, iconActive);
+      let marker = createMarker(roomScreenOfferLocation, roomScreenOfferDescription, iconActive);
+
+      group.addLayer(marker);
+      group.addTo(mapRef.current);
     }
-  });
+  }, []);
 
   return (
     <div id="map" ref={mapRef} style={{height: `100%`}}/>

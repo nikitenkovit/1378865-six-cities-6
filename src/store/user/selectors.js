@@ -1,3 +1,5 @@
+import {AuthorizationStatus} from "../../const";
+
 export const adaptUserData = (data) => {
   const user = {
     ...data,
@@ -12,5 +14,7 @@ export const adaptUserData = (data) => {
 };
 
 export const getAuthorizationStatus = (state) => state.USER.authorizationStatus;
+
+export const getIsNotAuthorized = (state) => state.USER.authorizationStatus !== AuthorizationStatus.AUTH;
 
 export const getUser = (state) => state.USER.user;

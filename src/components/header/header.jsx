@@ -1,10 +1,20 @@
 import React from "react";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {getUser} from "../../store/user/selectors";
-import headerProptypes from './header.props';
+import {logout} from "../../store/api-actions";
 
-const Header = ({user}) => {
+const Header = ({isFavoriteScreen}) => {
+  const dispatch = useDispatch();
+  const user = useSelector(getUser);
+
+  const handleLogoutClick = (evt) => {
+    evt.preventDefault();
+
+    dispatch(logout());
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -15,7 +25,7 @@ const Header = ({user}) => {
             </Link>
           </div>
           <nav className="header__nav">
-            <ul className="header__nav-list">
+            <ul className="header__nav-list" style={{flexDirection: `column`, alignItems: `flex-end`}}>
               <li className="header__nav-item user">
                 <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                   {user ? <div className="header__avatar-wrapper user__avatar-wrapper"
@@ -25,6 +35,14 @@ const Header = ({user}) => {
                   <span className="header__user-name user__name">{user ? user.email : `Sign in`}</span>
                 </Link>
               </li>
+              {isFavoriteScreen &&
+                <li className="header__nav-item user" style={{marginLeft: `15px`}}>
+                  <a className="header__nav-link header__nav-link--profile">
+                    <span onClick={handleLogoutClick}
+                      className="header__user-name user__name">Logout</span>
+                  </a>
+                </li>
+              }
             </ul>
           </nav>
         </div>
@@ -34,13 +52,7 @@ const Header = ({user}) => {
 };
 
 Header.propTypes = {
-  user: headerProptypes
+  isFavoriteScreen: PropTypes.bool
 };
 
-const mapStateToProps = (state, props) => ({
-  ...props,
-  user: getUser(state)
-});
-
-export {Header};
-export default connect(mapStateToProps)(Header);
+export default Header;

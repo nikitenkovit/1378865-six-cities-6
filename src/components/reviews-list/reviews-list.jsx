@@ -1,15 +1,18 @@
 import Review from "../review/review";
-import {nanoid} from "nanoid";
 import React from "react";
 import PropTypes from "prop-types";
 import reviewProp from "../review/review.prop";
+import {MAX_REVIEWS} from "../../const";
 
 const ReviewsList = ({reviews}) => {
   return (
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((review) => <Review key={nanoid()} review={review}/>)}
+        {reviews
+          .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+          .slice(0, MAX_REVIEWS)
+          .map((review, index) => <Review key={review.id + index} review={review}/>)}
       </ul>
     </>
   );

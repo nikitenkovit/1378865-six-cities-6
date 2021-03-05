@@ -58,3 +58,19 @@ export const LoadStatus = {
   SUCCESS: `success`,
   FAILURE: `failure`
 };
+
+export const SendStatus = {
+  INITIAL: `initial`,
+  SENDING: `sending`,
+  SUCCESS: `success`,
+  FAILURE: `failure`
+};
+
+export const MAX_GALLERY_IMAGES = 6;
+
+export const MAX_REVIEWS = 10;
+
+export const UserCommentLength = {
+  MIN: 50,
+  MAX: 300
+};
