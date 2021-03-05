@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {SortingType, DEFAULT_SORTING_TYPE} from "../../const";
-import OfferSortingType from "../offer-sorting-type/offer-sorting-type";
 import PropTypes from "prop-types";
+import OfferSortingType from "../offer-sorting-type/offer-sorting-type";
+import {SortingType, DEFAULT_SORTING_TYPE} from "../../const";
 
 const OfferSorting = ({onSortChange, activeType}) => {
   const [isOpenedSorting, setIsOpenedSorting] = useState(false);
@@ -13,7 +13,8 @@ const OfferSorting = ({onSortChange, activeType}) => {
 
   return (<form className="places__sorting" action="#" method="get">
     <span className="places__sorting-caption">Sort by </span>
-    <span className="places__sorting-type" tabIndex="0" onClick={() => setIsOpenedSorting(!isOpenedSorting)}>
+    <span className="places__sorting-type" tabIndex="0"
+      onClick={() => setIsOpenedSorting(!isOpenedSorting)}>
       {SortingType[activeType] || DEFAULT_SORTING_TYPE}
       <svg className="places__sorting-arrow" width="7" height="4">
         <use xlinkHref="#icon-arrow-select"/>

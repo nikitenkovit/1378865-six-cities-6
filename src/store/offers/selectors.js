@@ -1,4 +1,5 @@
-import {SortingType} from "../../const";
+import {LoadStatus, SortingType} from "../../const";
+import {createSelector} from "reselect";
 
 export const adaptOfferData = (data) => ({
   bedrooms: data.bedrooms,
@@ -36,7 +37,15 @@ export const sortingFunction = (offers, type) => (a, b) => {
   return offers;
 };
 
+const getOffers = (state) => state.OFFERS.items;
+
 export const getOffersByCity = (state) => {
-  const data = state.OFFERS.items;
-  return data.filter((offer) => offer.city.name === state.CITIES.current.name);
+  return createSelector(
+      getOffers,
+      (offers) => offers.filter((offer) => offer.city.name === state.CITIES.current.name))(state);
 };
+
+export const getIsNeedShowSpiner = (state) => state.OFFERS.status === LoadStatus.INITIAL
+  || state.OFFERS.status === LoadStatus.FETCHING;
+
+export const getIsNeedShowError = (state) => state.OFFERS.status === LoadStatus.FAILURE;

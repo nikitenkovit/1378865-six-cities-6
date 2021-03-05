@@ -2,7 +2,7 @@ import OffersActionCreator from './offers/action-creator';
 import UserActionCreator from './user/ation-creator';
 import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus, SendStatus} from "../const";
 import CityActionCreator from './cities/action-creator';
-import {adaptOfferData} from "./offers/offers-utils";
+import {adaptOfferData} from "./offers/selectors";
 import {adaptUserData} from "./user/selectors";
 import {adaptCommentsData} from "./current-offer/selectors";
 import RedirectActionCreator from '../store/middlewares/action-creator';

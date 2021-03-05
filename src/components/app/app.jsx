@@ -12,12 +12,8 @@ const App = () => {
   return (
     <Router history={browserHistory}>
       <Switch>
-        <Route exact path="/">
-          <MainScreen/>
-        </Route>
-        <Route exact path="/login">
-          <SignInScreen/>
-        </Route>
+        <Route exact path="/" component={MainScreen}/>
+        <Route exact path="/login" component={SignInScreen} />
         <PrivateRoute exact path="/favorites" component={FavoritesScreen}/>
         <Route exact path="/offer/:id" component={RoomScreen}/>
         <Route path="*" component={NotFoundScreen}/>

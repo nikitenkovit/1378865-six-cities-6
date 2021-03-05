@@ -15,6 +15,8 @@ export const adaptUserData = (data) => {
 
 export const getAuthorizationStatus = (state) => state.USER.authorizationStatus;
 
+export const getIsAuthorized = (state) => state.USER.authorizationStatus === AuthorizationStatus.AUTH;
+
 export const getIsNotAuthorized = (state) => state.USER.authorizationStatus !== AuthorizationStatus.AUTH;
 
 export const getUser = (state) => state.USER.user;
