@@ -107,7 +107,7 @@ const Map = (props) => {
       group.addLayer(marker);
       group.addTo(mapRef.current);
     }
-  });
+  }, []);
 
   return (
     <div id="map" ref={mapRef} style={{height: `100%`}}/>

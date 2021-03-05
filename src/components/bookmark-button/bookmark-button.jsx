@@ -1,20 +1,19 @@
 import React, {useState} from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import PropTypes from "prop-types";
 import BookmarkButtonProp from "./bookmark-button.prop";
-import {getAuthorizationStatus} from "../../store/user/selectors";
-import {AuthorizationStatus} from "../../const";
-import browserHistory from "../../history";
+import {getIsNotAuthorized} from "../../store/user/selectors";
+import RedirectActionCreator from "../../store/middlewares/action-creator";
 
 const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
+  const dispatch = useDispatch();
   const [isActiveBookmark, setIsActiveBookmark] = useState(isFavorite);
 
-  const authorizationStatus = useSelector(getAuthorizationStatus);
-  const isNotAuthorized = authorizationStatus !== AuthorizationStatus.AUTH;
+  const isNotAuthorized = useSelector(getIsNotAuthorized);
 
   const handleButtonClick = () => {
     if (isNotAuthorized) {
-      browserHistory.push(`/login`);
+      dispatch(RedirectActionCreator.redirectToRoute(`/login`));
 
       return;
     }

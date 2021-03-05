@@ -1,5 +1,4 @@
 import Review from "../review/review";
-import {nanoid} from "nanoid";
 import React from "react";
 import PropTypes from "prop-types";
 import reviewProp from "../review/review.prop";
@@ -13,7 +12,7 @@ const ReviewsList = ({reviews}) => {
         {reviews
           .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
           .slice(0, MAX_REVIEWS)
-          .map((review) => <Review key={nanoid()} review={review}/>)}
+          .map((review, index) => <Review key={review.id + index} review={review}/>)}
       </ul>
     </>
   );
