@@ -121,4 +121,4 @@ Map.propTypes = {
   roomScreenOfferDescription: PropTypes.string
 };
 
-export default Map;
+export default React.memo(Map);

@@ -38,4 +38,4 @@ OfferSorting.propTypes = {
   onSortChange: PropTypes.func.isRequired
 };
 
-export default OfferSorting;
+export default React.memo(OfferSorting);

@@ -65,4 +65,4 @@ const MainScreen = () => {
   );
 };
 
-export default MainScreen;
+export default React.memo(MainScreen);

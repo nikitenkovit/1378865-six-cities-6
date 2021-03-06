@@ -39,13 +39,22 @@ export const sortingFunction = (offers, type) => (a, b) => {
 
 const getOffers = (state) => state.OFFERS.items;
 
+const getStatus = (state) => state.OFFERS.status;
+
 export const getOffersByCity = (state) => {
   return createSelector(
       getOffers,
       (offers) => offers.filter((offer) => offer.city.name === state.CITIES.current.name))(state);
 };
 
-export const getIsNeedShowSpiner = (state) => state.OFFERS.status === LoadStatus.INITIAL
-  || state.OFFERS.status === LoadStatus.FETCHING;
+export const getIsNeedShowSpiner = (state) => {
+  return createSelector(
+      getStatus,
+      (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING)(state);
+};
 
-export const getIsNeedShowError = (state) => state.OFFERS.status === LoadStatus.FAILURE;
+export const getIsNeedShowError = (state) => {
+  return createSelector(
+      getStatus,
+      (status) => status === LoadStatus.FAILURE)(state);
+};

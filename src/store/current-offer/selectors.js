@@ -1,4 +1,5 @@
 import {LoadStatus} from "../../const";
+import {createSelector} from "reselect";
 
 export const adaptCommentsData = (data) => ({
   comment: data.comment,
@@ -13,10 +14,19 @@ export const adaptCommentsData = (data) => ({
   }
 });
 
-export const getIsNeedShowSpiner = (state) => state.CURRENT_OFFER.status === LoadStatus.INITIAL
-  || state.CURRENT_OFFER.status === LoadStatus.FETCHING;
+const getStatus = (state) => state.CURRENT_OFFER.status;
 
-export const getIsNeedShowNotFoundScreen = (state) => state.CURRENT_OFFER.status === LoadStatus.FAILURE;
+export const getIsNeedShowSpiner = (state) => {
+  return createSelector(
+      getStatus,
+      (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING)(state);
+};
+
+export const getIsNeedShowNotFoundScreen = (state) => {
+  return createSelector(
+      getStatus,
+      (status) => status === LoadStatus.FAILURE)(state);
+};
 
 export const getCurrentOffer = (state) => state.CURRENT_OFFER.current;
 

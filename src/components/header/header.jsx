@@ -55,4 +55,4 @@ Header.propTypes = {
   isFavoriteScreen: PropTypes.bool
 };
 
-export default Header;
+export default React.memo(Header);

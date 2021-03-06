@@ -1,9 +1,27 @@
 import {SendStatus} from "../../const";
+import {createSelector} from "reselect";
+
 
 export const getStatus = (state) => state.COMMENT.status;
 
-export const getIsNeedDisableForm = (state) => state.COMMENT.status === SendStatus.SENDING;
+export const getIsNeedDisableForm = (state) => {
+  return createSelector(
+      getStatus,
+      (status) => status === SendStatus.SENDING
+  )(state);
+};
 
-export const getIsNeedToClearForm = (state) => state.COMMENT.status === SendStatus.SUCCESS;
+export const getIsNeedToClearForm = (state) => {
+  return createSelector(
+      getStatus,
+      (status) => status === SendStatus.SUCCESS
+  )(state);
+};
 
-export const getIsNeedShowError = (state) => state.COMMENT.status === SendStatus.FAILURE;
+export const getIsNeedShowError = (state) => {
+  return createSelector(
+      getStatus,
+      (status) => status === SendStatus.FAILURE
+  )(state);
+};
+
