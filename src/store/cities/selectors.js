@@ -1,3 +1,5 @@
-export const getCities = (state) => state.CITIES.items;
+import NameSpace from '../name-space';
 
-export const getCurrentCity = (state) => state.CITIES.current;
+export const getCities = (state) => state[NameSpace.CITIES].items;
+
+export const getCurrentCity = (state) => state[NameSpace.CITIES].current;

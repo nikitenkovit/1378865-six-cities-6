@@ -1,8 +1,8 @@
 import {SendStatus} from "../../const";
 import {createSelector} from "reselect";
+import NameSpace from '../name-space';
 
-
-export const getStatus = (state) => state.COMMENT.status;
+export const getStatus = (state) => state[NameSpace.COMMENT].status;
 
 export const getIsNeedDisableForm = (state) => {
   return createSelector(

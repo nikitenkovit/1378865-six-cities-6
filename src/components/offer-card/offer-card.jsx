@@ -7,7 +7,7 @@ import BookmarkButton from "../bookmark-button/bookmark-button";
 import roomScreenProp from '../room-screen/room-screen.prop';
 
 const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onMouseLeave}) => {
-  const {articleClass, wrapperClass, infoClass} = offerCardClassName;
+  const {articleClass, wrapperClass, infoClass, imageWidth, imageHeight} = offerCardClassName;
   const {id, isPremium, previewImage, price, isFavorite, rating, title, type, location} = offer;
 
   return (
@@ -30,7 +30,7 @@ const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onM
       }
       <div className={`${wrapperClass} place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width={imageWidth} height={imageHeight} alt="Place image"/>
         </a>
       </div>
       <div className={`${infoClass} place-card__info`}>
@@ -39,7 +39,11 @@ const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onM
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton isFavorite={isFavorite} bookmarkButtonProperty={BookmarkButtonProperty.OFFER_CARD}/>
+          <BookmarkButton
+            id={id}
+            isFavorite={isFavorite}
+            bookmarkButtonProperty={BookmarkButtonProperty.OFFER_CARD}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -62,7 +66,9 @@ OfferCard.propTypes = {
   offerCardClassName: PropTypes.shape({
     articleClass: PropTypes.string.isRequired,
     wrapperClass: PropTypes.string.isRequired,
-    infoClass: PropTypes.string.isRequired
+    infoClass: PropTypes.string.isRequired,
+    imageWidth: PropTypes.string.isRequired,
+    imageHeight: PropTypes.string.isRequired
   }).isRequired,
   offer: roomScreenProp,
   isHoverHandler: PropTypes.bool.isRequired,

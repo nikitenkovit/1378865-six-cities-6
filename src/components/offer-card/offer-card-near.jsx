@@ -7,7 +7,9 @@ const OfferCardNear = (props) => {
       offerCardClassName={{
         articleClass: `near-places__card`,
         wrapperClass: `near-places__image-wrapper`,
-        infoClass: ``
+        infoClass: ``,
+        imageWidth: `260`,
+        imageHeight: `200`
       }}
       isHoverHandler={false}
       {...props}

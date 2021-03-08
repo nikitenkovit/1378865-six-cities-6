@@ -1,28 +1,34 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {nanoid} from "nanoid";
-import PropTypes from "prop-types";
 import FavoritesCityItem from "../favorites-city-item/favorites-city-item";
-import roomOfferProp from '../room-screen/room-screen.prop';
 import Header from "../header/header";
+import {getIsNeedShowSpiner, getFavoriteOffers, getIsNeedShowEmptyScreen} from "../../store/favorites/selectors";
+import SpinerScreen from "../spiner-screen/spiner-screen";
+import {fetchFavoriteOffers} from "../../store/api-actions";
+import FavoritesEmptyScreen from "../favorites-empty-screen/favorites-empty-screen";
+import {AppRoute} from "../../const";
 
-// полностью буду переделывать этот компонент в следущем задании
-// (новый редюсер, селекторы и так далее, сейчас не чего оптемизировать. нет смысла)
-const FavoritesScreen = ({offers}) => {
+const FavoritesScreen = () => {
+  const dispatch = useDispatch();
 
-  const filteredOffers = offers.filter((offer) => offer.isFavorite)
-    .reduce((generalOffer, offer) => {
-      if (generalOffer.hasOwnProperty(offer.city.name)) {
-        generalOffer[offer.city.name].push(offer);
-      } else {
-        generalOffer[offer.city.name] = [offer];
-      }
+  const needShowSpinner = useSelector(getIsNeedShowSpiner);
+  const favoriteOffers = useSelector(getFavoriteOffers);
+  const needShowEmptyScreen = useSelector(getIsNeedShowEmptyScreen);
 
-      return generalOffer;
-    }, {});
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, []);
 
-  const filteredOffersArray = Object.entries(filteredOffers); // временно, потом вынесу в отдельеый редюсер
+  if (needShowSpinner) {
+    return (
+      <SpinerScreen/>
+    );
+  } else if (needShowEmptyScreen) {
+    return (
+      <FavoritesEmptyScreen/>
+    );
+  }
 
   return (
     <div className="page">
@@ -33,9 +39,9 @@ const FavoritesScreen = ({offers}) => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {filteredOffersArray.map(([cityName, cityOffers]) =>
+              {favoriteOffers.map(([cityName, cityOffers]) =>
                 <FavoritesCityItem
-                  key={nanoid()}
+                  key={cityName}
                   cityName={cityName}
                   cityOffers={cityOffers}
                 />
@@ -45,7 +51,7 @@ const FavoritesScreen = ({offers}) => {
         </div>
       </main>
       <footer className="footer container">
-        <Link className="footer__logo-link" to="/">
+        <Link className="footer__logo-link" to={AppRoute.MAIN}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
         </Link>
       </footer>
@@ -53,14 +59,4 @@ const FavoritesScreen = ({offers}) => {
   );
 };
 
-FavoritesScreen.propTypes = {
-  offers: PropTypes.arrayOf(roomOfferProp)
-};
-
-const mapStateToProps = (state, props) => ({
-  ...props,
-  offers: state.OFFERS.items
-});
-
-export {FavoritesScreen};
-export default connect(mapStateToProps)(FavoritesScreen);
+export default FavoritesScreen;

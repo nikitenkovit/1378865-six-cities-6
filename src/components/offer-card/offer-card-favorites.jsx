@@ -7,7 +7,9 @@ const OfferCardFavorites = (props) => {
       offerCardClassName={{
         articleClass: `favorites__card`,
         wrapperClass: `favorites__image-wrapper`,
-        infoClass: `favorites__card-info`
+        infoClass: `favorites__card-info`,
+        imageWidth: `150`,
+        imageHeight: `110`
       }}
       isHoverHandler={false}
       {...props}

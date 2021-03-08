@@ -6,7 +6,7 @@ import OffersList from "../offers-list/offers-list";
 import OfferSorting from "../offer-sorting/offer-sorting";
 import Map from "../map/map";
 import SpinerScreen from "../spiner-screen/spiner-screen";
-import ServiceIsUnavailableScreen from "../service-is-unavailable-screen/service-is-unavailable-screen";
+import NoPlacesScreen from "../no-places-screen/no-places-screen";
 import {DEFAULT_SORTING_TYPE, OffersListClassName} from "../../const";
 import {sortingFunction} from "../../store/offers/selectors";
 import {getCurrentCity} from "../../store/cities/selectors";
@@ -23,7 +23,7 @@ const MainScreen = () => {
 
   useEffect(() => {
     setSortedOffers(offers.sort(sortingFunction(offers, activeType)));
-  }, [activeType, currentCity]);
+  }, [offers, activeType, currentCity]);
 
   if (needShowSpinner) {
     return (
@@ -31,7 +31,7 @@ const MainScreen = () => {
     );
   } else if (needShowError) {
     return (
-      <ServiceIsUnavailableScreen/>
+      <NoPlacesScreen/>
     );
   }
 

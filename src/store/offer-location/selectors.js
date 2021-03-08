@@ -1,1 +1,3 @@
-export const getCurrentOfferLocation = (state) => state.OFFER_LOCATION;
+import NameSpace from "../name-space";
+
+export const getCurrentOfferLocation = (state) => state[NameSpace.OFFER_LOCATION];

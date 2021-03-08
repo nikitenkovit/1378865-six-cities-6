@@ -1,28 +1,23 @@
-import React, {useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import React from "react";
+import {useDispatch} from "react-redux";
 import PropTypes from "prop-types";
+import {FavoriteStatus} from "../../const";
 import BookmarkButtonProp from "./bookmark-button.prop";
-import {getIsNotAuthorized} from "../../store/user/selectors";
-import RedirectActionCreator from "../../store/middlewares/action-creator";
+import {sendFavoriteStatus} from "../../store/api-actions";
 
-const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
-  const [isActiveBookmark, setIsActiveBookmark] = useState(isFavorite);
-
-  const isNotAuthorized = useSelector(getIsNotAuthorized);
+const BookmarkButton = ({id, isFavorite, bookmarkButtonProperty}) => {
+  const setStatus = (status) => {
+    return status ? FavoriteStatus.FALSE : FavoriteStatus.TRUE;
+  };
 
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
-    if (isNotAuthorized) {
-      dispatch(RedirectActionCreator.redirectToRoute(`/login`));
-
-      return;
-    }
-    setIsActiveBookmark(!isActiveBookmark);
+    dispatch(sendFavoriteStatus(id, setStatus(isFavorite)));
   };
 
   return (
-    <button className={`${isActiveBookmark
+    <button className={`${isFavorite
       ? bookmarkButtonProperty.buttonClass + ` ` + bookmarkButtonProperty.buttonClass + `--active`
       : bookmarkButtonProperty.buttonClass} button`}
     type="button"
@@ -38,6 +33,7 @@ const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
 };
 
 BookmarkButton.propTypes = {
+  id: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   bookmarkButtonProperty: BookmarkButtonProp
 };

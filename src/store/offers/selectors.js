@@ -1,5 +1,6 @@
 import {LoadStatus, SortingType} from "../../const";
 import {createSelector} from "reselect";
+import NameSpace from "../name-space";
 
 export const adaptOfferData = (data) => ({
   bedrooms: data.bedrooms,
@@ -37,14 +38,15 @@ export const sortingFunction = (offers, type) => (a, b) => {
   return offers;
 };
 
-const getOffers = (state) => state.OFFERS.items;
+const getOffers = (state) => state[NameSpace.OFFERS].items;
 
-const getStatus = (state) => state.OFFERS.status;
+export const getStatus = (state) => state[NameSpace.OFFERS].status;
 
 export const getOffersByCity = (state) => {
   return createSelector(
       getOffers,
-      (offers) => offers.filter((offer) => offer.city.name === state.CITIES.current.name))(state);
+      (offers) => offers.filter((offer) =>
+        offer.city.name === state[NameSpace.CITIES].current.name))(state);
 };
 
 export const getIsNeedShowSpiner = (state) => {
