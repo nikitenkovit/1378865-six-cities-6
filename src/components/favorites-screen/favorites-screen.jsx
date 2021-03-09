@@ -7,6 +7,8 @@ import FavoritesCityItem from "../favorites-city-item/favorites-city-item";
 import roomOfferProp from '../room-screen/room-screen.prop';
 import Header from "../header/header";
 
+// полностью буду переделывать этот компонент в следущем задании
+// (новый редюсер, селекторы и так далее, сейчас не чего оптемизировать. нет смысла)
 const FavoritesScreen = ({offers}) => {
 
   const filteredOffers = offers.filter((offer) => offer.isFavorite)

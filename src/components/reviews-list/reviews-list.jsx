@@ -12,7 +12,7 @@ const ReviewsList = ({reviews}) => {
         {reviews
           .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
           .slice(0, MAX_REVIEWS)
-          .map((review, index) => <Review key={review.id + index} review={review}/>)}
+          .map((review) => <Review key={review.id} review={review}/>)}
       </ul>
     </>
   );

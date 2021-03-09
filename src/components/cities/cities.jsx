@@ -1,14 +1,14 @@
 import React from "react";
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from "react-redux";
 import CityLink from "../city-link/city-link";
-import PropTypes from "prop-types";
-import {getCurrentCity} from "../../store/cities/cities-utils";
-import citiesProp from './cities.prop';
-import {useDispatch} from "react-redux";
+import {getCities, getCurrentCity} from "../../store/cities/selectors";
 import CityActionCreator from '../../store/cities/action-creator';
 
-const Cities = ({cities, currentCity}) => {
+const Cities = () => {
   const dispatch = useDispatch();
+
+  const cities = useSelector(getCities);
+  const currentCity = useSelector(getCurrentCity);
 
   const handleCityLinkClick = (evt, city) => {
     evt.preventDefault();
@@ -35,16 +35,4 @@ const Cities = ({cities, currentCity}) => {
   );
 };
 
-Cities.propTypes = {
-  cities: PropTypes.arrayOf(citiesProp),
-  currentCity: citiesProp
-};
-
-const mapStateToProps = (state, props) => ({
-  ...props,
-  cities: state.CITIES.items,
-  currentCity: getCurrentCity(state),
-});
-
-export {Cities};
-export default connect(mapStateToProps)(Cities);
+export default React.memo(Cities);

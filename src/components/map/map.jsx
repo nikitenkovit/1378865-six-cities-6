@@ -1,24 +1,24 @@
 import React, {useEffect, useRef} from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import PropTypes from "prop-types";
+import SpinerScreen from "../spiner-screen/spiner-screen";
 import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import {getCurrentCity} from "../../store/cities/cities-utils";
-import PropTypes from "prop-types";
+import {getCurrentCity} from "../../store/cities/selectors";
 import roomOfferProp from "../room-screen/room-screen.prop";
-import citiesProp from "../cities/cities.prop";
-import {getCurrentOfferLocation} from "../../store/offer-location/utils";
+import {getCurrentOfferLocation} from "../../store/offer-location/selectors";
 import {MapMarkerProperty} from "../../const";
 import mapProp from './map.prop';
-import SpinerScreen from "../spiner-screen/spiner-screen";
 
 const group = leaflet.layerGroup();
 const removeMarkers = () => group.clearLayers();
 
 const Map = (props) => {
+  const currentCity = useSelector(getCurrentCity);
+  const hoverOfferLocation = useSelector(getCurrentOfferLocation);
+
   const {
-    currentCity,
     offers,
-    hoverOfferLocation,
     isRoomScreenMap,
     roomScreenOfferLocation,
     roomScreenOfferDescription
@@ -116,19 +116,9 @@ const Map = (props) => {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  currentCity: citiesProp,
-  hoverOfferLocation: mapProp,
   isRoomScreenMap: PropTypes.bool,
   roomScreenOfferLocation: mapProp,
   roomScreenOfferDescription: PropTypes.string
 };
 
-/* из стора берутся только критичные свойства текущего города и обработчика ховер события */
-const mapStateToProps = (state, props) => ({
-  ...props,
-  currentCity: getCurrentCity(state),
-  hoverOfferLocation: getCurrentOfferLocation(state)
-});
-
-export {Map};
-export default connect(mapStateToProps)(Map);
+export default React.memo(Map);

@@ -6,10 +6,11 @@ import {getIsNotAuthorized} from "../../store/user/selectors";
 import RedirectActionCreator from "../../store/middlewares/action-creator";
 
 const BookmarkButton = ({isFavorite, bookmarkButtonProperty}) => {
-  const dispatch = useDispatch();
   const [isActiveBookmark, setIsActiveBookmark] = useState(isFavorite);
 
   const isNotAuthorized = useSelector(getIsNotAuthorized);
+
+  const dispatch = useDispatch();
 
   const handleButtonClick = () => {
     if (isNotAuthorized) {

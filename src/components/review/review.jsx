@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRatingStarValue} from "../../utils/common";
+import {getRatingStarValue} from "../../utils/rating-star-value";
 import reviewProp from './review.prop';
 
 const Review = ({review}) => {

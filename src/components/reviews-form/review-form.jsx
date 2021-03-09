@@ -2,17 +2,18 @@ import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {sendComment} from "../../store/api-actions";
-import {UserCommentLength, SendStatus} from "../../const";
-import {getStatus} from "../../store/comment-status/selectors";
+import {UserCommentLength} from "../../const";
+import {getStatus, getIsNeedDisableForm,
+  getIsNeedToClearForm, getIsNeedShowError} from "../../store/comment-status/selectors";
 
 const ReviewForm = ({id}) => {
   const dispatch = useDispatch();
 
   const formRef = useRef();
   const sendingStatus = useSelector(getStatus);
-  const needDisableForm = sendingStatus === SendStatus.SENDING;
-  const needToClearForm = sendingStatus === SendStatus.SUCCESS;
-  const needShowError = sendingStatus === SendStatus.FAILURE;
+  const needDisableForm = useSelector(getIsNeedDisableForm);
+  const needToClearForm = useSelector(getIsNeedToClearForm);
+  const needShowError = useSelector(getIsNeedShowError);
 
   const [formValue, setFormValue] = useState({
     review: ``,
@@ -27,12 +28,9 @@ const ReviewForm = ({id}) => {
 
   const handleFieldChange = (evt) => {
     const {name, value} = evt.target;
+
     setFormValue((state) => ({...state, [name]: value}));
   };
-
-  const needButtonDisable = formValue.review.length < UserCommentLength.MIN
-    || formValue.review.length > UserCommentLength.MAX || formValue.rating.length === 0;
-
 
   const showError = (element) => {
     element.style.outline = `2px solid red`;
@@ -44,11 +42,19 @@ const ReviewForm = ({id}) => {
   useEffect(() => {
     if (needToClearForm) {
       formRef.current.reset();
+
+      setFormValue(() => ({
+        review: ``,
+        rating: ``
+      }));
     }
     if (needShowError) {
       showError(formRef.current);
     }
   }, [sendingStatus]);
+
+  const needButtonDisable = formValue.review.length < UserCommentLength.MIN
+    || formValue.review.length > UserCommentLength.MAX || formValue.rating.length === 0;
 
   return (
     <form

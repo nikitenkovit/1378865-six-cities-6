@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {OfferType, BookmarkButtonProperty, AuthorizationStatus} from '../../const';
-import {getRatingStarValue} from "../../utils/common";
+import {OfferType, BookmarkButtonProperty} from '../../const';
+import {getRatingStarValue} from "../../utils/rating-star-value";
 import {nanoid} from "nanoid";
 import ReviewForm from "../reviews-form/review-form";
 import BookmarkButton from "../bookmark-button/bookmark-button";
@@ -14,7 +14,7 @@ import {fetchCurrentOffer} from "../../store/api-actions";
 import SpinerScreen from "../spiner-screen/spiner-screen";
 import {getIsNeedShowSpiner, getCurrentOffer, getOfferId, getReviews,
   getNearestOffers, getIsNeedShowNotFoundScreen} from "../../store/current-offer/selectors";
-import {getAuthorizationStatus} from "../../store/user/selectors";
+import {getIsAuthorized} from "../../store/user/selectors";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 
 const RoomScreen = (props) => {
@@ -26,8 +26,7 @@ const RoomScreen = (props) => {
   const offer = useSelector(getCurrentOffer);
   const reviews = useSelector(getReviews);
   const nearestOffers = useSelector(getNearestOffers);
-  const authorizationStatus = useSelector(getAuthorizationStatus);
-  const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
+  const isAuthorized = useSelector(getIsAuthorized);
 
   useEffect(() => {
     dispatch(fetchCurrentOffer(id));

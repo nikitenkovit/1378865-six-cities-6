@@ -52,4 +52,4 @@ OffersList.propTypes = {
   offersListClassName: PropTypes.string.isRequired
 };
 
-export default OffersList;
+export default React.memo(OffersList);
