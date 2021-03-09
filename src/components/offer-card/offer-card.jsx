@@ -29,9 +29,9 @@ const OfferCard = ({offerCardClassName, offer, isHoverHandler, onMouseEnter, onM
       </div>
       }
       <div className={`${wrapperClass} place-card__image-wrapper`}>
-        <a href="#">
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width={imageWidth} height={imageHeight} alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className={`${infoClass} place-card__info`}>
         <div className="place-card__price-wrapper">
