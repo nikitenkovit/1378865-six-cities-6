@@ -146,6 +146,7 @@ const RoomScreen = (props) => {
             <Map
               offers={nearestOffers}
               isRoomScreenMap={true}
+              currentCity={location}
               roomScreenOfferLocation={location}
               roomScreenOfferDescription={description}
             />

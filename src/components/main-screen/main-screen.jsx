@@ -55,7 +55,7 @@ const MainScreen = () => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers}/>
+                <Map offers={offers} currentCity={currentCity.location}/>
               </section>
             </div>
           </div>

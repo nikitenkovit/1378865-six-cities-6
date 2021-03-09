@@ -19,19 +19,9 @@ export default (state = initialState, action) => {
         status: action.payload
       };
     case UPDATE_OFFERS:
-      const index = state.items.findIndex(({id}) => id === action.payload.id);
-
-      if (index === -1) {
-        return state;
-      }
-
       return {
         ...state,
-        items: [
-          ...state.items.slice(0, index),
-          action.payload,
-          ...state.items.slice(index + 1)
-        ]
+        items: state.items.map((it) => it.id === action.payload.id ? action.payload : it)
       };
     default:
       return state;

@@ -17,16 +17,8 @@ export const adaptUserData = (data) => {
 
 export const getAuthorizationStatus = (state) => state[NameSpace.USER].authorizationStatus;
 
-export const getIsAuthorized = (state) => {
-  return createSelector(
-      getAuthorizationStatus,
-      (status) => status === AuthorizationStatus.AUTH)(state);
-};
-
-export const getIsNotAuthorized = (state) => {
-  return createSelector(
-      getAuthorizationStatus,
-      (status) => status !== AuthorizationStatus.AUTH)(state);
-};
+export const getIsAuthorized = createSelector(
+    getAuthorizationStatus,
+    (status) => status === AuthorizationStatus.AUTH);
 
 export const getUser = (state) => state[NameSpace.USER].user;

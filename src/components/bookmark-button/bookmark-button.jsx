@@ -1,19 +1,14 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 import PropTypes from "prop-types";
-import {FavoriteStatus} from "../../const";
 import BookmarkButtonProp from "./bookmark-button.prop";
 import {sendFavoriteStatus} from "../../store/api-actions";
 
 const BookmarkButton = ({id, isFavorite, bookmarkButtonProperty}) => {
-  const setStatus = (status) => {
-    return status ? FavoriteStatus.FALSE : FavoriteStatus.TRUE;
-  };
-
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
-    dispatch(sendFavoriteStatus(id, setStatus(isFavorite)));
+    dispatch(sendFavoriteStatus(id, isFavorite));
   };
 
   return (

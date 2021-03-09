@@ -40,23 +40,18 @@ export const sortingFunction = (offers, type) => (a, b) => {
 
 const getOffers = (state) => state[NameSpace.OFFERS].items;
 
+const getCurrentCityName = (state) => state[NameSpace.CITIES].current.name;
+
 export const getStatus = (state) => state[NameSpace.OFFERS].status;
 
-export const getOffersByCity = (state) => {
-  return createSelector(
-      getOffers,
-      (offers) => offers.filter((offer) =>
-        offer.city.name === state[NameSpace.CITIES].current.name))(state);
-};
+export const getOffersByCity = createSelector(
+    [getOffers, getCurrentCityName],
+    (offers, cityName) => offers.filter((offer) => offer.city.name === cityName));
 
-export const getIsNeedShowSpiner = (state) => {
-  return createSelector(
-      getStatus,
-      (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING)(state);
-};
+export const getIsNeedShowSpiner = createSelector(
+    getStatus,
+    (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING);
 
-export const getIsNeedShowError = (state) => {
-  return createSelector(
-      getStatus,
-      (status) => status === LoadStatus.FAILURE)(state);
-};
+export const getIsNeedShowError = createSelector(
+    getStatus,
+    (status) => status === LoadStatus.FAILURE);

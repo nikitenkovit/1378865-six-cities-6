@@ -2,9 +2,10 @@ import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {sendComment} from "../../store/api-actions";
-import {UserCommentLength} from "../../const";
+import {UserCommentLength, SHAKE_ANIMATION_TIMEOUT} from "../../const";
 import {getStatus, getIsNeedDisableForm,
   getIsNeedToClearForm, getIsNeedShowError} from "../../store/comment-status/selectors";
+import '../../styles/form-error/style.css';
 
 const ReviewForm = ({id}) => {
   const dispatch = useDispatch();
@@ -33,21 +34,22 @@ const ReviewForm = ({id}) => {
   };
 
   const showError = (element) => {
-    element.style.outline = `2px solid red`;
+    element.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+
     setTimeout(() => {
-      element.style.outline = `none`;
-    }, 3000);
+      element.style.animation = ``;
+    }, SHAKE_ANIMATION_TIMEOUT);
   };
 
   useEffect(() => {
+    const reviewsTextarea = formRef.current.querySelector(`.reviews__textarea`);
+
     if (needToClearForm) {
       formRef.current.reset();
 
-      setFormValue(() => ({
-        review: ``,
-        rating: ``
-      }));
+      reviewsTextarea.value = ``;
     }
+
     if (needShowError) {
       showError(formRef.current);
     }

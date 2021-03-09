@@ -128,7 +128,7 @@ export const sendFavoriteStatus = (id, status) => async (dispatch, _getState, ap
   let sendStatus;
 
   try {
-    sendStatus = await api.post(`/favorite/${id}/${status}`);
+    sendStatus = await api.post(`/favorite/${id}/${status ? 0 : 1}`);
   } catch (e) {
     dispatch(RedirectActionCreator.redirectToRoute(AppRoute.LOGIN));
     return;

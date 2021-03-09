@@ -36,6 +36,8 @@ export const MapMarkerProperty = {
   }
 };
 
+export const MAP_ZOOM = 13;
+
 export const SortingType = {
   POPULAR: `Popular`,
   LOW_TO_HIGH: `Price: low to high`,
@@ -84,14 +86,11 @@ export const DefaultCitiesList = [
   {name: `Dusseldorf`}
 ];
 
-export const FavoriteStatus = {
-  TRUE: 1,
-  FALSE: 0
-};
-
 export const AppRoute = {
   LOGIN: `/login`,
   FAVORITES: `/favorites`,
   ROOM: `/offer/:id`,
   MAIN: `/`
 };
+
+export const SHAKE_ANIMATION_TIMEOUT = 600;

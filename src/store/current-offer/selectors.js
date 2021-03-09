@@ -17,17 +17,13 @@ export const adaptCommentsData = (data) => ({
 
 const getStatus = (state) => state[NameSpace.CURRENT_OFFER].status;
 
-export const getIsNeedShowSpiner = (state) => {
-  return createSelector(
-      getStatus,
-      (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING)(state);
-};
+export const getIsNeedShowSpiner = createSelector(
+    getStatus,
+    (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING);
 
-export const getIsNeedShowNotFoundScreen = (state) => {
-  return createSelector(
-      getStatus,
-      (status) => status === LoadStatus.FAILURE)(state);
-};
+export const getIsNeedShowNotFoundScreen = createSelector(
+    getStatus,
+    (status) => status === LoadStatus.FAILURE);
 
 export const getCurrentOffer = (state) => state[NameSpace.CURRENT_OFFER].current;
 
