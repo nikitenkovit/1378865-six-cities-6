@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import Header from "../header/header";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/api-actions";
+import {AppRoute} from "../../const";
 
 const SignInScreen = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const SignInScreen = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="/">
+              <Link className="locations__item-link" to={AppRoute.MAIN}>
                 <span>Amsterdam</span>
               </Link>
             </div>

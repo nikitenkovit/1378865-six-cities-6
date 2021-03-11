@@ -1,17 +1,18 @@
 import OffersActionCreator from './offers/action-creator';
 import UserActionCreator from './user/ation-creator';
-import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus, SendStatus} from "../const";
 import CityActionCreator from './cities/action-creator';
-import {adaptOfferData} from "./offers/selectors";
-import {adaptUserData} from "./user/selectors";
-import {adaptCommentsData} from "./current-offer/selectors";
 import RedirectActionCreator from '../store/middlewares/action-creator';
 import CurrentOfferActionCreator from './current-offer/action-creator';
 import CommentActionCreator from './comment-status/action-creator';
+import FavoritesActionCreator from './favorites/action-creator';
+import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus, SendStatus, AppRoute} from "../const";
+import {adaptOfferData} from "./offers/selectors";
+import {adaptUserData} from "./user/selectors";
+import {adaptCommentsData} from "./current-offer/selectors";
 import {batch} from 'react-redux';
 
 const setDefaultCurrentCity = (data) => {
-  return data.find((city) => city.name === DEFAULT_CURRENT_CITY);
+  return data.find((city) => city.name === DEFAULT_CURRENT_CITY.name);
 };
 
 export const fetchOfferList = () => async (dispatch, _getState, api) => {
@@ -63,7 +64,7 @@ export const login = (email, password) => async (dispatch, _getState, api) => {
   dispatch(UserActionCreator.setUser(user));
   dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
 
-  dispatch(RedirectActionCreator.redirectToRoute(`/`));
+  dispatch(RedirectActionCreator.redirectToRoute(AppRoute.MAIN));
 };
 
 export const logout = () => (dispatch, _getState, api) => (
@@ -72,7 +73,7 @@ export const logout = () => (dispatch, _getState, api) => (
       dispatch(UserActionCreator.setUser(null));
       dispatch(UserActionCreator.requiredAuthorization(AuthorizationStatus.NO_AUTH));
     })
-    .then(() => dispatch(RedirectActionCreator.redirectToRoute(`/login`)))
+    .then(() => dispatch(RedirectActionCreator.redirectToRoute(AppRoute.LOGIN)))
 );
 
 export const fetchCurrentOffer = (id) => async (dispatch, _getState, api) => {
@@ -120,5 +121,54 @@ export const sendComment = (id, comment, rating) => async (dispatch, _getState, 
   batch(() => {
     dispatch(CurrentOfferActionCreator.setReviews(adaptedReviews));
     dispatch(CommentActionCreator.changeCommentStatus(SendStatus.SUCCESS));
+  });
+};
+
+export const sendFavoriteStatus = (id, status) => async (dispatch, _getState, api) => {
+  let sendStatus;
+
+  try {
+    sendStatus = await api.post(`/favorite/${id}/${status ? 0 : 1}`);
+  } catch (e) {
+    dispatch(RedirectActionCreator.redirectToRoute(AppRoute.LOGIN));
+    return;
+  }
+
+  const offer = adaptOfferData(sendStatus.data);
+
+  batch(() => {
+    dispatch(OffersActionCreator.updateOffers(offer));
+    dispatch(CurrentOfferActionCreator.setCurrentOffer(offer));
+    dispatch(fetchFavoriteOffers());
+  });
+};
+
+export const fetchFavoriteOffers = () => async (dispatch, _getState, api) => {
+  dispatch(FavoritesActionCreator.changeLoadFavoritesStatus(LoadStatus.FETCHING));
+
+  let fetchOffers;
+
+  try {
+    fetchOffers = await api.get(`/favorite`);
+  } catch (e) {
+    dispatch(RedirectActionCreator.redirectToRoute(AppRoute.LOGIN));
+    return;
+  }
+
+  const response = fetchOffers.data.map(adaptOfferData);
+
+  const offers = response.reduce((generalOffer, offer) => {
+    if (generalOffer.hasOwnProperty(offer.city.name)) {
+      generalOffer[offer.city.name].push(offer);
+    } else {
+      generalOffer[offer.city.name] = [offer];
+    }
+
+    return generalOffer;
+  }, {});
+
+  batch(() => {
+    dispatch(FavoritesActionCreator.setFavoriteOffers(Object.entries(offers)));
+    dispatch(FavoritesActionCreator.changeLoadFavoritesStatus(LoadStatus.SUCCESS));
   });
 };

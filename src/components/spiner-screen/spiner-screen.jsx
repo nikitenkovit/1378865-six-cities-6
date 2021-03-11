@@ -1,5 +1,5 @@
 import React from "react";
-import '../../spiner/css/style.css';
+import '../../styles/spiner/style.css';
 
 const SpinerScreen = () => {
   return (

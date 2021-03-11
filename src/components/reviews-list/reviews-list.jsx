@@ -7,7 +7,8 @@ import {MAX_REVIEWS} from "../../const";
 const ReviewsList = ({reviews}) => {
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">
+        {Math.min(reviews.length, MAX_REVIEWS)}</span></h2>
       <ul className="reviews__list">
         {reviews
           .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))

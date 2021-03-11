@@ -1,34 +1,26 @@
 import React, {useEffect, useRef} from 'react';
 import {useSelector} from 'react-redux';
 import PropTypes from "prop-types";
-import SpinerScreen from "../spiner-screen/spiner-screen";
 import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import {getCurrentCity} from "../../store/cities/selectors";
 import roomOfferProp from "../room-screen/room-screen.prop";
 import {getCurrentOfferLocation} from "../../store/offer-location/selectors";
-import {MapMarkerProperty} from "../../const";
+import {MapMarkerProperty, MAP_ZOOM} from "../../const";
 import mapProp from './map.prop';
 
 const group = leaflet.layerGroup();
 const removeMarkers = () => group.clearLayers();
 
 const Map = (props) => {
-  const currentCity = useSelector(getCurrentCity);
   const hoverOfferLocation = useSelector(getCurrentOfferLocation);
 
   const {
     offers,
+    currentCity,
     isRoomScreenMap,
     roomScreenOfferLocation,
     roomScreenOfferDescription
   } = props;
-
-  if (!currentCity.name) {
-    return (
-      <SpinerScreen/>
-    );
-  }
 
   const points = offers.map((offer) => {
     return {
@@ -42,7 +34,8 @@ const Map = (props) => {
   const iconDefault = leaflet.icon(MapMarkerProperty.DEFAULT);
   const iconActive = leaflet.icon(MapMarkerProperty.ACTIVE);
 
-  const {latitude, longitude, zoom} = currentCity.location;
+  const {latitude, longitude} = currentCity;
+  const zoom = MAP_ZOOM;
 
   const createMarker = (location, description, markerIcon) => {
     return leaflet.marker({
@@ -116,6 +109,7 @@ const Map = (props) => {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
+  currentCity: mapProp,
   isRoomScreenMap: PropTypes.bool,
   roomScreenOfferLocation: mapProp,
   roomScreenOfferDescription: PropTypes.string

@@ -7,7 +7,9 @@ const OfferCardCity = (props) => {
       offerCardClassName={{
         articleClass: `cities__place-card`,
         wrapperClass: `cities__image-wrapper`,
-        infoClass: ``
+        infoClass: ``,
+        imageWidth: `260`,
+        imageHeight: `200`
       }}
       isHoverHandler={true}
       {...props}

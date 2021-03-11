@@ -1,5 +1,6 @@
 import {LoadStatus, SortingType} from "../../const";
 import {createSelector} from "reselect";
+import NameSpace from "../name-space";
 
 export const adaptOfferData = (data) => ({
   bedrooms: data.bedrooms,
@@ -37,24 +38,20 @@ export const sortingFunction = (offers, type) => (a, b) => {
   return offers;
 };
 
-const getOffers = (state) => state.OFFERS.items;
+const getOffers = (state) => state[NameSpace.OFFERS].items;
 
-const getStatus = (state) => state.OFFERS.status;
+const getCurrentCityName = (state) => state[NameSpace.CITIES].current.name;
 
-export const getOffersByCity = (state) => {
-  return createSelector(
-      getOffers,
-      (offers) => offers.filter((offer) => offer.city.name === state.CITIES.current.name))(state);
-};
+export const getStatus = (state) => state[NameSpace.OFFERS].status;
 
-export const getIsNeedShowSpiner = (state) => {
-  return createSelector(
-      getStatus,
-      (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING)(state);
-};
+export const getOffersByCity = createSelector(
+    [getOffers, getCurrentCityName],
+    (offers, cityName) => offers.filter((offer) => offer.city.name === cityName));
 
-export const getIsNeedShowError = (state) => {
-  return createSelector(
-      getStatus,
-      (status) => status === LoadStatus.FAILURE)(state);
-};
+export const getIsNeedShowSpiner = createSelector(
+    getStatus,
+    (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING);
+
+export const getIsNeedShowError = createSelector(
+    getStatus,
+    (status) => status === LoadStatus.FAILURE);

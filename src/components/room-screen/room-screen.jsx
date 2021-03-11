@@ -79,7 +79,11 @@ const RoomScreen = (props) => {
               </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <BookmarkButton isFavorite={isFavorite} bookmarkButtonProperty={BookmarkButtonProperty.ROOM_SCREEN}/>
+                <BookmarkButton
+                  id={id}
+                  isFavorite={isFavorite}
+                  bookmarkButtonProperty={BookmarkButtonProperty.ROOM_SCREEN}
+                />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -142,6 +146,7 @@ const RoomScreen = (props) => {
             <Map
               offers={nearestOffers}
               isRoomScreenMap={true}
+              currentCity={location}
               roomScreenOfferLocation={location}
               roomScreenOfferDescription={description}
             />

@@ -1,4 +1,6 @@
 import {AuthorizationStatus} from "../../const";
+import NameSpace from "../name-space";
+import {createSelector} from "reselect";
 
 export const adaptUserData = (data) => {
   const user = {
@@ -13,10 +15,10 @@ export const adaptUserData = (data) => {
   return user;
 };
 
-export const getAuthorizationStatus = (state) => state.USER.authorizationStatus;
+export const getAuthorizationStatus = (state) => state[NameSpace.USER].authorizationStatus;
 
-export const getIsAuthorized = (state) => state.USER.authorizationStatus === AuthorizationStatus.AUTH;
+export const getIsAuthorized = createSelector(
+    getAuthorizationStatus,
+    (status) => status === AuthorizationStatus.AUTH);
 
-export const getIsNotAuthorized = (state) => state.USER.authorizationStatus !== AuthorizationStatus.AUTH;
-
-export const getUser = (state) => state.USER.user;
+export const getUser = (state) => state[NameSpace.USER].user;

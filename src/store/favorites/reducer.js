@@ -1,27 +1,22 @@
-import {SET_OFFERS, CHANGE_STATUS, UPDATE_OFFERS} from "./action-types";
 import {LoadStatus} from "../../const";
+import {SET_FAVORITE_OFFERS, CHANGE_LOAD_FAVORITES_STATUS} from "./action-types";
 
 const initialState = {
   items: [],
-  status: LoadStatus.INITIAL,
+  status: LoadStatus.INITIAL
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_OFFERS:
+    case SET_FAVORITE_OFFERS:
       return {
         ...state,
         items: action.payload
       };
-    case CHANGE_STATUS:
+    case CHANGE_LOAD_FAVORITES_STATUS:
       return {
         ...state,
         status: action.payload
-      };
-    case UPDATE_OFFERS:
-      return {
-        ...state,
-        items: state.items.map((it) => it.id === action.payload.id ? action.payload : it)
       };
     default:
       return state;

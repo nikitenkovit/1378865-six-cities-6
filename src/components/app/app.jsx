@@ -7,15 +7,16 @@ import RoomScreen from "../room-screen/room-screen";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from "../../history";
+import {AppRoute} from "../../const";
 
 const App = () => {
   return (
     <Router history={browserHistory}>
       <Switch>
-        <Route exact path="/" component={MainScreen}/>
-        <Route exact path="/login" component={SignInScreen} />
-        <PrivateRoute exact path="/favorites" component={FavoritesScreen}/>
-        <Route exact path="/offer/:id" component={RoomScreen}/>
+        <Route exact path={AppRoute.MAIN} component={MainScreen}/>
+        <Route exact path={AppRoute.LOGIN} component={SignInScreen} />
+        <PrivateRoute exact path={AppRoute.FAVORITES} component={FavoritesScreen}/>
+        <Route exact path={AppRoute.ROOM} component={RoomScreen}/>
         <Route path="*" component={NotFoundScreen}/>
       </Switch>
     </Router>

@@ -25,8 +25,6 @@ export const BookmarkButtonProperty = {
   }
 };
 
-export const DEFAULT_CURRENT_CITY = `Paris`;
-
 export const MapMarkerProperty = {
   DEFAULT: {
     iconUrl: `./img/pin.svg`,
@@ -37,6 +35,8 @@ export const MapMarkerProperty = {
     iconSize: [30, 30]
   }
 };
+
+export const MAP_ZOOM = 13;
 
 export const SortingType = {
   POPULAR: `Popular`,
@@ -74,3 +74,23 @@ export const UserCommentLength = {
   MIN: 50,
   MAX: 300
 };
+
+export const DEFAULT_CURRENT_CITY = {name: `Paris`};
+
+export const DefaultCitiesList = [
+  {name: `Paris`},
+  {name: `Cologne`},
+  {name: `Brussels`},
+  {name: `Amsterdam`},
+  {name: `Hamburg`},
+  {name: `Dusseldorf`}
+];
+
+export const AppRoute = {
+  LOGIN: `/login`,
+  FAVORITES: `/favorites`,
+  ROOM: `/offer/:id`,
+  MAIN: `/`
+};
+
+export const SHAKE_ANIMATION_TIMEOUT = 600;
