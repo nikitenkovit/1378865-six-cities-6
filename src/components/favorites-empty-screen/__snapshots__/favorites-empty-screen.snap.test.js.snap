@@ -44,10 +44,14 @@ exports[`Should FavoritesEmptyScreen render correctly 1`] = `
                   class="header__nav-link header__nav-link--profile"
                   href="/favorites"
                 >
+                  <div
+                    class="header__avatar-wrapper user__avatar-wrapper"
+                    style="background-image: url(undefined);"
+                  />
                   <span
                     class="header__user-name user__name"
                   >
-                    Sign in
+                    test@test.ru
                   </span>
                 </a>
               </li>
@@ -118,6 +122,5 @@ exports[`Should FavoritesEmptyScreen render correctly 1`] = `
       </a>
     </footer>
   </div>
-  );
 </div>
 `;
