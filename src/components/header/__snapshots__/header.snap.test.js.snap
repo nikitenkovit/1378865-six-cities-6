@@ -55,3 +55,73 @@ exports[`Header tests Should Header render correctly 1`] = `
   </header>
 </div>
 `;
+
+exports[`Header tests Should Header render correctly when is not favorite Screen 1`] = `
+<div>
+  <header
+    class="header"
+  >
+    <div
+      class="container"
+    >
+      <div
+        class="header__wrapper"
+      >
+        <div
+          class="header__left"
+        >
+          <a
+            class="header__logo-link header__logo-link--active"
+            href="/"
+          >
+            <img
+              alt="6 cities logo"
+              class="header__logo"
+              height="41"
+              src="img/logo.svg"
+              width="81"
+            />
+          </a>
+        </div>
+        <nav
+          class="header__nav"
+        >
+          <ul
+            class="header__nav-list"
+            style="flex-direction: column; align-items: flex-end;"
+          >
+            <li
+              class="header__nav-item user"
+            >
+              <a
+                class="header__nav-link header__nav-link--profile"
+                href="/favorites"
+              >
+                <span
+                  class="header__user-name user__name"
+                >
+                  Sign in
+                </span>
+              </a>
+            </li>
+            <li
+              class="header__nav-item user"
+              style="margin-left: 15px;"
+            >
+              <a
+                class="header__nav-link header__nav-link--profile"
+              >
+                <span
+                  class="header__user-name user__name"
+                >
+                  Logout
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+</div>
+`;
