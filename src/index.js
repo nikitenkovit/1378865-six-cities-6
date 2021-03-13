@@ -6,7 +6,7 @@ import {createAPI} from "./api";
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
-import UserActionCreator from './store/user/ation-creator';
+import UserActionCreator from './store/user/action-creator/action-creator';
 import {AuthorizationStatus} from "./const";
 import {checkAuth, fetchOfferList} from "./store/api-actions";
 

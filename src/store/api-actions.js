@@ -1,10 +1,10 @@
-import OffersActionCreator from './offers/action-creator';
-import UserActionCreator from './user/ation-creator';
-import CityActionCreator from './cities/action-creator';
-import RedirectActionCreator from '../store/middlewares/action-creator';
-import CurrentOfferActionCreator from './current-offer/action-creator';
-import CommentActionCreator from './comment-status/action-creator';
-import FavoritesActionCreator from './favorites/action-creator';
+import OffersActionCreator from './offers/action-creator/action-creator';
+import UserActionCreator from './user/action-creator/action-creator';
+import CityActionCreator from './cities/action-creator/action-creator';
+import RedirectActionCreator from './middlewares/action-creator/action-creator';
+import CurrentOfferActionCreator from './current-offer/action-creator/action-creator';
+import CommentActionCreator from './comment-status/action-creator/action-creator';
+import FavoritesActionCreator from './favorites/action-creator/action-creator';
 import {AuthorizationStatus, DEFAULT_CURRENT_CITY, LoadStatus, SendStatus, AppRoute} from "../const";
 import {adaptOfferData} from "./offers/selectors";
 import {adaptUserData} from "./user/selectors";

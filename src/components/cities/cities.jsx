@@ -2,7 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import CityLink from "../city-link/city-link";
 import {getCities, getCurrentCity} from "../../store/cities/selectors";
-import CityActionCreator from '../../store/cities/action-creator';
+import CityActionCreator from '../../store/cities/action-creator/action-creator';
 import {getIsNeedShowError} from "../../store/offers/selectors";
 import {fetchOfferList} from "../../store/api-actions";
 
