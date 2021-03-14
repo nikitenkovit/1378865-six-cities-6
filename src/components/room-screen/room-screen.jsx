@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
+import * as redux from 'react-redux';
 import {OfferType, BookmarkButtonProperty} from '../../const';
 import {getRatingStarValue} from "../../utils/rating-star-value";
 import {nanoid} from "nanoid";
@@ -18,7 +19,7 @@ import {getIsAuthorized} from "../../store/user/selectors";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 
 const RoomScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = redux.useDispatch();
 
   const needShowSpinner = useSelector(getIsNeedShowSpiner);
   const needShowNotFoundScreen = useSelector(getIsNeedShowNotFoundScreen);
@@ -29,7 +30,9 @@ const RoomScreen = (props) => {
   const isAuthorized = useSelector(getIsAuthorized);
 
   useEffect(() => {
-    dispatch(fetchCurrentOffer(id));
+    if (offer === null) {
+      dispatch(fetchCurrentOffer(id));
+    }
   }, [id]);
 
   if (needShowSpinner) {

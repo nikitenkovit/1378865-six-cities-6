@@ -1,10 +1,12 @@
 import React from 'react';
-import {render} from "../../utils/test-utils";
+import {render, screen} from "@testing-library/react";
 import App from './app';
 import {AppRoute, LoadStatus, AuthorizationStatus, DefaultCitiesList} from "../../const";
 import * as redux from 'react-redux';
-
+import configureStore from 'redux-mock-store';
 import browserHistory from "../../history";
+import {Provider} from "react-redux";
+import {Router} from "react-router-dom";
 
 const mockOffer = {
   "bedrooms": 3,
@@ -41,62 +43,67 @@ const mockOffer = {
   "type": `apartment`
 };
 
-const mockStore = {
-  OFFERS: {
-    items: [mockOffer],
-    status: LoadStatus.SUCCESS
-  },
-  USER: {
-    authorizationStatus: AuthorizationStatus.NO_AUTH,
-    user: null
-  },
-  CITIES: {
-    items: DefaultCitiesList,
-    current: {
-      name: `Paris`,
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13
+const mockStore = configureStore({});
+
+const wrapper = ({children}) => (
+  <Provider store={mockStore({
+    OFFERS: {
+      items: [mockOffer],
+      status: LoadStatus.SUCCESS
+    },
+    USER: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      user: null
+    },
+    CITIES: {
+      items: DefaultCitiesList,
+      current: {
+        name: `Paris`,
+        location: {
+          latitude: 48.85661,
+          longitude: 2.351499,
+          zoom: 13
+        }
       }
+    },
+    OFFER_LOCATION: {
+      latitude: 48.83861,
+      longitude: 2.350499,
+    },
+    CURRENT_OFFER: {
+      current: mockOffer,
+      reviews: [{
+        "comment": `test`,
+        "date": `2019-05-08T14:13:56.569Z`,
+        "id": 1,
+        "rating": 4,
+        "user": {
+          "avatarUrl": `test`,
+          "id": 4,
+          "isPro": false,
+          "name": `test`
+        }
+      }],
+      nearest: [mockOffer],
+      status: LoadStatus.SUCCESS
+    },
+    FAVORITES: {
+      items: [],
+      status: LoadStatus.SUCCESS
     }
-  },
-  OFFER_LOCATION: {
-    latitude: 48.83861,
-    longitude: 2.350499,
-  },
-  CURRENT_OFFER: {
-    current: mockOffer,
-    reviews: [{
-      "comment": `test`,
-      "date": `2019-05-08T14:13:56.569Z`,
-      "id": 1,
-      "rating": 4,
-      "user": {
-        "avatarUrl": `test`,
-        "id": 4,
-        "isPro": false,
-        "name": `test`
-      }
-    }],
-    nearest: [mockOffer],
-    status: LoadStatus.SUCCESS
-  },
-  FAVORITES: {
-    items: [],
-    status: LoadStatus.SUCCESS
-  }
-};
+  })}>
+    <Router history={browserHistory}>
+      {children}
+    </Router>
+  </Provider>
+);
 
 describe(`Test routing`, () => {
   jest.spyOn(redux, `useDispatch`);
 
   it(`Render 'MainScreen' when user navigate to ${AppRoute.MAIN} url`, () => {
 
-    const {container} = render(
-        <App/>,
-        {store: mockStore}
-    );
+    const {container} = render(<App/>, {wrapper});
 
     expect(container).toMatchSnapshot();
   });
@@ -105,10 +112,7 @@ describe(`Test routing`, () => {
 
     browserHistory.push(AppRoute.LOGIN);
 
-    const {container} = render(
-        <App/>,
-        {store: mockStore}
-    );
+    const {container} = render(<App/>, {wrapper});
 
     expect(container).toMatchSnapshot();
   });
@@ -118,9 +122,16 @@ describe(`Test routing`, () => {
 
     jest.spyOn(redux, `useDispatch`);
 
-    const {container} = render(
-        <App/>,
-        {store: mockStore});
+    const {container} = render(<App/>, {wrapper});
+
     expect(container).toMatchSnapshot();
+  });
+
+  it(`Render 'NotFoundScreen' when user navigate to non-existent route`, () => {
+    browserHistory.push(`/non-existent-route`);
+
+    render(<App/>, {wrapper});
+
+    expect(screen.getByText(`404. Page not found`)).toBeInTheDocument();
   });
 });

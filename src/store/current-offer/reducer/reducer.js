@@ -3,7 +3,7 @@ import {SET_NEAREST_OFFERS, CHANGE_CURRENT_OFFER_STATUS,
 import {LoadStatus} from "../../../const";
 
 const initialState = {
-  current: {},
+  current: null,
   reviews: [],
   nearest: [],
   status: LoadStatus.INITIAL,

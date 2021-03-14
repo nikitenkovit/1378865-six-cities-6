@@ -331,6 +331,598 @@ exports[`Test routing Render 'MainScreen' when user navigate to / url 1`] = `
 </div>
 `;
 
+exports[`Test routing Render 'RoomScreen' when user navigate to /offer/:id url 1`] = `
+<div>
+  <div
+    class="page"
+  >
+    <header
+      class="header"
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="header__wrapper"
+        >
+          <div
+            class="header__left"
+          >
+            <a
+              class="header__logo-link header__logo-link--active"
+              href="/"
+            >
+              <img
+                alt="6 cities logo"
+                class="header__logo"
+                height="41"
+                src="img/logo.svg"
+                width="81"
+              />
+            </a>
+          </div>
+          <nav
+            class="header__nav"
+          >
+            <ul
+              class="header__nav-list"
+              style="flex-direction: column; align-items: flex-end;"
+            >
+              <li
+                class="header__nav-item user"
+              >
+                <a
+                  class="header__nav-link header__nav-link--profile"
+                  href="/favorites"
+                >
+                  <span
+                    class="header__user-name user__name"
+                  >
+                    Sign in
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main
+      class="page__main page__main--property"
+    >
+      <section
+        class="property"
+      >
+        <div
+          class="property__gallery-container container"
+        >
+          <div
+            class="property__gallery"
+          >
+            <div
+              class="property__image-wrapper"
+            >
+              <img
+                alt="Photo studio"
+                class="property__image"
+                src="./img/apartment-01.jpg"
+              />
+            </div>
+            <div
+              class="property__image-wrapper"
+            >
+              <img
+                alt="Photo studio"
+                class="property__image"
+                src="./img/apartment-02.jpg"
+              />
+            </div>
+            <div
+              class="property__image-wrapper"
+            >
+              <img
+                alt="Photo studio"
+                class="property__image"
+                src="./img/apartment-03.jpg"
+              />
+            </div>
+            <div
+              class="property__image-wrapper"
+            >
+              <img
+                alt="Photo studio"
+                class="property__image"
+                src="./img/room.jpg"
+              />
+            </div>
+            <div
+              class="property__image-wrapper"
+            >
+              <img
+                alt="Photo studio"
+                class="property__image"
+                src="./img/apartment-02.jpg"
+              />
+            </div>
+            <div
+              class="property__image-wrapper"
+            >
+              <img
+                alt="Photo studio"
+                class="property__image"
+                src="./img/apartment-03.jpg"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="property__container container"
+        >
+          <div
+            class="property__wrapper"
+          >
+            <div
+              class="property__name-wrapper"
+            >
+              <h1
+                class="property__name"
+              >
+                Beautiful & luxurious studio at great location
+              </h1>
+              <button
+                class="property__bookmark-button property__bookmark-button--active button"
+                type="button"
+              >
+                <svg
+                  class="property__bookmark-icon"
+                  height="33"
+                  width="31"
+                >
+                  <use
+                    xlink:href="#icon-bookmark"
+                  />
+                </svg>
+                <span
+                  class="visually-hidden"
+                >
+                  To bookmarks
+                </span>
+              </button>
+            </div>
+            <div
+              class="property__rating rating"
+            >
+              <div
+                class="property__stars rating__stars"
+              >
+                <span
+                  style="width: 100%;"
+                />
+                <span
+                  class="visually-hidden"
+                >
+                  Rating
+                </span>
+              </div>
+              <span
+                class="property__rating-value rating__value"
+              >
+                4.8
+              </span>
+            </div>
+            <ul
+              class="property__features"
+            >
+              <li
+                class="property__feature property__feature--entire"
+              >
+                Apartment
+              </li>
+              <li
+                class="property__feature property__feature--bedrooms"
+              >
+                3 Bedrooms
+              </li>
+              <li
+                class="property__feature property__feature--adults"
+              >
+                Max 
+                4
+                 adults
+              </li>
+            </ul>
+            <div
+              class="property__price"
+            >
+              <b
+                class="property__price-value"
+              >
+                €
+                120
+              </b>
+              <span
+                class="property__price-text"
+              >
+                 night
+              </span>
+            </div>
+            <div
+              class="property__inside"
+            >
+              <h2
+                class="property__inside-title"
+              >
+                What's inside
+              </h2>
+              <ul
+                class="property__inside-list"
+              >
+                <li
+                  class="property__inside-item"
+                >
+                  Heating
+                </li>
+                <li
+                  class="property__inside-item"
+                >
+                  Kitchen
+                </li>
+                <li
+                  class="property__inside-item"
+                >
+                  Cable TV
+                </li>
+                <li
+                  class="property__inside-item"
+                >
+                  Washing machine
+                </li>
+                <li
+                  class="property__inside-item"
+                >
+                  Coffee machine
+                </li>
+                <li
+                  class="property__inside-item"
+                >
+                  Dishwasher
+                </li>
+              </ul>
+            </div>
+            <div
+              class="property__host"
+            >
+              <h2
+                class="property__host-title"
+              >
+                Meet the host
+              </h2>
+              <div
+                class="property__host-user user"
+              >
+                <div
+                  class="property__avatar-wrapper user__avatar-wrapper property__avatar-wrapper--pro"
+                >
+                  <img
+                    alt="Host avatar"
+                    class="property__avatar user__avatar"
+                    height="74"
+                    src="test"
+                    width="74"
+                  />
+                </div>
+                <span
+                  class="property__user-name"
+                >
+                  test
+                </span>
+              </div>
+              <div
+                class="property__description"
+              >
+                <p
+                  class="property__text"
+                >
+                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
+                </p>
+              </div>
+            </div>
+            <section
+              class="property__reviews reviews"
+            >
+              <h2
+                class="reviews__title"
+              >
+                Reviews · 
+                <span
+                  class="reviews__amount"
+                >
+                  1
+                </span>
+              </h2>
+              <ul
+                class="reviews__list"
+              >
+                <li
+                  class="reviews__item"
+                >
+                  <div
+                    class="reviews__user user"
+                  >
+                    <div
+                      class="reviews__avatar-wrapper user__avatar-wrapper"
+                    >
+                      <img
+                        alt="Reviews avatar"
+                        class="reviews__avatar user__avatar"
+                        height="54"
+                        src="test"
+                        width="54"
+                      />
+                    </div>
+                    <span
+                      class="reviews__user-name"
+                    >
+                      test
+                    </span>
+                  </div>
+                  <div
+                    class="reviews__info"
+                  >
+                    <div
+                      class="reviews__rating rating"
+                    >
+                      <div
+                        class="reviews__stars rating__stars"
+                      >
+                        <span
+                          style="width: 80%;"
+                        />
+                        <span
+                          class="visually-hidden"
+                        >
+                          Rating
+                        </span>
+                      </div>
+                    </div>
+                    <p
+                      class="reviews__text"
+                    >
+                      test
+                    </p>
+                    <time
+                      class="reviews__time"
+                      datetime="2019-05-08T14:13:56.569Z"
+                    >
+                      May 2019
+                    </time>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+        <section
+          class="property__map map"
+        >
+          <div
+            class="leaflet-container leaflet-grab leaflet-touch-drag"
+            id="map"
+            style="height: 100%; position: relative;"
+            tabindex="0"
+          >
+            <div
+              class="leaflet-pane leaflet-map-pane"
+              style="left: 0px; top: 0px;"
+            >
+              <div
+                class="leaflet-pane leaflet-tile-pane"
+              >
+                <div
+                  class="leaflet-layer "
+                  style="z-index: 1;"
+                >
+                  <div
+                    class="leaflet-tile-container leaflet-zoom-animated"
+                    style="z-index: 18; left: 0px; top: 0px;"
+                  >
+                    <img
+                      alt=""
+                      class="leaflet-tile"
+                      role="presentation"
+                      src="https://a.basemaps.cartocdn.com/rastertiles/voyager/13/4208/2683.png"
+                      style="width: 256px; height: 256px; left: -182px; top: -244px;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="leaflet-pane leaflet-shadow-pane"
+              />
+              <div
+                class="leaflet-pane leaflet-overlay-pane"
+              />
+              <div
+                class="leaflet-pane leaflet-marker-pane"
+              >
+                <img
+                  alt=""
+                  class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+                  src="./img/pin.svg"
+                  style="margin-left: -15px; margin-top: -15px; width: 30px; height: 30px; left: 0px; top: 0px; z-index: 0; z-index: 0;"
+                  tabindex="0"
+                />
+                <img
+                  alt=""
+                  class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+                  src="./img/pin-active.svg"
+                  style="margin-left: -15px; margin-top: -15px; width: 30px; height: 30px; left: 0px; top: 0px; z-index: 0;"
+                  tabindex="0"
+                />
+              </div>
+              <div
+                class="leaflet-pane leaflet-tooltip-pane"
+              />
+              <div
+                class="leaflet-pane leaflet-popup-pane"
+              />
+            </div>
+            <div
+              class="leaflet-control-container"
+            >
+              <div
+                class="leaflet-top leaflet-left"
+              />
+              <div
+                class="leaflet-top leaflet-right"
+              />
+              <div
+                class="leaflet-bottom leaflet-left"
+              />
+              <div
+                class="leaflet-bottom leaflet-right"
+              >
+                <div
+                  class="leaflet-control-attribution leaflet-control"
+                >
+                  <a
+                    href="https://leafletjs.com"
+                    title="A JS library for interactive maps"
+                  >
+                    Leaflet
+                  </a>
+                   | © 
+                  <a
+                    href="https://www.openstreetmap.org/copyright"
+                  >
+                    OpenStreetMap
+                  </a>
+                   contributors © 
+                  <a
+                    href="https://carto.com/attributions"
+                  >
+                    CARTO
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+      <div
+        class="container"
+      >
+        <section
+          class="near-places places"
+        >
+          <h2
+            class="near-places__title"
+          >
+            Other places in the neighbourhood
+          </h2>
+          <div
+            class="near-places__list places__list
+     "
+          >
+            <article
+              class="near-places__card place-card"
+            >
+              <div
+                class="near-places__image-wrapper place-card__image-wrapper"
+              >
+                <a
+                  href="/offer/1"
+                >
+                  <img
+                    alt="Place image"
+                    class="place-card__image"
+                    height="200"
+                    src="./img/apartment-01.jpg"
+                    width="260"
+                  />
+                </a>
+              </div>
+              <div
+                class=" place-card__info"
+              >
+                <div
+                  class="place-card__price-wrapper"
+                >
+                  <div
+                    class="place-card__price"
+                  >
+                    <b
+                      class="place-card__price-value"
+                    >
+                      €
+                      120
+                    </b>
+                    <span
+                      class="place-card__price-text"
+                    >
+                      / night
+                    </span>
+                  </div>
+                  <button
+                    class="place-card__bookmark-button place-card__bookmark-button--active button"
+                    type="button"
+                  >
+                    <svg
+                      class="place-card__bookmark-icon"
+                      height="19"
+                      width="18"
+                    >
+                      <use
+                        xlink:href="#icon-bookmark"
+                      />
+                    </svg>
+                    <span
+                      class="visually-hidden"
+                    >
+                      To bookmarks
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="place-card__rating rating"
+                >
+                  <div
+                    class="place-card__stars rating__stars"
+                  >
+                    <span
+                      style="width: 100%;"
+                    />
+                    <span
+                      class="visually-hidden"
+                    >
+                      Rating
+                    </span>
+                  </div>
+                </div>
+                <h2
+                  class="place-card__name"
+                >
+                  <a
+                    href="/offer/1"
+                  >
+                    Beautiful & luxurious studio at great location
+                  </a>
+                </h2>
+                <p
+                  class="place-card__type"
+                >
+                  Apartment
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
 exports[`Test routing Render 'SignInScreen' when user navigate to /login url 1`] = `
 <div>
   <div
