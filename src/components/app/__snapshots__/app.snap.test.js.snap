@@ -44,10 +44,14 @@ exports[`Test routing Render 'MainScreen' when user navigate to / url 1`] = `
                   class="header__nav-link header__nav-link--profile"
                   href="/favorites"
                 >
+                  <div
+                    class="header__avatar-wrapper user__avatar-wrapper"
+                    style="background-image: url(test);"
+                  />
                   <span
                     class="header__user-name user__name"
                   >
-                    Sign in
+                    test@test.ru
                   </span>
                 </a>
               </li>
@@ -375,10 +379,14 @@ exports[`Test routing Render 'RoomScreen' when user navigate to /offer/:id url 1
                   class="header__nav-link header__nav-link--profile"
                   href="/favorites"
                 >
+                  <div
+                    class="header__avatar-wrapper user__avatar-wrapper"
+                    style="background-image: url(test);"
+                  />
                   <span
                     class="header__user-name user__name"
                   >
-                    Sign in
+                    test@test.ru
                   </span>
                 </a>
               </li>
@@ -699,6 +707,174 @@ exports[`Test routing Render 'RoomScreen' when user navigate to /offer/:id url 1
                   </div>
                 </li>
               </ul>
+              <form
+                action="#"
+                class="reviews__form form"
+                method="post"
+                style="pointer-events: auto;"
+              >
+                <label
+                  class="reviews__label form__label"
+                  for="review"
+                >
+                  Your review
+                </label>
+                <div
+                  class="reviews__rating-form form__rating"
+                >
+                  <input
+                    class="form__rating-input visually-hidden"
+                    id="5-stars"
+                    name="rating"
+                    required=""
+                    type="radio"
+                    value="5"
+                  />
+                  <label
+                    class="reviews__rating-label form__rating-label"
+                    for="5-stars"
+                    title="perfect"
+                  >
+                    <svg
+                      class="form__star-image"
+                      height="33"
+                      width="37"
+                    >
+                      <use
+                        xlink:href="#icon-star"
+                      />
+                    </svg>
+                  </label>
+                  <input
+                    class="form__rating-input visually-hidden"
+                    id="4-stars"
+                    name="rating"
+                    required=""
+                    type="radio"
+                    value="4"
+                  />
+                  <label
+                    class="reviews__rating-label form__rating-label"
+                    for="4-stars"
+                    title="good"
+                  >
+                    <svg
+                      class="form__star-image"
+                      height="33"
+                      width="37"
+                    >
+                      <use
+                        xlink:href="#icon-star"
+                      />
+                    </svg>
+                  </label>
+                  <input
+                    class="form__rating-input visually-hidden"
+                    id="3-stars"
+                    name="rating"
+                    required=""
+                    type="radio"
+                    value="3"
+                  />
+                  <label
+                    class="reviews__rating-label form__rating-label"
+                    for="3-stars"
+                    title="not bad"
+                  >
+                    <svg
+                      class="form__star-image"
+                      height="33"
+                      width="37"
+                    >
+                      <use
+                        xlink:href="#icon-star"
+                      />
+                    </svg>
+                  </label>
+                  <input
+                    class="form__rating-input visually-hidden"
+                    id="2-stars"
+                    name="rating"
+                    required=""
+                    type="radio"
+                    value="2"
+                  />
+                  <label
+                    class="reviews__rating-label form__rating-label"
+                    for="2-stars"
+                    title="badly"
+                  >
+                    <svg
+                      class="form__star-image"
+                      height="33"
+                      width="37"
+                    >
+                      <use
+                        xlink:href="#icon-star"
+                      />
+                    </svg>
+                  </label>
+                  <input
+                    class="form__rating-input visually-hidden"
+                    id="1-star"
+                    name="rating"
+                    required=""
+                    type="radio"
+                    value="1"
+                  />
+                  <label
+                    class="reviews__rating-label form__rating-label"
+                    for="1-star"
+                    title="terribly"
+                  >
+                    <svg
+                      class="form__star-image"
+                      height="33"
+                      width="37"
+                    >
+                      <use
+                        xlink:href="#icon-star"
+                      />
+                    </svg>
+                  </label>
+                </div>
+                <textarea
+                  class="reviews__textarea form__textarea"
+                  id="review"
+                  maxlength="300"
+                  minlength="50"
+                  name="review"
+                  placeholder="Tell how was your stay, what you like and what can be improved"
+                />
+                <div
+                  class="reviews__button-wrapper"
+                >
+                  <p
+                    class="reviews__help"
+                  >
+                    To submit review please make sure to set 
+                    <span
+                      class="reviews__star"
+                    >
+                      rating
+                    </span>
+                     and describe your stay with at least 
+                    <b
+                      class="reviews__text-amount"
+                    >
+                      50 characters
+                    </b>
+                    .
+                  </p>
+                  <button
+                    class="reviews__submit form__submit button"
+                    disabled=""
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
             </section>
           </div>
         </div>
@@ -967,10 +1143,14 @@ exports[`Test routing Render 'SignInScreen' when user navigate to /login url 1`]
                   class="header__nav-link header__nav-link--profile"
                   href="/favorites"
                 >
+                  <div
+                    class="header__avatar-wrapper user__avatar-wrapper"
+                    style="background-image: url(test);"
+                  />
                   <span
                     class="header__user-name user__name"
                   >
-                    Sign in
+                    test@test.ru
                   </span>
                 </a>
               </li>

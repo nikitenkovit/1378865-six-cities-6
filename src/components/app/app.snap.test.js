@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from "@testing-library/react";
 import App from './app';
-import {AppRoute, LoadStatus, AuthorizationStatus, DefaultCitiesList} from "../../const";
+import {AppRoute, LoadStatus, SendStatus, AuthorizationStatus, DefaultCitiesList} from "../../const";
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import browserHistory from "../../history";
@@ -52,8 +52,14 @@ const wrapper = ({children}) => (
       status: LoadStatus.SUCCESS
     },
     USER: {
-      authorizationStatus: AuthorizationStatus.NO_AUTH,
-      user: null
+      authorizationStatus: AuthorizationStatus.AUTH,
+      user: {
+        id: 1,
+        email: `test@test.ru`,
+        name: `test`,
+        avatarUrl: `test`,
+        isPro: false
+      }
     },
     CITIES: {
       items: DefaultCitiesList,
@@ -90,6 +96,9 @@ const wrapper = ({children}) => (
     FAVORITES: {
       items: [],
       status: LoadStatus.SUCCESS
+    },
+    COMMENT: {
+      status: SendStatus.INITIAL
     }
   })}>
     <Router history={browserHistory}>
@@ -99,7 +108,13 @@ const wrapper = ({children}) => (
 );
 
 describe(`Test routing`, () => {
-  jest.spyOn(redux, `useDispatch`);
+  const fakeDispatch = jest.fn();
+
+  jest.spyOn(redux, `useDispatch`).mockImplementation(() => fakeDispatch);
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it(`Render 'MainScreen' when user navigate to ${AppRoute.MAIN} url`, () => {
 
@@ -117,13 +132,20 @@ describe(`Test routing`, () => {
     expect(container).toMatchSnapshot();
   });
 
+  it(`Render 'FavoritesScreen' when user navigate to ${AppRoute.FAVORITES} url`, () => {
+    browserHistory.push(AppRoute.FAVORITES);
+
+    render(<App/>, {wrapper});
+
+    expect(screen.getByText(`Nothing yet saved.`)).toBeInTheDocument();
+  });
+
   it(`Render 'RoomScreen' when user navigate to ${AppRoute.ROOM} url`, () => {
     browserHistory.push(AppRoute.ROOM);
 
-    jest.spyOn(redux, `useDispatch`);
-
     const {container} = render(<App/>, {wrapper});
 
+    expect(fakeDispatch).toHaveBeenCalledTimes(1);
     expect(container).toMatchSnapshot();
   });
 

@@ -30,9 +30,7 @@ const RoomScreen = (props) => {
   const isAuthorized = useSelector(getIsAuthorized);
 
   useEffect(() => {
-    if (offer === null) {
-      dispatch(fetchCurrentOffer(id));
-    }
+    dispatch(fetchCurrentOffer(id));
   }, [id]);
 
   if (needShowSpinner) {
