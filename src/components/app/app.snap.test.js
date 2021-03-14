@@ -99,7 +99,14 @@ const wrapper = ({children}) => (
 );
 
 describe(`Test routing`, () => {
-  jest.spyOn(redux, `useDispatch`);
+  const fakeDispatch = jest.fn(); // создаем фейковую функцию dispatch
+  // мокаем юз диспатч и переопределяем ее на возврат фейковой функции
+  jest.spyOn(redux, `useDispatch`).mockImplementation(() => fakeDispatch);
+
+  // сбрасываем моки после каждого it
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it(`Render 'MainScreen' when user navigate to ${AppRoute.MAIN} url`, () => {
 
@@ -119,11 +126,9 @@ describe(`Test routing`, () => {
 
   it(`Render 'RoomScreen' when user navigate to ${AppRoute.ROOM} url`, () => {
     browserHistory.push(AppRoute.ROOM);
-
-    jest.spyOn(redux, `useDispatch`);
-
     const {container} = render(<App/>, {wrapper});
 
+    expect(fakeDispatch).toHaveBeenCalledTimes(1); // проверяем что вызвалась фейковая функция
     expect(container).toMatchSnapshot();
   });
 
