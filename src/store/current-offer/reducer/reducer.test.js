@@ -3,7 +3,7 @@ import {SET_CURRENT_OFFER, CHANGE_CURRENT_OFFER_STATUS, SET_NEAREST_OFFERS, SET_
 import {LoadStatus} from "../../../const";
 
 const initialState = {
-  current: {},
+  current: null,
   reviews: [],
   nearest: [],
   status: LoadStatus.INITIAL,
@@ -77,7 +77,7 @@ describe(`Current offer reducer work correctly`, () => {
     };
 
     const expected = {
-      current: {},
+      current: null,
       reviews: [],
       nearest: [],
       status: LoadStatus.SUCCESS,
@@ -95,7 +95,7 @@ describe(`Current offer reducer work correctly`, () => {
     };
 
     const expected = {
-      current: {},
+      current: null,
       reviews: [],
       nearest: [offer, offer, offer],
       status: LoadStatus.INITIAL,
@@ -124,7 +124,7 @@ describe(`Current offer reducer work correctly`, () => {
     };
 
     const expected = {
-      current: {},
+      current: null,
       reviews: [{
         "comment": `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
         "date": `2019-05-08T14:13:56.569Z`,
