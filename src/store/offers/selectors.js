@@ -53,5 +53,7 @@ export const getIsNeedShowSpiner = createSelector(
     (status) => status === LoadStatus.INITIAL || status === LoadStatus.FETCHING);
 
 export const getIsNeedShowError = createSelector(
-    getStatus,
-    (status) => status === LoadStatus.FAILURE);
+    [getStatus, getOffers, getOffersByCity],
+    (status, offers, citiOffers) => status === LoadStatus.FAILURE
+      || offers.length === 0
+      || citiOffers === 0);

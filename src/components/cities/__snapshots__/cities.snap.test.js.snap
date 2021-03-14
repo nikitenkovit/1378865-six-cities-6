@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cities tests Should Cities render correctly 1`] = `
+<div>
+  <section
+    class="locations container"
+  >
+    <ul
+      class="locations__list tabs__list"
+    >
+      <li
+        class="locations__item"
+      >
+        <a
+          class="locations__item-link tabs__item tabs__item--active"
+          href="#"
+        >
+          <span>
+            Paris
+          </span>
+        </a>
+      </li>
+      <li
+        class="locations__item"
+      >
+        <a
+          class="locations__item-link tabs__item false"
+          href="#"
+        >
+          <span>
+            Cologne
+          </span>
+        </a>
+      </li>
+      <li
+        class="locations__item"
+      >
+        <a
+          class="locations__item-link tabs__item false"
+          href="#"
+        >
+          <span>
+            Brussels
+          </span>
+        </a>
+      </li>
+      <li
+        class="locations__item"
+      >
+        <a
+          class="locations__item-link tabs__item false"
+          href="#"
+        >
+          <span>
+            Amsterdam
+          </span>
+        </a>
+      </li>
+      <li
+        class="locations__item"
+      >
+        <a
+          class="locations__item-link tabs__item false"
+          href="#"
+        >
+          <span>
+            Hamburg
+          </span>
+        </a>
+      </li>
+      <li
+        class="locations__item"
+      >
+        <a
+          class="locations__item-link tabs__item false"
+          href="#"
+        >
+          <span>
+            Dusseldorf
+          </span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</div>
+`;

@@ -1,23 +1,20 @@
 import React from "react";
-import {Router} from 'react-router-dom';
-import {render} from "@testing-library/react";
+import {render} from "../../utils/test-utils";
 import FavoritesEmptyScreen from "./favorites-empty-screen";
-import browserHistory from "../../history";
-import * as redux from "react-redux";
-import configureStore from "redux-mock-store";
 
-const mockStore = configureStore({});
+const testStore = {
+  USER: {
+    user: {
+      email: `test@test.ru`,
+      name: `Name`,
+    }
+  }
+};
 
 it(`Should FavoritesEmptyScreen render correctly`, () => {
   const {container} = render(
-      <redux.Provider store={mockStore({
-        USER: {
-          user: null
-        }
-      })}>
-        <Router history={browserHistory}>
-          <FavoritesEmptyScreen/>
-        </Router>);
-      </redux.Provider>);
+      <FavoritesEmptyScreen/>,
+      {store: testStore},
+  );
   expect(container).toMatchSnapshot();
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should FavoritesEmptyScreen render correctly 1`] = `
+exports[`NotFoundScreen tests Should NotFoundScreen render correctly 1`] = `
 <div>
   <div
     class="page page--favorites-empty"
@@ -55,20 +55,6 @@ exports[`Should FavoritesEmptyScreen render correctly 1`] = `
                   </span>
                 </a>
               </li>
-              <li
-                class="header__nav-item user"
-                style="margin-left: 15px;"
-              >
-                <a
-                  class="header__nav-link header__nav-link--profile"
-                >
-                  <span
-                    class="header__user-name user__name"
-                  >
-                    Logout
-                  </span>
-                </a>
-              </li>
             </ul>
           </nav>
         </div>
@@ -86,7 +72,7 @@ exports[`Should FavoritesEmptyScreen render correctly 1`] = `
           <h1
             class="visually-hidden"
           >
-            Favorites (empty)
+            Page not found
           </h1>
           <div
             class="favorites__status-wrapper"
@@ -94,12 +80,18 @@ exports[`Should FavoritesEmptyScreen render correctly 1`] = `
             <b
               class="favorites__status"
             >
-              Nothing yet saved.
+              404. Page not found
             </b>
             <p
               class="favorites__status-description"
             >
-              Save properties to narrow down search or plan your future trips.
+              <a
+                class="error-link"
+                href="/"
+                style="color: rgb(68, 129, 195); font-weight: bold;"
+              >
+                Go back to the home page
+              </a>
             </p>
           </div>
         </section>

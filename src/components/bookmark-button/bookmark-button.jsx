@@ -29,7 +29,7 @@ const BookmarkButton = ({id, isFavorite, bookmarkButtonProperty}) => {
 
 BookmarkButton.propTypes = {
   id: PropTypes.number.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
+  isFavorite: PropTypes.bool,
   bookmarkButtonProperty: BookmarkButtonProp
 };
 
