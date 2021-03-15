@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should FavoritesCityItem render correctly 1`] = `
+<div>
+  <li
+    class="favorites__locations-items"
+  >
+    <div
+      class="favorites__locations locations locations--current"
+    >
+      <div
+        class="locations__item"
+      >
+        <a
+          class="locations__item-link"
+          href="#"
+        >
+          <span>
+            Paris
+          </span>
+        </a>
+      </div>
+    </div>
+    <div
+      class="favorites__places"
+    />
+  </li>
+</div>
+`;

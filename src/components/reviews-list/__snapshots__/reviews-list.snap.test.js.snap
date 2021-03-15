@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should ReviewsList render correctly 1`] = `
+<div>
+  <h2
+    class="reviews__title"
+  >
+    Reviews · 
+    <span
+      class="reviews__amount"
+    >
+      1
+    </span>
+  </h2>
+  <ul
+    class="reviews__list"
+  >
+    <li
+      class="reviews__item"
+    >
+      <div
+        class="reviews__user user"
+      >
+        <div
+          class="reviews__avatar-wrapper user__avatar-wrapper"
+        >
+          <img
+            alt="Reviews avatar"
+            class="reviews__avatar user__avatar"
+            height="54"
+            src="./img/avatar-max.jpg"
+            width="54"
+          />
+        </div>
+        <span
+          class="reviews__user-name"
+        >
+          Max
+        </span>
+      </div>
+      <div
+        class="reviews__info"
+      >
+        <div
+          class="reviews__rating rating"
+        >
+          <div
+            class="reviews__stars rating__stars"
+          >
+            <span
+              style="width: 80%;"
+            />
+            <span
+              class="visually-hidden"
+            >
+              Rating
+            </span>
+          </div>
+        </div>
+        <p
+          class="reviews__text"
+        >
+          A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+        </p>
+        <time
+          class="reviews__time"
+          datetime="2019-05-08T14:13:56.569Z"
+        >
+          May 2019
+        </time>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

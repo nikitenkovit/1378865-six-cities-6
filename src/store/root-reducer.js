@@ -1,12 +1,12 @@
 import {combineReducers} from "redux";
 import NameSpace from './name-space';
-import offers from './offers/reducer';
-import cities from './cities/reducer';
-import offerLocation from './offer-location/reducer';
-import user from './user/reducer';
-import currentOffer from './current-offer/reducer';
-import comment from './comment-status/reducer';
-import favorites from './favorites/reducer';
+import offers from './offers/reducer/reducer';
+import cities from './cities/reducer/reducer';
+import offerLocation from './offer-location/reducer/reducer';
+import user from './user/reducer/reducer';
+import currentOffer from './current-offer/reducer/reducer';
+import comment from './comment-status/reducer/reducer';
+import favorites from './favorites/reducer/reducer';
 
 export default combineReducers({
   [NameSpace.OFFERS]: offers,

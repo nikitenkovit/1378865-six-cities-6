@@ -4,7 +4,7 @@ import Header from "../header/header";
 import Cities from "../cities/cities";
 import {getCurrentCity} from "../../store/cities/selectors";
 import {getIsNeedShowError} from "../../store/offers/selectors";
-import RedirectActionCreator from "../../store/middlewares/action-creator";
+import RedirectActionCreator from "../../store/middlewares/action-creator/action-creator";
 import {AppRoute} from "../../const";
 
 const NoPlacesScreen = () => {

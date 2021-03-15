@@ -5,7 +5,7 @@ import roomOfferProp from '../room-screen/room-screen.prop';
 import {OffersListClassName} from "../../const";
 import OfferCardNear from "../offer-card/offer-card-near";
 import {useDispatch} from "react-redux";
-import OfferLocationActionCreator from '../../store/offer-location/action-creator';
+import OfferLocationActionCreator from '../../store/offer-location/action-creator/action-creator';
 
 const OffersList = ({offers, offersListClassName}) => {
   const dispatch = useDispatch();

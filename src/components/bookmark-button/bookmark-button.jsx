@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 import PropTypes from "prop-types";
-import BookmarkButtonProp from "./bookmark-button.prop";
+import bookmarkButtonProp from "./bookmark-button.prop";
 import {sendFavoriteStatus} from "../../store/api-actions";
 
 const BookmarkButton = ({id, isFavorite, bookmarkButtonProperty}) => {
@@ -29,8 +29,8 @@ const BookmarkButton = ({id, isFavorite, bookmarkButtonProperty}) => {
 
 BookmarkButton.propTypes = {
   id: PropTypes.number.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  bookmarkButtonProperty: BookmarkButtonProp
+  isFavorite: PropTypes.bool,
+  bookmarkButtonProperty: bookmarkButtonProp
 };
 
 export default BookmarkButton;
