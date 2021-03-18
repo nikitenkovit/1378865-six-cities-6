@@ -1,9 +1,10 @@
 import {AuthorizationStatus} from "../../../const";
-import {REQUIRED_AUTHORIZATION, SET_USER} from "../action-types";
+import {REQUIRED_AUTHORIZATION, SET_USER, SET_STATUS_BAD_LOGIN_REQUEST} from "../action-types";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  user: null
+  user: null,
+  statusBadLoginRequest: false
 };
 
 export default (state = initialState, action) => {
@@ -18,6 +19,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload
+      };
+    }
+    case SET_STATUS_BAD_LOGIN_REQUEST: {
+      return {
+        ...state,
+        statusBadLoginRequest: action.payload
       };
     }
     default:

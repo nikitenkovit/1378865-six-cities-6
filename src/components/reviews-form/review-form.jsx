@@ -2,10 +2,11 @@ import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {sendComment} from "../../store/api-actions/send-comment/send-comment";
-import {UserCommentLength, SHAKE_ANIMATION_TIMEOUT} from "../../const";
+import {UserCommentLength} from "../../const";
 import {getStatus, getIsNeedDisableForm,
   getIsNeedToClearForm, getIsNeedShowError} from "../../store/comment-status/selectors/selectors";
-import './style.css';
+import {showError} from "../../utils/show-error/show-error";
+import './error.css';
 
 const ReviewForm = ({id}) => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ReviewForm = ({id}) => {
     rating: ``
   });
 
-  const handleSubmit = (evt) => {
+  const handleFormSubmit = (evt) => {
     evt.preventDefault();
 
     dispatch(sendComment(id, formValue.review, formValue.rating));
@@ -31,14 +32,6 @@ const ReviewForm = ({id}) => {
     const {name, value} = evt.target;
 
     setFormValue((state) => ({...state, [name]: value}));
-  };
-
-  const showError = (element) => {
-    element.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
-
-    setTimeout(() => {
-      element.style.animation = ``;
-    }, SHAKE_ANIMATION_TIMEOUT);
   };
 
   useEffect(() => {
@@ -59,7 +52,7 @@ const ReviewForm = ({id}) => {
       style={{pointerEvents: `${needDisableForm ? `none` : `auto`}`}}
       ref={formRef}
       onChange={handleFieldChange}
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
       className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">

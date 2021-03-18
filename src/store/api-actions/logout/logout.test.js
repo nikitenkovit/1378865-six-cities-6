@@ -2,7 +2,8 @@ import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from "../../../api";
 import {logout} from "./logout";
 import {REQUIRED_AUTHORIZATION, SET_USER} from "../../user/action-types";
-import {AuthorizationStatus} from "../../../const";
+import {AppRoute, AuthorizationStatus} from "../../../const";
+import {REDIRECT_TO_ROUTE} from "../../middlewares/action-types";
 
 describe(`logout work correctly`, () => {
   afterEach(() => {
@@ -17,7 +18,7 @@ describe(`logout work correctly`, () => {
   const apiMock = new MockAdapter(api);
   const setLogout = logout();
 
-  it(`Should make a correct API call to /logout`, () => {
+  it(`Should make a correct API call to /logout and should change route to '/login'`, () => {
     apiMock
       .onGet(URL)
       .reply(SUCCESS_STATUS);
@@ -34,6 +35,11 @@ describe(`logout work correctly`, () => {
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.NO_AUTH
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
+          type: REDIRECT_TO_ROUTE,
+          payload: AppRoute.LOGIN,
         });
       });
   });

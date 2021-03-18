@@ -30,10 +30,11 @@ const getOffers = (state) => state[NameSpace.OFFERS].items;
 
 export const getStatus = (state) => state[NameSpace.OFFERS].status;
 
-export const getOffersByCity = (state) => {
-  const data = state.OFFERS.items;
-  return data.filter((offer) => offer.city.name === state.CITIES.current.name);
-};
+const getCurrentCityName = (state) => state[NameSpace.CITIES].current.name;
+
+export const getOffersByCity = createSelector(
+    [getOffers, getCurrentCityName],
+    (offers, cityName) => offers.filter((offer) => offer.city.name === cityName));
 
 export const getIsNeedShowSpiner = createSelector(
     getStatus,

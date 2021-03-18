@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useSelector} from "react-redux";
 import * as redux from 'react-redux';
 import {OfferType, BookmarkButtonProperty} from '../../const';
-import {getRatingStarValue} from "../../utils/rating-star-value";
+import {getRatingStarValue} from "../../utils/get-rating-star-value/get-rating-star-value";
 import {nanoid} from "nanoid";
 import ReviewForm from "../reviews-form/review-form";
 import BookmarkButton from "../bookmark-button/bookmark-button";

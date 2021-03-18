@@ -1,4 +1,4 @@
-import {REQUIRED_AUTHORIZATION, SET_USER} from "../action-types";
+import {REQUIRED_AUTHORIZATION, SET_USER, SET_STATUS_BAD_LOGIN_REQUEST} from "../action-types";
 
 export default {
   requiredAuthorization: (status) => ({
@@ -8,5 +8,9 @@ export default {
   setUser: (user) => ({
     type: SET_USER,
     payload: user
+  }),
+  setStatusBadLoginRequest: (status) => ({
+    type: SET_STATUS_BAD_LOGIN_REQUEST,
+    payload: status
   })
 };

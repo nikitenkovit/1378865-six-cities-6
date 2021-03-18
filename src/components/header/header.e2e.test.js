@@ -24,16 +24,6 @@ const wrapper = ({children}) => (
 );
 
 describe(`Header tests`, () => {
-  it(`Should Header render correctly`, () => {
-    const {container} = render(<Header isFavoriteScreen={true} />, {wrapper});
-    expect(container).toMatchSnapshot();
-  });
-
-  it(`Should Header render correctly when is not favorite Screen`, () => {
-    const {container} = render(<Header isFavoriteScreen={false} />, {wrapper});
-    expect(container).toMatchSnapshot();
-  });
-
   it(`When user click 'Logout button' should be dispatch called`, () => {
     const fakeDispatch = jest.fn();
 

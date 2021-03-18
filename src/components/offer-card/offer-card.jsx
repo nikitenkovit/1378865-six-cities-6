@@ -2,7 +2,7 @@ import React from 'react';
 import {OfferType, BookmarkButtonProperty} from "../../const";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {getRatingStarValue} from "../../utils/rating-star-value";
+import {getRatingStarValue} from "../../utils/get-rating-star-value/get-rating-star-value";
 import BookmarkButton from "../bookmark-button/bookmark-button";
 import roomScreenProp from '../room-screen/room-screen.prop';
 

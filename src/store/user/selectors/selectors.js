@@ -22,3 +22,5 @@ export const getIsAuthorized = createSelector(
     (status) => status === AuthorizationStatus.AUTH);
 
 export const getUser = (state) => state[NameSpace.USER].user;
+
+export const getIsNeedShowError = (state) => state[NameSpace.USER].statusBadLoginRequest;

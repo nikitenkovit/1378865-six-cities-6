@@ -1,4 +1,4 @@
-import {REQUIRED_AUTHORIZATION, SET_USER} from "../action-types";
+import {REQUIRED_AUTHORIZATION, SET_USER, SET_STATUS_BAD_LOGIN_REQUEST} from "../action-types";
 import ActionCreator from "./action-creator";
 import {AuthorizationStatus} from "../../../const";
 
@@ -29,5 +29,16 @@ describe(`User action creators work correctly`, () => {
     };
 
     expect(ActionCreator.setUser(user)).toEqual(expected);
+  });
+
+  it(`Action creator set status bad login request returns correct action`, () => {
+    const status = true;
+
+    const expected = {
+      type: SET_STATUS_BAD_LOGIN_REQUEST,
+      payload: status
+    };
+
+    expect(ActionCreator.setStatusBadLoginRequest(status)).toEqual(expected);
   });
 });

@@ -5,17 +5,6 @@ import {DEFAULT_CURRENT_CITY} from "../../const";
 import userEvent from "@testing-library/user-event";
 
 describe(`BookmarkButton tests`, () => {
-  it(`Should CityLink render correctly`, () => {
-    const {container} = render(
-        <CityLink
-          city={DEFAULT_CURRENT_CITY}
-          isActive={true}
-          onCityLinkClick={jest.fn()}
-        />);
-
-    expect(container).toMatchSnapshot();
-  });
-
   it(`When user click 'City link' when city link name not equal current city name
    and needFetchOffer equally 'true' should be 'City link' work correctly`, () => {
 

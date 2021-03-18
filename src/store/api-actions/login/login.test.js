@@ -1,8 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from "../../../api";
 import {login} from "./login";
-import {AuthorizationStatus} from "../../../const";
-import {REQUIRED_AUTHORIZATION, SET_USER} from "../../user/action-types";
+import {AppRoute, AuthorizationStatus} from "../../../const";
+import {REQUIRED_AUTHORIZATION, SET_USER, SET_STATUS_BAD_LOGIN_REQUEST} from "../../user/action-types";
+import {REDIRECT_TO_ROUTE} from "../../middlewares/action-types";
 import {adaptUserData} from "../../user/selectors/selectors";
 
 const mockUser = {
@@ -29,23 +30,33 @@ describe(`login work correctly`, () => {
   const data = mockUser;
   const adaptedUserData = adaptUserData(mockUser);
 
-  it(`Should make a correct API call to /login when status is successful`, () => {
+  it(`Should make a correct API call to /login when status is successful and should change route to '/'`, () => {
     apiMock
       .onPost(URL)
       .reply(SUCCESS_STATUS, data);
 
     return sendLogin(dispatch, _getState, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(4);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: SET_STATUS_BAD_LOGIN_REQUEST,
+          payload: false,
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: SET_USER,
           payload: adaptedUserData,
         });
 
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(4, {
+          type: REDIRECT_TO_ROUTE,
+          payload: AppRoute.MAIN,
         });
       });
   });
@@ -57,11 +68,16 @@ describe(`login work correctly`, () => {
 
     return sendLogin(dispatch, _getState, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: REQUIRED_AUTHORIZATION,
-          payload: AuthorizationStatus.NO_AUTH,
+          type: SET_STATUS_BAD_LOGIN_REQUEST,
+          payload: false,
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: SET_STATUS_BAD_LOGIN_REQUEST,
+          payload: true,
         });
       });
   });

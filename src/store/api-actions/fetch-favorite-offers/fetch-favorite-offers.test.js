@@ -2,8 +2,9 @@ import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from "../../../api";
 import {fetchFavoriteOffers} from "./fetch-favorite-offers";
 import {adaptOfferData} from "../../offers/selectors/selectors";
-import {LoadStatus} from "../../../const";
+import {AppRoute, LoadStatus} from "../../../const";
 import {CHANGE_LOAD_FAVORITES_STATUS, SET_FAVORITE_OFFERS} from "../../favorites/action-types";
+import {REDIRECT_TO_ROUTE} from "../../middlewares/action-types";
 
 const MockOffers = {
   "bedrooms": 3,
@@ -82,7 +83,7 @@ describe(`Should fetchFavoriteOffers work correctly`, () => {
       });
   });
 
-  it(`Should make a correct API call to /favorite when status is failure`, () => {
+  it(`Should make a correct API call to /favorite when status is failure and should change route to '/login'`, () => {
     apiMock
       .onGet(URL)
       .reply(FAILURE_STATUS);
@@ -90,6 +91,16 @@ describe(`Should fetchFavoriteOffers work correctly`, () => {
     return loadFavoriteOffers(dispatch, _getState, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
+
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: CHANGE_LOAD_FAVORITES_STATUS,
+          payload: LoadStatus.FETCHING,
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: REDIRECT_TO_ROUTE,
+          payload: AppRoute.LOGIN,
+        });
       });
   });
 });

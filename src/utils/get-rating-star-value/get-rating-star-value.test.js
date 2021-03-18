@@ -1,4 +1,4 @@
-import {getRatingStarValue} from "./rating-star-value";
+import {getRatingStarValue} from "./get-rating-star-value";
 
 it(`getRatingStarValue work correctly`, () => {
   const mockNumber = 4.2;
