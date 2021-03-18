@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookmarkButton tests Should CityLink render correctly 1`] = `
+<div>
+  <a
+    class="locations__item-link tabs__item tabs__item--active"
+    href="#"
+  >
+    <span>
+      Paris
+    </span>
+  </a>
+</div>
+`;

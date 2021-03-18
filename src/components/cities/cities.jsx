@@ -3,22 +3,22 @@ import {useDispatch, useSelector} from "react-redux";
 import CityLink from "../city-link/city-link";
 import {getCities, getCurrentCity} from "../../store/cities/selectors";
 import CityActionCreator from '../../store/cities/action-creator/action-creator';
-import {getIsNeedShowError} from "../../store/offers/selectors";
-import {fetchOfferList} from "../../store/api-actions";
+import {getIsNeedShowError} from "../../store/offers/selectors/selectors";
+import {fetchOfferList} from "../../store/api-actions/fetch-offer-list/fetch-offer-list";
 
 const Cities = () => {
   const dispatch = useDispatch();
 
   const cities = useSelector(getCities);
   const currentCity = useSelector(getCurrentCity);
-  const needShowError = useSelector(getIsNeedShowError);
+  const needFetchOffers = useSelector(getIsNeedShowError);
 
   const handleCityLinkClick = (evt, city) => {
     evt.preventDefault();
     if (city.name !== currentCity.name) {
       dispatch(CityActionCreator.changeCity(city));
     }
-    if (needShowError) {
+    if (needFetchOffers) {
       dispatch(fetchOfferList());
     }
   };

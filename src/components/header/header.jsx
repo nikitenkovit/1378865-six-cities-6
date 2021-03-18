@@ -2,8 +2,8 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {getUser} from "../../store/user/selectors";
-import {logout} from "../../store/api-actions";
+import {getUser} from "../../store/user/selectors/selectors";
+import {logout} from "../../store/api-actions/logout/logout";
 
 const Header = ({isFavoriteScreen}) => {
   const dispatch = useDispatch();

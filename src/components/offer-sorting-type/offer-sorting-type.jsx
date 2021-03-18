@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 const OfferSortingType = ({type, onSelectType, isActive}) => {
   return (
-    <li className={`places__option " tabIndex="0"
-    ${isActive ? `places__option--active` : null}`}
-    onClick={() => onSelectType(type)}
+    <li className={`places__option ${isActive ? `places__option--active` : null}`}
+      onClick={() => onSelectType(type)}
+      tabIndex="0"
     >
       {type}
     </li>

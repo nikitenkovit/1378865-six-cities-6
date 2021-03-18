@@ -25,7 +25,7 @@ const CityLink = (props) => {
 CityLink.propTypes = {
   city: citiesProp,
   isActive: PropTypes.bool.isRequired,
-  onCityLinkClick: PropTypes.func.isRequired
+  onCityLinkClick: PropTypes.func
 };
 
 export default CityLink;

@@ -18,5 +18,6 @@ const reviews = [{
 it(`Should ReviewsList render correctly`, () => {
   const {container} = render(
       <ReviewsList reviews={reviews}/>);
+
   expect(container).toMatchSnapshot();
 });

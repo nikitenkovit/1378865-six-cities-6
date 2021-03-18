@@ -32,26 +32,26 @@ exports[`OfferSorting tests Should OfferSorting render correctly 1`] = `
     null"
     >
       <li
-        class="places__option \\" tabIndex=\\"0\\"
-    places__option--active"
+        class="places__option places__option--active"
+        tabindex="0"
       >
         Popular
       </li>
       <li
-        class="places__option \\" tabIndex=\\"0\\"
-    null"
+        class="places__option null"
+        tabindex="0"
       >
         Price: low to high
       </li>
       <li
-        class="places__option \\" tabIndex=\\"0\\"
-    null"
+        class="places__option null"
+        tabindex="0"
       >
         Price: high to low
       </li>
       <li
-        class="places__option \\" tabIndex=\\"0\\"
-    null"
+        class="places__option null"
+        tabindex="0"
       >
         Top rated first
       </li>

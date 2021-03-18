@@ -4,6 +4,7 @@ import '../../styles/spiner/style.css';
 const SpinerScreen = () => {
   return (
     <div className='spiner'>
+      <h1 className="visually-hidden">Spiner</h1>
       <div className="loader">
         <div className="ball"/>
         <div className="ball"/>

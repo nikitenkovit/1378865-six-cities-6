@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
-import {sendComment} from "../../store/api-actions";
+import {sendComment} from "../../store/api-actions/send-comment/send-comment";
 import {UserCommentLength, SHAKE_ANIMATION_TIMEOUT} from "../../const";
 import {getStatus, getIsNeedDisableForm,
-  getIsNeedToClearForm, getIsNeedShowError} from "../../store/comment-status/selectors";
+  getIsNeedToClearForm, getIsNeedShowError} from "../../store/comment-status/selectors/selectors";
 import '../../styles/form-error/style.css';
 
 const ReviewForm = ({id}) => {
@@ -42,12 +42,8 @@ const ReviewForm = ({id}) => {
   };
 
   useEffect(() => {
-    const reviewsTextarea = formRef.current.querySelector(`.reviews__textarea`);
-
     if (needToClearForm) {
       formRef.current.reset();
-
-      reviewsTextarea.value = ``;
     }
 
     if (needShowError) {

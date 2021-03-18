@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import OfferSortingType from "../offer-sorting-type/offer-sorting-type";
-import {SortingType, DEFAULT_SORTING_TYPE} from "../../const";
+import {SortingType} from "../../const";
 
 const OfferSorting = ({onSortChange, activeType}) => {
   const [isOpenedSorting, setIsOpenedSorting] = useState(false);
 
-  const onSelectType = (type) => {
+  const handleTypeSelect = (type) => {
     onSortChange(type);
     setIsOpenedSorting(!activeType);
   };
@@ -15,7 +15,7 @@ const OfferSorting = ({onSortChange, activeType}) => {
     <span className="places__sorting-caption">Sort by </span>
     <span className="places__sorting-type" tabIndex="0"
       onClick={() => setIsOpenedSorting(!isOpenedSorting)}>
-      {SortingType[activeType] || DEFAULT_SORTING_TYPE}
+      {activeType}
       <svg className="places__sorting-arrow" width="7" height="4">
         <use xlinkHref="#icon-arrow-select"/>
       </svg>
@@ -26,7 +26,7 @@ const OfferSorting = ({onSortChange, activeType}) => {
         <OfferSortingType
           key={`sorting-type-${type}`}
           type={type}
-          onSelectType={onSelectType}
+          onSelectType={handleTypeSelect}
           isActive={activeType === type}
         />)}
     </ul>

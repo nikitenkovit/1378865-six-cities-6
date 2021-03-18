@@ -16,7 +16,7 @@ const Map = (props) => {
 
   const {
     offers,
-    currentCity,
+    cityCenter,
     isRoomScreenMap,
     roomScreenOfferLocation,
     roomScreenOfferDescription
@@ -34,7 +34,7 @@ const Map = (props) => {
   const iconDefault = leaflet.icon(MapMarkerProperty.DEFAULT);
   const iconActive = leaflet.icon(MapMarkerProperty.ACTIVE);
 
-  const {latitude, longitude} = currentCity;
+  const {latitude, longitude} = cityCenter;
   const zoom = MAP_ZOOM;
 
   const createMarker = (location, description, markerIcon) => {
@@ -75,7 +75,7 @@ const Map = (props) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [currentCity]);
+  }, [cityCenter]);
 
   const changeMarkerIcon = () => {
     group.eachLayer((layer) => {
@@ -109,7 +109,7 @@ const Map = (props) => {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(roomOfferProp).isRequired,
-  currentCity: mapProp,
+  cityCenter: mapProp,
   isRoomScreenMap: PropTypes.bool,
   roomScreenOfferLocation: mapProp,
   roomScreenOfferDescription: PropTypes.string

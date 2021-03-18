@@ -11,11 +11,11 @@ import Map from "../map/map";
 import {OffersListClassName, MAX_GALLERY_IMAGES} from "../../const";
 import OffersList from "../offers-list/offers-list";
 import Header from "../header/header";
-import {fetchCurrentOffer} from "../../store/api-actions";
+import {fetchCurrentOffer} from "../../store/api-actions/fetch-current-offer/fetch-current-offer";
 import SpinerScreen from "../spiner-screen/spiner-screen";
 import {getIsNeedShowSpiner, getCurrentOffer, getOfferId, getReviews,
-  getNearestOffers, getIsNeedShowNotFoundScreen} from "../../store/current-offer/selectors";
-import {getIsAuthorized} from "../../store/user/selectors";
+  getNearestOffers, getIsNeedShowNotFoundScreen} from "../../store/current-offer/selectors/selectors";
+import {getIsAuthorized} from "../../store/user/selectors/selectors";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
 
 const RoomScreen = (props) => {
@@ -147,7 +147,7 @@ const RoomScreen = (props) => {
             <Map
               offers={nearestOffers}
               isRoomScreenMap={true}
-              currentCity={location}
+              cityCenter={location}
               roomScreenOfferLocation={location}
               roomScreenOfferDescription={description}
             />
