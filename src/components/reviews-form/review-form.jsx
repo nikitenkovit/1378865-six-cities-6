@@ -5,7 +5,7 @@ import {sendComment} from "../../store/api-actions/send-comment/send-comment";
 import {UserCommentLength, SHAKE_ANIMATION_TIMEOUT} from "../../const";
 import {getStatus, getIsNeedDisableForm,
   getIsNeedToClearForm, getIsNeedShowError} from "../../store/comment-status/selectors/selectors";
-import '../../styles/form-error/style.css';
+import './style.css';
 
 const ReviewForm = ({id}) => {
   const dispatch = useDispatch();

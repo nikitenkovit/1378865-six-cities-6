@@ -4,7 +4,7 @@ import Header from "../header/header";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/api-actions/login/login";
 import {AppRoute} from "../../const";
-import '../../styles/form-error/style.css';
+import '../reviews-form/style.css';
 
 const SignInScreen = () => {
   const dispatch = useDispatch();
