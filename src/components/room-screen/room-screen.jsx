@@ -17,10 +17,13 @@ import {getIsNeedShowSpiner, getCurrentOffer, getOfferId, getReviews,
   getNearestOffers, getIsNeedShowNotFoundScreen} from "../../store/current-offer/selectors/selectors";
 import {getIsAuthorized} from "../../store/user/selectors/selectors";
 import NotFoundScreen from "../not-found-screen/not-found-screen";
+import ServiceUnavailableScreen from "../service-unavailable-screen/service-unavailable-screen";
+import {getIsNeedShowServiceUnavailableScreen} from "../../store/service-available-status/selectors/selectors";
 
 const RoomScreen = (props) => {
   const dispatch = redux.useDispatch();
 
+  const needShowServiceUnavailableScreen = useSelector(getIsNeedShowServiceUnavailableScreen);
   const needShowSpinner = useSelector(getIsNeedShowSpiner);
   const needShowNotFoundScreen = useSelector(getIsNeedShowNotFoundScreen);
   const id = getOfferId(props);
@@ -33,7 +36,11 @@ const RoomScreen = (props) => {
     dispatch(fetchCurrentOffer(id));
   }, [id]);
 
-  if (needShowSpinner) {
+  if (needShowServiceUnavailableScreen) {
+    return (
+      <ServiceUnavailableScreen/>
+    );
+  } else if (needShowSpinner) {
     return (
       <SpinerScreen/>
     );

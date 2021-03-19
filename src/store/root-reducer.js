@@ -7,6 +7,7 @@ import user from './user/reducer/reducer';
 import currentOffer from './current-offer/reducer/reducer';
 import comment from './comment-status/reducer/reducer';
 import favorites from './favorites/reducer/reducer';
+import serviceAvailableStatus from './service-available-status/reducer/reducer';
 
 export default combineReducers({
   [NameSpace.OFFERS]: offers,
@@ -15,5 +16,6 @@ export default combineReducers({
   [NameSpace.OFFER_LOCATION]: offerLocation,
   [NameSpace.CURRENT_OFFER]: currentOffer,
   [NameSpace.COMMENT]: comment,
-  [NameSpace.FAVORITES]: favorites
+  [NameSpace.FAVORITES]: favorites,
+  [NameSpace.SERVICE_AVAILABLE_STATUS]: serviceAvailableStatus
 });

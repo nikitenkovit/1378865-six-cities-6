@@ -7,11 +7,14 @@ import {getIsNeedShowSpiner, getFavoriteOffers, getIsNeedShowEmptyScreen} from "
 import SpinerScreen from "../spiner-screen/spiner-screen";
 import {fetchFavoriteOffers} from "../../store/api-actions/fetch-favorite-offers/fetch-favorite-offers";
 import FavoritesEmptyScreen from "../favorites-empty-screen/favorites-empty-screen";
+import ServiceUnavailableScreen from "../service-unavailable-screen/service-unavailable-screen";
 import {AppRoute} from "../../const";
+import {getIsNeedShowServiceUnavailableScreen} from "../../store/service-available-status/selectors/selectors";
 
 const FavoritesScreen = () => {
   const dispatch = useDispatch();
 
+  const needShowServiceUnavailableScreen = useSelector(getIsNeedShowServiceUnavailableScreen);
   const needShowSpinner = useSelector(getIsNeedShowSpiner);
   const favoriteOffers = useSelector(getFavoriteOffers);
   const needShowEmptyScreen = useSelector(getIsNeedShowEmptyScreen);
@@ -20,7 +23,11 @@ const FavoritesScreen = () => {
     dispatch(fetchFavoriteOffers());
   }, []);
 
-  if (needShowSpinner) {
+  if (needShowServiceUnavailableScreen) {
+    return (
+      <ServiceUnavailableScreen/>
+    );
+  } else if (needShowSpinner) {
     return (
       <SpinerScreen/>
     );

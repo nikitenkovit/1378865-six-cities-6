@@ -11,8 +11,11 @@ import {DEFAULT_SORTING_TYPE, OffersListClassName} from "../../const";
 import {sortingFunction} from "../../store/offers/utils";
 import {getCurrentCity} from "../../store/cities/selectors";
 import {getOffersByCity, getIsNeedShowSpiner, getIsNeedShowError} from "../../store/offers/selectors/selectors";
+import ServiceUnavailableScreen from "../service-unavailable-screen/service-unavailable-screen";
+import {getIsNeedShowServiceUnavailableScreen} from "../../store/service-available-status/selectors/selectors";
 
 const MainScreen = () => {
+  const needShowServiceUnavailableScreen = useSelector(getIsNeedShowServiceUnavailableScreen);
   const needShowSpinner = useSelector(getIsNeedShowSpiner);
   const needShowError = useSelector(getIsNeedShowError);
   const currentCity = useSelector(getCurrentCity);
@@ -25,7 +28,11 @@ const MainScreen = () => {
     setSortedOffers(offers.slice().sort(sortingFunction(offers, activeType)));
   }, [offers, activeType, currentCity]);
 
-  if (needShowSpinner) {
+  if (needShowServiceUnavailableScreen) {
+    return (
+      <ServiceUnavailableScreen/>
+    );
+  } else if (needShowSpinner) {
     return (
       <SpinerScreen/>
     );

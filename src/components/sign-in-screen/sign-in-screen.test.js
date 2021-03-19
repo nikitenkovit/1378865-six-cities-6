@@ -5,7 +5,7 @@ import SignInScreen from "./sign-in-screen";
 import * as redux from "react-redux";
 import userEvent from "@testing-library/user-event";
 import browserHistory from "../../history";
-import {AppRoute, AuthorizationStatus} from "../../const";
+import {AppRoute, AuthorizationStatus, ServiceAvailableStatus} from "../../const";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import {Route, Router, Switch} from "react-router-dom";
@@ -17,6 +17,9 @@ const wrapper = ({children}) => (
     USER: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
       user: null
+    },
+    SERVICE_AVAILABLE_STATUS: {
+      status: ServiceAvailableStatus.AVAILABLE
     }
   })}>
     <Router history={browserHistory}>
@@ -46,6 +49,9 @@ describe(`SignInScreen tests`, () => {
           USER: {
             authorizationStatus: AuthorizationStatus.NO_AUTH,
             user: null
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
           }
         })}>
           <Router history={browserHistory}>
@@ -93,5 +99,23 @@ describe(`SignInScreen tests`, () => {
     userEvent.click(screen.getByRole(`button`));
 
     expect(fakeDispatch).not.toHaveBeenCalled();
+  });
+
+  it(`Sign in screen render 'ServiceUnavailableScreen' when service unavailable`, () => {
+    render(<Provider store={mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        user: null
+      },
+      SERVICE_AVAILABLE_STATUS: {
+        status: ServiceAvailableStatus.UNAVAILABLE
+      }
+    })}>
+      <Router history={browserHistory}>
+        <SignInScreen/>
+      </Router>
+    </Provider>);
+
+    expect(screen.getByText(/Service is unavailable/i)).toBeInTheDocument();
   });
 });

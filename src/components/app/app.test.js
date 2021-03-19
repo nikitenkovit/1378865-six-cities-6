@@ -1,7 +1,14 @@
 import React from 'react';
 import {render, screen} from "@testing-library/react";
 import App from './app';
-import {AppRoute, LoadStatus, SendStatus, AuthorizationStatus, DefaultCitiesList} from "../../const";
+import {
+  AppRoute,
+  LoadStatus,
+  SendStatus,
+  AuthorizationStatus,
+  DefaultCitiesList,
+  ServiceAvailableStatus
+} from "../../const";
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import browserHistory from "../../history";
@@ -52,7 +59,7 @@ const wrapper = ({children}) => (
       status: LoadStatus.SUCCESS
     },
     USER: {
-      authorizationStatus: AuthorizationStatus.AUTH,
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
       user: {
         id: 1,
         email: `test@test.ru`,
@@ -99,6 +106,9 @@ const wrapper = ({children}) => (
     },
     COMMENT: {
       status: SendStatus.INITIAL
+    },
+    SERVICE_AVAILABLE_STATUS: {
+      status: ServiceAvailableStatus.AVAILABLE
     }
   })}>
     <Router history={browserHistory}>
@@ -133,12 +143,84 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/Password/i)).toBeInTheDocument();
   });
 
-  it(`Render 'FavoritesScreen' when user navigate to ${AppRoute.FAVORITES} url`, () => {
+  it(`If user is authorized and when user navigate to ${AppRoute.LOGIN} url should render MainScreen`, () => {
+
+    browserHistory.push(AppRoute.LOGIN);
+
+    render(<Provider store={mockStore({
+      OFFERS: {
+        items: [mockOffer],
+        status: LoadStatus.SUCCESS
+      },
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+      },
+      CITIES: {
+        items: DefaultCitiesList,
+        current: {
+          name: `Paris`,
+          location: {
+            latitude: 48.85661,
+            longitude: 2.351499,
+            zoom: 13
+          }
+        }
+      },
+      SERVICE_AVAILABLE_STATUS: {
+        status: ServiceAvailableStatus.AVAILABLE
+      }
+    })}>
+      <Router history={browserHistory}>
+        <App/>
+      </Router>
+    </Provider>);
+
+    expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
+  });
+
+  it(`Render 'FavoritesScreen' if user authorized and when user navigate to ${AppRoute.FAVORITES} url`, () => {
     browserHistory.push(AppRoute.FAVORITES);
 
-    render(<App/>, {wrapper});
+    render(
+        <Provider store={mockStore({
+          USER: {
+            authorizationStatus: AuthorizationStatus.AUTH,
+          },
+          FAVORITES: {
+            items: [],
+            status: LoadStatus.SUCCESS
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
+          }
+        })}>
+          <Router history={browserHistory}>
+            <App/>
+          </Router>
+        </Provider>);
 
     expect(screen.getByText(`Nothing yet saved.`)).toBeInTheDocument();
+  });
+
+  it(`If user not authorized and when user navigate to ${AppRoute.FAVORITES} url should render SignInScreen`, () => {
+    browserHistory.push(AppRoute.FAVORITES);
+
+    render(
+        <Provider store={mockStore({
+          USER: {
+            authorizationStatus: AuthorizationStatus.NO_AUTH,
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
+          }
+        })}>
+          <Router history={browserHistory}>
+            <App/>
+          </Router>
+        </Provider>);
+
+    expect(screen.getByText(/E-mail/i)).toBeInTheDocument();
+    expect(screen.getByText(/Password/i)).toBeInTheDocument();
   });
 
   it(`Render 'RoomScreen' when user navigate to ${AppRoute.ROOM} url`, () => {

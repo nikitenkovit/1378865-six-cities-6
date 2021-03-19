@@ -3,7 +3,7 @@ import {render, screen} from "@testing-library/react";
 import RoomScreen from "./room-screen";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import {AuthorizationStatus, LoadStatus, SendStatus} from "../../const";
+import {AuthorizationStatus, LoadStatus, SendStatus, ServiceAvailableStatus} from "../../const";
 import {Router} from "react-router-dom";
 import browserHistory from "../../history";
 import * as redux from "react-redux";
@@ -78,6 +78,9 @@ describe(`RoomScreen tests`, () => {
           },
           COMMENT: {
             status: SendStatus.INITIAL
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
           }
         })}>
           <Router history={browserHistory}>
@@ -91,6 +94,31 @@ describe(`RoomScreen tests`, () => {
     expect(screen.getByText(`Other places in the neighbourhood`)).toBeInTheDocument();
   });
 
+  it(`Room screen render 'ServiceUnavailableScreen' when service unavailable`, () => {
+    render(
+        <Provider store={mockStore({
+          USER: {
+            authorizationStatus: AuthorizationStatus.AUTH
+          },
+          CURRENT_OFFER: {
+            current: mockOffer,
+            reviews: [],
+            nearest: [mockOffer],
+            status: LoadStatus.FAILURE
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.UNAVAILABLE
+          }
+        })}>
+          <Router history={browserHistory}>
+            <RoomScreen match={{params: {id: 1}}}/>
+          </Router>
+        </Provider>
+    );
+
+    expect(screen.getByText(/Service is unavailable/i)).toBeInTheDocument();
+  });
+
   it(`Room screen render 'NotFoundScreen' when loading status is equal to 'FAILURE'`, () => {
     render(
         <Provider store={mockStore({
@@ -102,6 +130,9 @@ describe(`RoomScreen tests`, () => {
             reviews: [],
             nearest: [mockOffer],
             status: LoadStatus.FAILURE
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
           }
         })}>
           <Router history={browserHistory}>
@@ -124,6 +155,9 @@ describe(`RoomScreen tests`, () => {
             reviews: [],
             nearest: [mockOffer],
             status: LoadStatus.FETCHING
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
           }
         })}>
           <Router history={browserHistory}>

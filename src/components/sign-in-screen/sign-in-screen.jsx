@@ -6,6 +6,8 @@ import {login} from "../../store/api-actions/login/login";
 import {getIsNeedShowError} from "../../store/user/selectors/selectors";
 import {AppRoute} from "../../const";
 import {showError} from "../../utils/show-error/show-error";
+import ServiceUnavailableScreen from "../service-unavailable-screen/service-unavailable-screen";
+import {getIsNeedShowServiceUnavailableScreen} from "../../store/service-available-status/selectors/selectors";
 import './error.css';
 
 const SignInScreen = () => {
@@ -13,6 +15,7 @@ const SignInScreen = () => {
 
   const formRef = useRef();
   const needShowError = useSelector(getIsNeedShowError);
+  const needShowServiceUnavailableScreen = useSelector(getIsNeedShowServiceUnavailableScreen);
 
   const [isNoRequestError, setIsNoRequestError] = useState(true);
 
@@ -52,6 +55,12 @@ const SignInScreen = () => {
     const {name, value} = evt.target;
     setFormValue((state) => ({...state, [name]: value}));
   };
+
+  if (needShowServiceUnavailableScreen) {
+    return (
+      <ServiceUnavailableScreen/>
+    );
+  }
 
   return (
     <div className="page page--gray page--login">

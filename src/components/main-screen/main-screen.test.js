@@ -3,7 +3,7 @@ import {render, screen} from "@testing-library/react";
 import MainScreen from "./main-screen";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import {AuthorizationStatus, DefaultCitiesList, LoadStatus} from "../../const";
+import {AuthorizationStatus, DefaultCitiesList, LoadStatus, ServiceAvailableStatus} from "../../const";
 import {Router} from "react-router-dom";
 import browserHistory from "../../history";
 
@@ -71,6 +71,9 @@ describe(`MainScreen tests`, () => {
             zoom: 13
           }
         }
+      },
+      SERVICE_AVAILABLE_STATUS: {
+        status: ServiceAvailableStatus.AVAILABLE
       }
     })}>
       <Router history={browserHistory}>
@@ -79,6 +82,45 @@ describe(`MainScreen tests`, () => {
     </Provider>);
 
     expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
+  });
+
+  it(`Main screen render 'ServiceUnavailableScreen' when service unavailable`, () => {
+    render(<Provider store={mockStore({
+      OFFERS: {
+        items: [],
+        status: LoadStatus.SUCCESS
+      },
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+        user: {
+          id: 1,
+          email: `test@test.ru`,
+          name: `test`,
+          avatarUrl: `test`,
+          isPro: false
+        }
+      },
+      CITIES: {
+        items: DefaultCitiesList,
+        current: {
+          name: `Paris`,
+          location: {
+            latitude: 48.85661,
+            longitude: 2.351499,
+            zoom: 13
+          }
+        }
+      },
+      SERVICE_AVAILABLE_STATUS: {
+        status: ServiceAvailableStatus.UNAVAILABLE
+      }
+    })}>
+      <Router history={browserHistory}>
+        <MainScreen/>
+      </Router>
+    </Provider>);
+
+    expect(screen.getByText(/Service is unavailable/i)).toBeInTheDocument();
   });
 
   it(`Main screen render 'NoPlacesScreen' when offers list empty`, () => {
@@ -107,6 +149,9 @@ describe(`MainScreen tests`, () => {
             zoom: 13
           }
         }
+      },
+      SERVICE_AVAILABLE_STATUS: {
+        status: ServiceAvailableStatus.AVAILABLE
       }
     })}>
       <Router history={browserHistory}>
@@ -143,6 +188,9 @@ describe(`MainScreen tests`, () => {
             zoom: 13
           }
         }
+      },
+      SERVICE_AVAILABLE_STATUS: {
+        status: ServiceAvailableStatus.AVAILABLE
       }
     })}>
       <Router history={browserHistory}>

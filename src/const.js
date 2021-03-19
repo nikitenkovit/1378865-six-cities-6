@@ -52,6 +52,11 @@ export const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+export const ServiceAvailableStatus = {
+  AVAILABLE: `AVAILABLE`,
+  UNAVAILABLE: `UNAVAILABLE`,
+};
+
 export const LoadStatus = {
   INITIAL: `initial`,
   FETCHING: `fetching`,
