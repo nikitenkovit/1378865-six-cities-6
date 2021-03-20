@@ -1,10 +1,11 @@
 import userReducer from "./reducer";
-import {REQUIRED_AUTHORIZATION, SET_USER} from "../action-types";
+import {REQUIRED_AUTHORIZATION, SET_USER, SET_STATUS_BAD_LOGIN_REQUEST} from "../action-types";
 import {AuthorizationStatus} from "../../../const";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  user: null
+  user: null,
+  statusBadLoginRequest: false
 };
 
 describe(`User reducer work correctly`, () => {
@@ -23,7 +24,8 @@ describe(`User reducer work correctly`, () => {
 
     const expected = {
       authorizationStatus: AuthorizationStatus.AUTH,
-      user: null
+      user: null,
+      statusBadLoginRequest: false
     };
 
     expect(userReducer(initialState, action))
@@ -47,7 +49,27 @@ describe(`User reducer work correctly`, () => {
 
     const expected = {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
-      user
+      user,
+      statusBadLoginRequest: false
+    };
+
+    expect(userReducer(initialState, action))
+      .toEqual(expected);
+  });
+
+  it(`Reducer should set status bad login request correctly`, () => {
+
+    const status = true;
+
+    const action = {
+      type: SET_STATUS_BAD_LOGIN_REQUEST,
+      payload: status
+    };
+
+    const expected = {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      user: null,
+      statusBadLoginRequest: status
     };
 
     expect(userReducer(initialState, action))

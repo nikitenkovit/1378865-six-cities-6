@@ -3,9 +3,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import FavoritesCityItem from "../favorites-city-item/favorites-city-item";
 import Header from "../header/header";
-import {getIsNeedShowSpiner, getFavoriteOffers, getIsNeedShowEmptyScreen} from "../../store/favorites/selectors";
+import {getIsNeedShowSpiner, getFavoriteOffers, getIsNeedShowEmptyScreen} from "../../store/favorites/selectors/selectors";
 import SpinerScreen from "../spiner-screen/spiner-screen";
-import {fetchFavoriteOffers} from "../../store/api-actions";
+import {fetchFavoriteOffers} from "../../store/api-actions/fetch-favorite-offers/fetch-favorite-offers";
 import FavoritesEmptyScreen from "../favorites-empty-screen/favorites-empty-screen";
 import {AppRoute} from "../../const";
 

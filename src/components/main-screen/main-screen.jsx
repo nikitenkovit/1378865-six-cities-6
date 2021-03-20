@@ -8,9 +8,9 @@ import Map from "../map/map";
 import SpinerScreen from "../spiner-screen/spiner-screen";
 import NoPlacesScreen from "../no-places-screen/no-places-screen";
 import {DEFAULT_SORTING_TYPE, OffersListClassName} from "../../const";
-import {sortingFunction} from "../../store/offers/selectors";
+import {sortingFunction} from "../../store/offers/utils";
 import {getCurrentCity} from "../../store/cities/selectors";
-import {getOffersByCity, getIsNeedShowSpiner, getIsNeedShowError} from "../../store/offers/selectors";
+import {getOffersByCity, getIsNeedShowSpiner, getIsNeedShowError} from "../../store/offers/selectors/selectors";
 
 const MainScreen = () => {
   const needShowSpinner = useSelector(getIsNeedShowSpiner);
@@ -22,7 +22,7 @@ const MainScreen = () => {
   const [sortedOffers, setSortedOffers] = useState(offers);
 
   useEffect(() => {
-    setSortedOffers(offers.sort(sortingFunction(offers, activeType)));
+    setSortedOffers(offers.slice().sort(sortingFunction(offers, activeType)));
   }, [offers, activeType, currentCity]);
 
   if (needShowSpinner) {
@@ -55,7 +55,7 @@ const MainScreen = () => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} currentCity={currentCity.location}/>
+                <Map offers={offers} cityCenter={currentCity.location}/>
               </section>
             </div>
           </div>

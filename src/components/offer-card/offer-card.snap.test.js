@@ -39,25 +39,21 @@ const mockOffer = {
   "type": `apartment`
 };
 
-const mockProps = {
-  offerCardClassName: {
-    articleClass: `cities__place-card`,
-    wrapperClass: `cities__image-wrapper`,
-    infoClass: ``,
-    imageWidth: `260`,
-    imageHeight: `200`
-  },
-  offer: mockOffer,
-  isHoverHandler: true,
-  onMouseEnter: jest.fn(),
-  onMouseLeave: jest.fn()
-};
-
-describe(`OfferCard tests`, () => {
-  it(`Should OfferCard render correctly`, () => {
-    const {container} = render(
-        <OfferCard {...mockProps}/>,
-        {store: testStore});
-    expect(container).toMatchSnapshot();
-  });
+it(`Should OfferCard render correctly`, () => {
+  const {container} = render(
+      <OfferCard
+        offerCardClassName={{
+          articleClass: `cities__place-card`,
+          wrapperClass: `cities__image-wrapper`,
+          infoClass: ``,
+          imageWidth: `260`,
+          imageHeight: `200`
+        }}
+        offer={mockOffer}
+        isHoverHandler={true}
+        onMouseEnter={jest.fn}
+        onMouseLeave={jest.fn}
+      />,
+      {store: testStore});
+  expect(container).toMatchSnapshot();
 });

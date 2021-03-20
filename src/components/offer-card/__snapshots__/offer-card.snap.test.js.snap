@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OfferCard tests Should OfferCard render correctly 1`] = `
+exports[`Should OfferCard render correctly 1`] = `
 <div>
   <article
     class="cities__place-card place-card"

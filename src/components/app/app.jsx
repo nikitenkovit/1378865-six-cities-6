@@ -13,7 +13,14 @@ const App = () => {
     <Switch>
       <Route exact path={AppRoute.MAIN} component={MainScreen}/>
       <Route exact path={AppRoute.LOGIN} component={SignInScreen}/>
-      <PrivateRoute exact path={AppRoute.FAVORITES} component={FavoritesScreen}/>
+      <PrivateRoute
+        exact
+        path={AppRoute.FAVORITES}
+        render={() => {
+          return (
+            <FavoritesScreen/>
+          );
+        }}/>
       <Route exact path={AppRoute.ROOM} component={RoomScreen}/>
       <Route path="*" component={NotFoundScreen}/>
     </Switch>
