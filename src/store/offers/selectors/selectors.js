@@ -47,7 +47,7 @@ export const getIsNeedShowError = createSelector(
       || citiOffers === 0);
 
 export const getIsNeedRedirect = createSelector(
-  [getStatus, getOffers, getOffersByCity],
-  (status, offers, citiOffers) => status !== LoadStatus.FAILURE
+    [getStatus, getOffers, getOffersByCity],
+    (status, offers, citiOffers) => status !== LoadStatus.FAILURE
     || offers.length > 0
     || citiOffers > 0);
