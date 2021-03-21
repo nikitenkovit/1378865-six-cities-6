@@ -1,12 +1,12 @@
 import React from "react";
 import {useSelector} from 'react-redux';
 import {Route, Redirect} from "react-router-dom";
-import {AuthorizationStatus, AppRoute} from "../../const";
+import {AppRoute} from "../../const";
 import PropTypes from "prop-types";
-import {getAuthorizationStatus} from "../../store/user/selectors/selectors";
+import {getIsAuthorized} from "../../store/user/selectors/selectors";
 
 const PrivateRoute = ({render, path, exact}) => {
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isAuthorized = useSelector(getIsAuthorized);
 
   return (
     <Route
@@ -14,7 +14,7 @@ const PrivateRoute = ({render, path, exact}) => {
       exact={exact}
       render={(routeProps) => {
         return (
-          authorizationStatus === AuthorizationStatus.AUTH
+          isAuthorized
             ? render(routeProps)
             : <Redirect to={AppRoute.LOGIN} />
         );

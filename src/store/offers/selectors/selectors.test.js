@@ -1,4 +1,4 @@
-import {adaptOfferData, getOffersByCity, getIsNeedShowError, getIsNeedShowSpiner} from "./selectors";
+import {adaptOfferData, getOffersByCity, getIsNeedShowError, getIsNeedShowSpiner, getIsNeedRedirect} from "./selectors";
 import {LoadStatus} from "../../../const";
 
 describe(`Test offers selectors`, () => {
@@ -123,6 +123,36 @@ describe(`Test offers selectors`, () => {
       },
     };
     expect(getIsNeedShowError(mockStore)).toBe(false);
+  });
+
+  it(`getIsNeedRedirect should be return 'true'`, () => {
+    const mockStore = {
+      OFFERS: {
+        items: [],
+        status: LoadStatus.SUCCESS
+      },
+      CITIES: {
+        current: {
+          name: `Paris`,
+        }
+      },
+    };
+    expect(getIsNeedRedirect(mockStore)).toBe(true);
+  });
+
+  it(`getIsNeedRedirect should be return 'false'`, () => {
+    const mockStore = {
+      OFFERS: {
+        items: [],
+        status: LoadStatus.FAILURE
+      },
+      CITIES: {
+        current: {
+          name: `Paris`,
+        }
+      },
+    };
+    expect(getIsNeedRedirect(mockStore)).toBe(false);
   });
 
   it(`getIsNeedShowSpiner should be return 'true'`, () => {

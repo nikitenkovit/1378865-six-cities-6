@@ -3,7 +3,7 @@ import {render, screen} from "@testing-library/react";
 import FavoritesScreen from "./favorites-screen";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import {AuthorizationStatus, LoadStatus} from "../../const";
+import {AuthorizationStatus, LoadStatus, ServiceAvailableStatus} from "../../const";
 import {Router} from "react-router-dom";
 import browserHistory from "../../history";
 import * as redux from "react-redux";
@@ -66,6 +66,9 @@ describe(`FavoritesScreen tests`, () => {
             items: [[mockOffer.city.name, [mockOffer]]],
             status: LoadStatus.SUCCESS
           },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
+          }
         })}>
           <Router history={browserHistory}>
             <FavoritesScreen/>
@@ -73,6 +76,35 @@ describe(`FavoritesScreen tests`, () => {
         </Provider>);
 
     expect(screen.getByText(`Saved listing`)).toBeInTheDocument();
+  });
+
+  it(`Favorites screen render 'ServiceUnavailableScreen' when service unavailable`, () => {
+    render(
+        <Provider store={mockStore({
+          USER: {
+            authorizationStatus: AuthorizationStatus.AUTH,
+            user: {
+              id: 1,
+              email: `test@test.ru`,
+              name: `test`,
+              avatarUrl: `test`,
+              isPro: false
+            }
+          },
+          FAVORITES: {
+            items: [],
+            status: LoadStatus.SUCCESS
+          },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.UNAVAILABLE
+          }
+        })}>
+          <Router history={browserHistory}>
+            <FavoritesScreen/>
+          </Router>
+        </Provider>);
+
+    expect(screen.getByText(/Service is unavailable/i)).toBeInTheDocument();
   });
 
   it(`Favorites screen render 'FavoritesEmptyScreen' when favorites list empty`, () => {
@@ -92,6 +124,9 @@ describe(`FavoritesScreen tests`, () => {
             items: [],
             status: LoadStatus.SUCCESS
           },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
+          }
         })}>
           <Router history={browserHistory}>
             <FavoritesScreen/>
@@ -118,6 +153,9 @@ describe(`FavoritesScreen tests`, () => {
             items: [],
             status: LoadStatus.FETCHING
           },
+          SERVICE_AVAILABLE_STATUS: {
+            status: ServiceAvailableStatus.AVAILABLE
+          }
         })}>
           <Router history={browserHistory}>
             <FavoritesScreen/>

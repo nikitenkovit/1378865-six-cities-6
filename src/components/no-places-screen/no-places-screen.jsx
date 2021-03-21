@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Header from "../header/header";
 import Cities from "../cities/cities";
 import {getCurrentCity} from "../../store/cities/selectors";
-import {getIsNeedShowError} from "../../store/offers/selectors/selectors";
+import {getIsNeedRedirect} from "../../store/offers/selectors/selectors";
 import RedirectActionCreator from "../../store/middlewares/action-creator/action-creator";
 import {AppRoute} from "../../const";
 
@@ -11,9 +11,9 @@ const NoPlacesScreen = () => {
   const dispatch = useDispatch();
 
   const currentCity = useSelector(getCurrentCity);
-  const needRedirectToMainScreen = useSelector(getIsNeedShowError);
+  const needRedirectToMainScreen = useSelector(getIsNeedRedirect);
 
-  if (!needRedirectToMainScreen) {
+  if (needRedirectToMainScreen) {
     dispatch(RedirectActionCreator.redirectToRoute(AppRoute.MAIN));
   }
 

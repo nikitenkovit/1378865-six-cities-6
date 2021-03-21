@@ -4,6 +4,8 @@ import {sendFavoriteStatus} from "./send-favorite-status";
 import {adaptOfferData} from "../../offers/selectors/selectors";
 import {UPDATE_OFFERS} from "../../offers/action-types";
 import {SET_CURRENT_OFFER} from "../../current-offer/action-types";
+import {REDIRECT_TO_ROUTE} from "../../middlewares/action-types";
+import {AppRoute} from "../../../const";
 
 const MockOffer = {
   "bedrooms": 3,
@@ -88,6 +90,11 @@ describe(`Should sendFavoriteStatus work correctly`, () => {
     return postFavoriteStatus(dispatch, _getState, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
+
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: REDIRECT_TO_ROUTE,
+          payload: AppRoute.LOGIN,
+        });
       });
   });
 });
