@@ -3,15 +3,22 @@ import {Link} from "react-router-dom";
 import Header from "../header/header";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../store/api-actions/login/login";
-import {getIsNeedShowError} from "../../store/user/selectors/selectors";
+import {getIsAuthorized, getIsNeedShowError} from "../../store/user/selectors/selectors";
 import {AppRoute} from "../../const";
 import {showError} from "../../utils/show-error/show-error";
 import ServiceUnavailableScreen from "../service-unavailable-screen/service-unavailable-screen";
 import {getIsNeedShowServiceUnavailableScreen} from "../../store/service-available-status/selectors/selectors";
 import './error.css';
+import RedirectActionCreator from "../../store/middlewares/action-creator/action-creator";
 
 const SignInScreen = () => {
   const dispatch = useDispatch();
+
+  const needRedirectToMainScreen = useSelector(getIsAuthorized);
+
+  if (needRedirectToMainScreen) {
+    dispatch(RedirectActionCreator.redirectToRoute(AppRoute.MAIN));
+  }
 
   const formRef = useRef();
   const needShowError = useSelector(getIsNeedShowError);

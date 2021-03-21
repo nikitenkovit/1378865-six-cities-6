@@ -36,6 +36,29 @@ describe(`SignInScreen tests`, () => {
     expect(screen.getByText(/Password/i)).toBeInTheDocument();
   });
 
+  it(`If user is authorized and when user navigate to ${AppRoute.LOGIN} url should call dispatch`, () => {
+
+    const fakeDispatch = jest.fn();
+
+    jest.spyOn(redux, `useDispatch`).mockImplementation(() => fakeDispatch);
+
+    render(<Provider store={mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+        user: null
+      },
+      SERVICE_AVAILABLE_STATUS: {
+        status: ServiceAvailableStatus.AVAILABLE
+      }
+    })}>
+      <Router history={browserHistory}>
+        <SignInScreen/>
+      </Router>
+    </Provider>);
+
+    expect(fakeDispatch).toHaveBeenCalled();
+  });
+
   it(`When all the fields is filled out correctly should submits the form and redirect to Main screen`, () => {
     browserHistory.push(AppRoute.LOGIN);
 

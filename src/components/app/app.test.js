@@ -143,41 +143,6 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/Password/i)).toBeInTheDocument();
   });
 
-  it(`If user is authorized and when user navigate to ${AppRoute.LOGIN} url should render MainScreen`, () => {
-
-    browserHistory.push(AppRoute.LOGIN);
-
-    render(<Provider store={mockStore({
-      OFFERS: {
-        items: [mockOffer],
-        status: LoadStatus.SUCCESS
-      },
-      USER: {
-        authorizationStatus: AuthorizationStatus.AUTH,
-      },
-      CITIES: {
-        items: DefaultCitiesList,
-        current: {
-          name: `Paris`,
-          location: {
-            latitude: 48.85661,
-            longitude: 2.351499,
-            zoom: 13
-          }
-        }
-      },
-      SERVICE_AVAILABLE_STATUS: {
-        status: ServiceAvailableStatus.AVAILABLE
-      }
-    })}>
-      <Router history={browserHistory}>
-        <App/>
-      </Router>
-    </Provider>);
-
-    expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
-  });
-
   it(`Render 'FavoritesScreen' if user authorized and when user navigate to ${AppRoute.FAVORITES} url`, () => {
     browserHistory.push(AppRoute.FAVORITES);
 
