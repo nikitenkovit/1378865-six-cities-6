@@ -123,7 +123,7 @@ describe(`MainScreen tests`, () => {
     expect(screen.getByText(/Service is unavailable/i)).toBeInTheDocument();
   });
 
-  it(`Main screen render 'NoPlacesScreen' when offers list empty`, () => {
+  it(`Main screen render 'CitiesNoPlaces' when offers list empty`, () => {
     render(<Provider store={mockStore({
       OFFERS: {
         items: [],

@@ -2,7 +2,8 @@ import {AuthorizationStatus} from "../../../const";
 import {REQUIRED_AUTHORIZATION, SET_USER, SET_STATUS_BAD_LOGIN_REQUEST} from "../action-types";
 
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  // authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: null,
   user: null,
   statusBadLoginRequest: false
 };

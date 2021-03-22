@@ -1,32 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
 import Header from "../header/header";
 import Cities from "../cities/cities";
-import OffersList from "../offers-list/offers-list";
-import OfferSorting from "../offer-sorting/offer-sorting";
-import Map from "../map/map";
+import CitiesPlaces from "../cities-places/cities-places";
 import SpinerScreen from "../spiner-screen/spiner-screen";
-import NoPlacesScreen from "../no-places-screen/no-places-screen";
-import {DEFAULT_SORTING_TYPE, OffersListClassName} from "../../const";
-import {sortingFunction} from "../../store/offers/utils";
-import {getCurrentCity} from "../../store/cities/selectors";
-import {getOffersByCity, getIsNeedShowSpiner, getIsNeedShowError} from "../../store/offers/selectors/selectors";
+import CitiesNoPlaces from "../cities-no-places/cities-no-places";
+import {getIsNeedShowSpiner, getIsNeedShowError} from "../../store/offers/selectors/selectors";
 import ServiceUnavailableScreen from "../service-unavailable-screen/service-unavailable-screen";
 import {getIsNeedShowServiceUnavailableScreen} from "../../store/service-available-status/selectors/selectors";
 
 const MainScreen = () => {
   const needShowServiceUnavailableScreen = useSelector(getIsNeedShowServiceUnavailableScreen);
   const needShowSpinner = useSelector(getIsNeedShowSpiner);
-  const needShowError = useSelector(getIsNeedShowError);
-  const currentCity = useSelector(getCurrentCity);
-  const offers = useSelector(getOffersByCity);
-
-  const [activeType, setActiveType] = useState(DEFAULT_SORTING_TYPE);
-  const [sortedOffers, setSortedOffers] = useState(offers);
-
-  useEffect(() => {
-    setSortedOffers(offers.slice().sort(sortingFunction(offers, activeType)));
-  }, [offers, activeType, currentCity]);
+  const needShowCitiesNoPlaces = useSelector(getIsNeedShowError);
 
   if (needShowServiceUnavailableScreen) {
     return (
@@ -36,37 +22,17 @@ const MainScreen = () => {
     return (
       <SpinerScreen/>
     );
-  } else if (needShowError) {
-    return (
-      <NoPlacesScreen/>
-    );
   }
 
   return (
-    <div className="page page--gray page--main">
+    <div className={`page page--gray page--main ${needShowCitiesNoPlaces ? `page__main--index-empty` : ``}`}>
       <Header/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <Cities/>
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {offers.length} places to stay in {currentCity.name}
-              </b>
-              <OfferSorting activeType={activeType} onSortChange={setActiveType}/>
-              <OffersList offers={sortedOffers} offersListClassName={OffersListClassName.CITY_PLACES}/>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map offers={offers} cityCenter={currentCity.location}/>
-              </section>
-            </div>
-          </div>
-        </div>
+        {needShowCitiesNoPlaces ? <CitiesNoPlaces/> : <CitiesPlaces/>}
       </main>
     </div>
   );

@@ -3,7 +3,7 @@ import {REQUIRED_AUTHORIZATION, SET_USER, SET_STATUS_BAD_LOGIN_REQUEST} from "..
 import {AuthorizationStatus} from "../../../const";
 
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: null,
   user: null,
   statusBadLoginRequest: false
 };
@@ -48,7 +48,7 @@ describe(`User reducer work correctly`, () => {
     };
 
     const expected = {
-      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      authorizationStatus: null,
       user,
       statusBadLoginRequest: false
     };
@@ -67,7 +67,7 @@ describe(`User reducer work correctly`, () => {
     };
 
     const expected = {
-      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      authorizationStatus: null,
       user: null,
       statusBadLoginRequest: status
     };

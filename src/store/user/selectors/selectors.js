@@ -24,3 +24,7 @@ export const getIsAuthorized = createSelector(
 export const getUser = (state) => state[NameSpace.USER].user;
 
 export const getIsNeedShowError = (state) => state[NameSpace.USER].statusBadLoginRequest;
+
+export const getIsNeedShowSpiner = createSelector(
+    getAuthorizationStatus,
+    (status) => status === null);
