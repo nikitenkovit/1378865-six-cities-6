@@ -13,19 +13,19 @@ const NoPlacesScreen = () => {
   const currentCity = useSelector(getCurrentCity);
   const needRedirectToMainScreen = useSelector(getIsNeedRedirect);
 
-  if (needRedirectToMainScreen) {
-    dispatch(RedirectActionCreator.redirectToRoute(AppRoute.MAIN));
-  }
+  // if (needRedirectToMainScreen) {
+  //   dispatch(RedirectActionCreator.redirectToRoute(AppRoute.MAIN));
+  // }
 
   return (
-    <div className="page page--gray page--main">
-      <Header/>
-
-      <main className="page__main page__main--index page__main--index-empty">
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <Cities/>
-        </div>
+    // <div className="page page--gray page--main">
+    //   <Header/>
+    //
+    //   <main className="page__main page__main--index page__main--index-empty">
+    //     <h1 className="visually-hidden">Cities</h1>
+    //     <div className="tabs">
+    //       <Cities/>
+    //     </div>
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">
             <section className="cities__no-places">
@@ -38,8 +38,8 @@ const NoPlacesScreen = () => {
             <div className="cities__right-section"/>
           </div>
         </div>
-      </main>
-    </div>
+    //   </main>
+    // </div>
   );
 };
 
