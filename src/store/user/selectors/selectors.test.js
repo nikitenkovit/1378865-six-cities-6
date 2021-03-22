@@ -1,4 +1,4 @@
-import {adaptUserData, getIsAuthorized} from "./selectors";
+import {adaptUserData, getIsAuthorized, getIsNeedShowSpiner} from "./selectors";
 import {AuthorizationStatus} from "../../../const";
 
 describe(`Test user selectors`, () => {
@@ -38,5 +38,23 @@ describe(`Test user selectors`, () => {
       }
     };
     expect(getIsAuthorized(mockStore)).toBe(false);
+  });
+
+  it(`getIsNeedShowSpiner should be return 'true'`, () => {
+    const mockStore = {
+      USER: {
+        authorizationStatus: null,
+      }
+    };
+    expect(getIsNeedShowSpiner(mockStore)).toBe(true);
+  });
+
+  it(`getIsNeedShowSpiner should be return 'false'`, () => {
+    const mockStore = {
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+      }
+    };
+    expect(getIsNeedShowSpiner(mockStore)).toBe(false);
   });
 });

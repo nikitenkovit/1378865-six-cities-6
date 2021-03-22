@@ -48,6 +48,6 @@ export const getIsNeedShowError = createSelector(
 
 export const getIsNeedRedirect = createSelector(
     [getStatus, getOffers, getOffersByCity],
-    (status, offers, citiOffers) => status !== LoadStatus.FAILURE
+    (status, offers, citiOffers) => status === LoadStatus.SUCCESS
     || offers.length > 0
     || citiOffers > 0);

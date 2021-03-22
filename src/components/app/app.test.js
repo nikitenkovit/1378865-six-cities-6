@@ -126,6 +126,28 @@ describe(`Test routing`, () => {
     jest.clearAllMocks();
   });
 
+  it(`App render 'SpinerScreen' when authorizationStatus is equal to null`, () => {
+
+    render(<Provider store={mockStore({
+      USER: {
+        authorizationStatus: null,
+        user: {
+          id: 1,
+          email: `test@test.ru`,
+          name: `test`,
+          avatarUrl: `test`,
+          isPro: false
+        }
+      }
+    })}>
+      <Router history={browserHistory}>
+        <App/>
+      </Router>
+    </Provider>);
+
+    expect(screen.getByText(/Spiner/i)).toBeInTheDocument();
+  });
+
   it(`Render 'MainScreen' when user navigate to ${AppRoute.MAIN} url`, () => {
 
     render(<App/>, {wrapper});

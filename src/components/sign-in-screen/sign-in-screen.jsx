@@ -16,9 +16,11 @@ const SignInScreen = () => {
 
   const needRedirectToMainScreen = useSelector(getIsAuthorized);
 
-  if (needRedirectToMainScreen) {
-    dispatch(RedirectActionCreator.redirectToRoute(AppRoute.MAIN));
-  }
+  useEffect(() => {
+    if (needRedirectToMainScreen) {
+      dispatch(RedirectActionCreator.redirectToRoute(AppRoute.MAIN));
+    }
+  }, [needRedirectToMainScreen]);
 
   const formRef = useRef();
   const needShowError = useSelector(getIsNeedShowError);
