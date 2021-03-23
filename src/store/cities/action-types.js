@@ -1,2 +1,2 @@
-export const SET_ITEMS = `SET_ITEMS`;
-export const CHANGE_CITY = `CHANGE_CITY`;
+export const SET_ITEMS = `CITIES/SET_ITEMS`;
+export const CHANGE_CITY = `CITIES/CHANGE_CITY`;
